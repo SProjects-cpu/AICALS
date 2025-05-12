@@ -1,0 +1,128 @@
+/* Admin Panel Hover Effects
+ * This file replaces all black hover effects with light grey ones
+ */
+
+:root {
+  --hover-light-gray: #f8f8f8;
+  --hover-gray: #eaeaea;
+  --active-gray: #e0e0e0;
+}
+
+/* Table row hover effects */
+.results table tbody tr:hover,
+#changelist table tbody tr:hover,
+.dashboard .module table tr:hover {
+  background-color: var(--hover-gray) !important;
+  border-radius: 6px !important;
+  transition: background-color 0.2s ease !important;
+}
+
+/* Sidebar link hover effects */
+#custom-sidebar li a:hover {
+  background-color: var(--hover-light-gray) !important;
+  color: var(--primary-orange) !important;
+  border-radius: 6px !important;
+  transition: all 0.2s ease !important;
+}
+
+/* Button hover effects */
+.button:hover, 
+input[type=submit]:hover, 
+input[type=button]:hover, 
+.submit-row input:hover, 
+a.button:hover {
+  background-color: var(--hover-light-gray) !important;
+  color: var(--primary) !important;
+  border-radius: 6px !important;
+  transition: all 0.2s ease !important;
+}
+
+/* Default button hover effects */
+.button.default:hover, 
+input[type=submit].default:hover, 
+.submit-row input.default:hover {
+  background-color: var(--hover-light-gray) !important;
+  color: var(--accent) !important;
+  transition: all 0.2s ease !important;
+}
+
+/* Primary button hover effects */
+.primary-btn:hover {
+  background-color: var(--hover-light-gray) !important;
+  color: var(--primary-orange) !important;
+  transform: translateY(-2px) !important;
+  transition: all 0.3s ease !important;
+}
+
+/* Secondary button hover effects */
+.secondary-btn:hover {
+  background-color: var(--hover-light-gray) !important;
+  color: var(--primary-gray) !important;
+  transform: translateY(-2px) !important;
+  transition: all 0.3s ease !important;
+}
+
+/* User tool links hover effects */
+#user-tools a:hover {
+  background-color: var(--hover-light-gray) !important;
+  color: var(--primary-orange) !important;
+  transition: all 0.2s ease !important;
+}
+
+/* Breadcrumb links hover effects */
+div.breadcrumbs a:hover {
+  color: var(--hover-light-gray) !important;
+  transition: color 0.2s ease !important;
+}
+
+/* Dashboard module hover effects */
+.dashboard-grid .module:hover {
+  transform: translateY(-4px) !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+  transition: all 0.3s ease !important;
+}
+
+/* Action list item hover effects */
+.actionlist li a:hover {
+  color: var(--primary-orange) !important;
+  text-decoration: none !important;
+  background-color: var(--hover-light-gray) !important;
+  border-radius: 4px !important;
+  padding: 2px 5px !important;
+  margin: -2px -5px !important;
+  display: inline-block !important;
+  transition: all 0.2s ease !important;
+}
+
+/* Paginator link hover effects */
+.paginator a:hover {
+  background-color: var(--hover-light-gray) !important;
+  transition: background-color 0.2s ease !important;
+}
+
+/* Filter link hover effects */
+#changelist-filter a:hover {
+  background-color: var(--hover-light-gray) !important;
+  border-radius: 4px !important;
+  transition: background-color 0.2s ease !important;
+}
+
+/* Logo hover effects */
+#branding h1 a:hover .custom-logo {
+  box-shadow: 0 6px 16px rgba(255, 165, 0, 0.1) !important;
+  transform: translateY(-2px) !important;
+  transition: all 0.3s ease !important;
+}
+
+/* Link hover effects in content */
+#content-wrapper a:hover {
+  color: var(--primary-orange) !important;
+  transition: color 0.2s ease !important;
+}
+
+/* Text div hover effects - Added to replace black hover with grey */
+div.text a:hover {
+  color: #000000 !important; /* Keep text color black */
+  background-color: var(--hover-gray) !important; /* Only change background to grey */
+  transition: all 0.2s ease !important;
+} 

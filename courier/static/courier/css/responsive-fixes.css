@@ -1,0 +1,573 @@
+/* Responsive fixes for the navbar */
+@media (max-width: 991.98px) {
+  .site-navbar {
+    padding: 0.5rem;
+  }
+
+  .site-navbar .site-logo {
+    margin-bottom: 0;
+    position: relative !important;
+    left: 0;
+    z-index: 2000;
+  }
+
+  /* Improve the row layout on smaller screens to avoid overlap */
+  .site-navbar .row.align-items-center {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    width: 100%;
+  }
+
+  .col-auto.site-logo {
+    max-width: 80%;
+    padding-right: 0;
+    flex: 0 1 auto;
+  }
+
+  /* Adjust logo container for smaller screens */
+  .logo-container {
+    display: flex;
+    align-items: center;
+  }
+
+  .logo-container .logo-img {
+    max-height: 40px;
+    width: auto;
+  }
+
+  .logo-container .ml-3 {
+    margin-left: 0.5rem !important;
+  }
+
+  .logo-container span {
+    font-size: 14px;
+  }
+
+  /* Position hamburger menu on the right with proper spacing */
+  .toggle-button {
+    position: relative;
+    top: auto;
+    right: auto;
+    z-index: 1999;
+    margin-left: auto;
+    padding-right: 5px;
+    flex: 0 0 auto;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  /* Force the navbar to split the logo and hamburger menu to opposite sides */
+  .site-navbar .row.align-items-center {
+    justify-content: space-between !important;
+  }
+
+  .navbar-collapse {
+    width: 100%;
+    background-color: white;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  }
+
+  .site-navbar .site-menu {
+    display: block !important;
+    opacity: 1;
+    visibility: visible;
+    padding: 10px 0;
+  }
+
+  .site-navbar .site-menu li {
+    display: block !important;
+    text-align: left;
+    margin-bottom: 0.5rem;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .site-navbar .site-menu li a {
+    padding: 8px 15px;
+    display: block;
+    width: 100%;
+    margin: 0 !important;
+  }
+
+  .site-mobile-menu {
+    z-index: 2000;
+  }
+
+  .col-12 {
+    position: static;
+  }
+
+  .top-bar {
+    padding: 10px 0;
+  }
+
+  /* Menu icon animation */
+  .icon-menu.active {
+    transform: rotate(90deg);
+    transition: transform 0.3s ease;
+  }
+
+  .icon-menu {
+    transition: transform 0.3s ease;
+  }
+
+  /* Mobile specific styling */
+  .site-nav-container {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+/* Extra small devices (phones) */
+@media (max-width: 575.98px) {
+  .col-auto.site-logo {
+    max-width: 75%;
+  }
+  
+  .logo-container span {
+    font-size: 12px;
+  }
+  
+  .logo-container .logo-img {
+    max-height: 35px;
+  }
+
+  /* Additional responsive logo styling for very small screens */
+  .responsive-logo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    max-width: 100%;
+    flex-wrap: nowrap;
+  }
+
+  .responsive-logo .logo-img {
+    max-height: 30px;
+    margin-right: 5px;
+    flex-shrink: 0;
+  }
+
+  .responsive-logo .ml-3 {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .responsive-logo .ml-3 span {
+    font-size: 10px;
+    line-height: 1.1;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Ensure toggle button stays right-aligned */
+  .toggle-button {
+    margin-left: 10px;
+  }
+}
+
+/* Even smaller devices (small phones) */
+@media (max-width: 374.98px) {
+  .col-auto.site-logo {
+    max-width: 70%;
+  }
+
+  .responsive-logo .logo-img {
+    max-height: 25px;
+  }
+
+  .responsive-logo .ml-3 span {
+    font-size: 9px;
+  }
+}
+
+/* Bootstrap collapse styling fix */
+.navbar-collapse.collapse {
+  display: none;
+}
+
+.navbar-collapse.collapse.show {
+  display: block;
+  position: absolute;
+  top: 60px;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  margin: 0 15px;
+}
+
+@media (min-width: 992px) {
+  .navbar-collapse.collapse {
+    display: block !important;
+    position: static;
+    box-shadow: none;
+    background-color: transparent;
+    margin: 0;
+  }
+
+  .site-navbar .site-menu {
+    display: flex !important;
+    justify-content: flex-end;
+  }
+
+  .site-navbar .site-menu li {
+    display: inline-block !important;
+  }
+
+  .navbar-collapse.collapse.show {
+    position: static;
+    margin: 0;
+  }
+
+  /* Prevent logo overlapping with menu on larger screens */
+  .site-navbar .row {
+    align-items: center;
+  }
+
+  .col-auto.site-logo {
+    width: auto;
+    flex: 0 0 auto;
+    max-width: 150px;
+    margin-right: 20px;
+  }
+
+  .site-nav-container {
+    flex: 1;
+  }
+
+  .site-navigation {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  /* Add spacing between nav items */
+  .site-menu li {
+    margin: 0 8px;
+  }
+
+  .site-menu li a {
+    padding: 10px 5px;
+  }
+
+  /* Additional fix for overlapping issue on larger screens */
+  .site-navbar .container {
+    max-width: 100%;
+    padding: 0 30px;
+  }
+
+  .site-navbar .row {
+    width: 100%;
+  }
+
+  .col-auto.site-logo {
+    padding-right: 30px;
+  }
+
+  .site-nav-container {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .site-navigation {
+    width: auto;
+    min-width: 70%;
+  }
+
+  /* Specific fix for overflow issues */
+  .site-menu {
+    justify-content: flex-end;
+    flex-wrap: wrap;
+  }
+
+  .site-menu li {
+    white-space: nowrap;
+  }
+}
+
+/* Fix for the logo overlap issue on all screen sizes */
+.site-navbar .site-logo {
+  z-index: 1;
+}
+
+.site-navbar .site-navigation {
+  z-index: 2;
+}
+
+/* Fix the container layout for proper spacing */
+.site-navbar .container {
+  position: relative;
+}
+
+.site-navbar .row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* Fix sticky header positioning */
+.js-sticky-header.is-sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+/* Ensure menu is visible on desktop */
+@media (min-width: 992px) {
+  .site-menu {
+    display: flex !important;
+  }
+
+  .site-menu.js-clone-nav {
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  /* Remove d-none class effect on large screens */
+  .site-menu.d-none.d-lg-block {
+    display: flex !important;
+  }
+}
+
+/* Fix for menu items spacing */
+@media (min-width: 1200px) {
+  .site-menu li {
+    margin: 0 10px;
+  }
+}
+
+/* Force the menu to be flex on larger screens */
+@media (min-width: 992px) {
+  .d-lg-block {
+    display: flex !important;
+  }
+}
+
+/* Ensure the logo doesn't overlap with nav items */
+.col-auto.site-logo {
+  position: relative;
+  z-index: 3;
+}
+
+/* Responsive fixes for Courier Management System */
+
+/* Fix for duplicate menus on mobile */
+@media (max-width: 767.98px) {
+    /* Hide desktop navigation on mobile */
+    .site-nav-container {
+        display: none !important;
+    }
+
+    /* Ensure only one instance of navigation is visible */
+    .site-nav-wrap:not(:first-of-type) {
+        display: none !important;
+    }
+
+    /* Hide duplicate Home links in footer on small screens */
+    footer ul li:nth-child(7) {
+        display: none;
+    }
+
+    /* Ensure proper layout on small screens */
+    .flex-responsive {
+        flex-direction: column !important;
+    }
+
+    /* Better mobile menu positioning */
+    .site-mobile-menu {
+        transform: translateX(-110%);
+        transition: all 0.3s ease;
+    }
+
+    .site-mobile-menu.active {
+        transform: translateX(0%);
+    }
+
+    /* Make sure menu toggles properly */
+    .toggle-button {
+        display: block !important;
+        z-index: 1001;
+    }
+}
+
+/* Fix for the problematic range (760px to 990px) */
+@media (max-width: 990px) and (min-width: 768px) {
+    .site-nav-container {
+        display: none !important;
+    }
+    .toggle-button {
+        display: block !important;
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 1001;
+    }
+    .site-mobile-menu {
+        display: none;
+    }
+    .site-mobile-menu.active {
+        display: block !important;
+    }
+}
+
+/* Hide mobile menu on desktop (above 990px) */
+@media (min-width: 991px) {
+    .site-mobile-menu {
+        display: none !important;
+    }
+
+    .toggle-button {
+        display: none !important;
+    }
+}
+
+/* General mobile menu styling improvements */
+.site-mobile-menu {
+    position: fixed;
+    z-index: 2000;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.97);
+    overflow-y: auto;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    display: none;
+    height: 100vh;
+}
+
+.site-mobile-menu.active {
+    opacity: 1;
+    visibility: visible;
+    display: block;
+}
+
+/* Mobile menu header styling */
+.site-mobile-menu-header {
+    position: relative;
+    padding: 1rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    display: flex;
+    justify-content: flex-end;
+}
+
+.site-mobile-menu-close {
+    position: relative;
+    cursor: pointer;
+    z-index: 1002;
+}
+
+.site-mobile-menu-close i {
+    font-size: 20px;
+    transition: transform 0.3s ease;
+}
+
+.site-mobile-menu-close:hover i {
+    transform: rotate(90deg);
+}
+
+/* Mobile menu body styling */
+.site-mobile-menu-body {
+    padding: 20px;
+    padding-top: 10px;
+}
+
+/* Toggle button animations and positioning */
+.site-menu-toggle {
+    outline: none !important;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.site-menu-toggle.active .fas.fa-bars {
+    transform: rotate(90deg);
+}
+
+/* Mobile menu list styling */
+.site-nav-wrap {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.site-nav-wrap li {
+    position: relative;
+    display: block;
+}
+
+.site-nav-wrap li a {
+    position: relative;
+    display: block;
+    padding: 12px 0;
+    color: #212529;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.site-nav-wrap li a:hover {
+    color: #FF8C00;
+}
+
+/* Mobile only for better spacing */
+@media (max-width: 767px) {
+    .site-nav-wrap li a {
+        font-size: 16px;
+        padding: 15px 0;
+    }
+    
+    .site-mobile-menu-body .secondary-btn {
+        margin-top: 10px;
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* Specific adjustments for the 890px to 990px range */
+@media (max-width: 990px) and (min-width: 890px) {
+    /* Ensure the toggle button is properly positioned */
+    .toggle-button {
+        right: 20px;
+    }
+
+    /* Adjust logo size for this range */
+    .logo-img {
+        height: 40px;
+    }
+
+    /* Ensure proper spacing in the header */
+    .site-header .container {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}
+
+/* Responsive styling for the Sign Up button */
+@media (max-width: 767px) {
+    .secondary-btn {
+        display: block;
+        width: calc(100% - 1rem);
+        text-align: center;
+        margin: 0.5rem;
+        padding: 0.75rem 1rem;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 990px) {
+    .secondary-btn {
+        padding: 0.6rem 1.2rem;
+        margin: 0.3rem;
+    }
+}
+
+/* Ensure the Sign Up button stands out */
+.secondary-btn {
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+}

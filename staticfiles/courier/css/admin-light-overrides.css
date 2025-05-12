@@ -1,0 +1,138 @@
+/* Admin Panel Light Mode Overrides
+ * This file overrides black backgrounds with light gray
+ * Note: All hover effects are now managed in admin-hover-effects.css
+ */
+
+:root {
+  --light-gray: #f5f5f5;
+  --lighter-gray: #fafafa;
+  --border-light: #e5e7eb;
+}
+
+/* Main background */
+body {
+  background-color: var(--lighter-gray) !important;
+}
+
+/* Content wrapper */
+#content-wrapper {
+  background-color: white !important;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Sidebar */
+#custom-sidebar {
+  background-color: white !important;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Modules */
+.module {
+  background-color: white !important;
+  border: 1px solid var(--border-light) !important;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Form rows */
+.form-row {
+  border-bottom: 1px solid var(--border-light) !important;
+}
+
+/* Tables */
+#changelist table,
+.dashboard .module table {
+  background-color: white !important;
+}
+
+/* Table headers */
+thead th {
+  background-color: var(--light-gray) !important;
+  color: #333 !important;
+}
+
+/* Table rows */
+#changelist table tbody tr:nth-child(odd),
+.dashboard .module table tr:nth-child(odd) {
+  background-color: var(--lighter-gray) !important;
+}
+
+/* Form inputs */
+input, textarea, select, .select2-container--admin-autocomplete .select2-selection {
+  background-color: white !important;
+  border-color: var(--border-light) !important;
+  color: #333 !important;
+}
+
+/* Recent actions module */
+#recent-actions-module h2,
+#content-related .module h2,
+#content-related .module h3,
+.module.recent-actions h3,
+.module.dashboard-module-recent-actions h3 {
+  background-color: var(--light-gray) !important;
+  color: #333 !important;
+}
+
+/* Override "My actions" heading to be black */
+#recent-actions-module h3,
+h3[style*="color: #FFFFFF"],
+h3[style*="color: #ffffff"] {
+  color: #000000 !important;
+}
+
+#recent-actions-module p,
+#content-related .module p,
+.module.recent-actions p,
+.module.dashboard-module-recent-actions p {
+  color: #333 !important;
+}
+
+/* Paginator */
+.paginator {
+  background-color: white !important;
+  border-color: var(--border-light) !important;
+}
+
+/* Login form */
+.login #content {
+  background-color: white !important;
+}
+
+/* Filter Column Overrides */
+#changelist-filter {
+  background-color: var(--light-gray) !important;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05) !important;
+  border: 1px solid var(--border-light) !important;
+}
+
+#changelist-filter h2 {
+  background-color: var(--light-gray) !important;
+  color: #333 !important;
+  font-weight: 600;
+  border-radius: 8px 8px 0 0;
+  padding: 10px 15px;
+}
+
+#changelist-filter a {
+  color: #333 !important;
+}
+
+#changelist-filter li.selected {
+  border-left: 5px solid var(--primary) !important;
+}
+
+#changelist-filter li.selected a {
+  color: var(--primary) !important;
+}
+
+/* Override any black elements */
+.dashboard .module table tr,
+.dashboard .module table td,
+#changelist table tbody tr,
+#changelist table tbody td {
+  background-color: transparent !important;
+} 

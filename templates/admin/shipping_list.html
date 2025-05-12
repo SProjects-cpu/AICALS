@@ -1,0 +1,648 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block extrastyle %}
+  {{ block.super }}
+  <link rel="stylesheet" type="text/css" href="{% static 'courier/css/admin.css' %}">
+  <style>
+    /* Modern styles matching the provided image */
+    body {
+      background-color: #f5f5f5;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    /* Main container */
+    .courier-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 15px;
+    }
+
+    /* Header styles */
+    .courier-header {
+      background-color: #87CEEB;
+      color: #000;
+      padding: 15px 20px;
+      margin-bottom: 20px;
+      text-align: center;
+      border-bottom: 1px solid #ccc;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .courier-header h1 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    /* Date display */
+    .reporting-date {
+      background-color: #87CEEB;
+      color: #000;
+      padding: 15px;
+      margin-bottom: 20px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      border-radius: 4px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    /* Stats boxes */
+    .stats-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .stat-box {
+      flex: 1;
+      min-width: 200px;
+      background-color: #fff;
+      border-radius: 4px;
+      padding: 15px;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .stat-box:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .stat-box.placed {
+      background-color: #e6f7ff;
+    }
+
+    .stat-box.picked {
+      background-color: #e6f7ff;
+    }
+
+    .stat-box.delivered {
+      background-color: #e6f7ff;
+    }
+
+    .stat-box.pending {
+      background-color: #e6f7ff;
+    }
+
+    .stat-title {
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    .stat-number {
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    /* Tables */
+    .table-container {
+      background-color: #fff;
+      border-radius: 4px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+
+    .table-header {
+      background-color: #87CEEB;
+      color: #000;
+      padding: 10px 15px;
+      font-weight: bold;
+      border-bottom: 1px solid #ddd;
+    }
+
+    table.courier-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    table.courier-table th {
+      background-color: #87CEEB;
+      color: #000;
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    table.courier-table td {
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+    }
+
+    table.courier-table tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    table.courier-table tr:hover {
+      background-color: #f0f0f0;
+    }
+
+    /* Status indicators */
+    .status-indicator {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin-right: 5px;
+    }
+
+    .status-pending {
+      background-color: #FFA500;
+    }
+
+    .status-in_transit {
+      background-color: #1E90FF;
+    }
+
+    .status-delivered {
+      background-color: #32CD32;
+    }
+
+    .status-returned {
+      background-color: #FF6347;
+    }
+
+    /* Summary section */
+    .summary-container {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .summary-box {
+      flex: 1;
+      background-color: #fff;
+      border-radius: 4px;
+      padding: 15px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .summary-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 15px;
+      padding-bottom: 5px;
+      border-bottom: 1px solid #eee;
+      color: #333;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px dashed #eee;
+    }
+
+    .summary-label {
+      font-weight: bold;
+      color: #555;
+    }
+
+    .summary-value {
+      font-weight: bold;
+    }
+
+    /* Search box */
+    .search-box {
+      display: flex;
+      margin-bottom: 20px;
+    }
+
+    .search-box input[type="text"] {
+      flex: 1;
+      padding: 10px 15px;
+      border: 1px solid #ddd;
+      border-radius: 4px 0 0 4px;
+      font-size: 14px;
+    }
+
+    .search-box button {
+      background-color: #87CEEB;
+      color: #000;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 0 4px 4px 0;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+
+    .search-box button:hover {
+      background-color: #5CACEE;
+    }
+
+    /* Buttons */
+    .courier-button {
+      display: inline-block;
+      background-color: #87CEEB;
+      color: #000;
+      padding: 8px 15px;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .courier-button:hover {
+      background-color: #5CACEE;
+      transform: translateY(-2px);
+    }
+
+    .courier-button.primary {
+      background-color: #FF7F50;
+      color: white;
+    }
+
+    .courier-button.primary:hover {
+      background-color: #FF6347;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-in {
+      animation: fadeIn 0.5s ease forwards;
+    }
+
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.3s; }
+    .delay-4 { animation-delay: 0.4s; }
+
+    /* Progress bars */
+    .progress-container {
+      width: 100%;
+      background-color: #f0f0f0;
+      border-radius: 10px;
+      margin: 5px 0;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 8px;
+      background: linear-gradient(to right, #87CEEB, #5CACEE);
+      border-radius: 10px;
+      transition: width 1s ease;
+    }
+
+    /* Dotted lines like in the image */
+    .dotted-line {
+      display: inline-block;
+      width: 100px;
+      height: 1px;
+      border-top: 2px dotted #aaa;
+      margin: 0 10px;
+      vertical-align: middle;
+    }
+  </style>
+{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+<a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
+&rsaquo; {% trans 'Shipping Management' %}
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="courier-container">
+  <!-- Header with title -->
+  <div class="courier-header">
+    <h1>COURIER</h1>
+    <div style="display: flex; gap: 15px;">
+      <a href="{% url 'admin:index' %}" class="courier-button">Home</a>
+      <a href="{% url 'admin:courier_order_changelist' %}" class="courier-button">Orders</a>
+      <a href="{% url 'admin_shipping_list' %}" class="courier-button">Shipping</a>
+      <a href="{% url 'admin:logout' %}" class="courier-button">Logout</a>
+    </div>
+  </div>
+
+  <script>
+    // JavaScript to enhance animations and interactivity
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialize progress bars with random widths for demonstration
+      const progressBars = document.querySelectorAll('.progress-bar');
+      progressBars.forEach(bar => {
+        const randomWidth = Math.floor(Math.random() * 100) + '%';
+        setTimeout(() => {
+          bar.style.width = randomWidth;
+        }, 300);
+      });
+
+      // Add hover effects to table rows
+      const tableRows = document.querySelectorAll('.courier-table tbody tr');
+      tableRows.forEach(row => {
+        row.addEventListener('mouseenter', function() {
+          this.style.transform = 'translateX(5px)';
+          this.style.transition = 'transform 0.3s ease';
+        });
+
+        row.addEventListener('mouseleave', function() {
+          this.style.transform = 'translateX(0)';
+        });
+      });
+
+      // Add click effect to buttons
+      const buttons = document.querySelectorAll('.courier-button');
+      buttons.forEach(button => {
+        button.addEventListener('click', function() {
+          this.style.transform = 'scale(0.95)';
+          setTimeout(() => {
+            this.style.transform = 'scale(1)';
+          }, 100);
+        });
+      });
+
+      // Add counter animation to stat numbers
+      const statNumbers = document.querySelectorAll('.stat-number');
+      statNumbers.forEach(stat => {
+        const finalValue = parseInt(stat.textContent);
+        let currentValue = 0;
+        const duration = 1000; // 1 second
+        const increment = finalValue / (duration / 16); // 60fps
+
+        function updateCounter() {
+          if (currentValue < finalValue) {
+            currentValue += increment;
+            if (currentValue > finalValue) currentValue = finalValue;
+            stat.textContent = Math.floor(currentValue);
+            requestAnimationFrame(updateCounter);
+          }
+        }
+
+        stat.textContent = '0';
+        setTimeout(() => {
+          requestAnimationFrame(updateCounter);
+        }, 300);
+      });
+    });
+  </script>
+
+  <!-- Reporting date section -->
+  <div class="reporting-date fade-in">
+    REPORTING DATE: {{ today|date:"Y-m-d" }}
+  </div>
+
+  <!-- Stats boxes section -->
+  <div class="stats-container">
+    <div class="stat-box placed fade-in delay-1">
+      <div class="stat-title">PLACED ORDERS</div>
+      <div class="stat-number">{{ pending_count }}</div>
+    </div>
+
+    <div class="stat-box picked fade-in delay-2">
+      <div class="stat-title">PICKED-UP ORDERS</div>
+      <div class="stat-number">{{ in_transit_count }}</div>
+    </div>
+
+    <div class="stat-box delivered fade-in delay-3">
+      <div class="stat-title">DELIVERED ORDERS</div>
+      <div class="stat-number">{{ delivered_count }}</div>
+    </div>
+  </div>
+
+  <!-- Search form -->
+  <form method="get" action="">
+    <div class="search-box fade-in delay-1">
+      <input type="text" name="q" value="{{ search_query }}" placeholder="{% trans 'Search by tracking number, carrier, or order ID' %}">
+      <button type="submit">{% trans 'Search' %}</button>
+    </div>
+  </form>
+
+  <!-- Placed orders table -->
+  <div class="table-container fade-in delay-2">
+    <div class="table-header">PLACED ORDERS: {{ pending_count }}</div>
+    <table class="courier-table">
+      <thead>
+        <tr>
+          <th>Order ID</th>
+          <th>Description</th>
+          <th>Time</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for shipping in shippings %}
+          {% if shipping.status == 'pending' %}
+          <tr>
+            <td>{{ shipping.order.order_id }}</td>
+            <td>The order has been placed</td>
+            <td>{{ shipping.shipping_date|date:"g:i a" }}</td>
+          </tr>
+          {% endif %}
+        {% empty %}
+          <tr>
+            <td colspan="3" style="text-align: center;">No placed orders found</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Picked-up orders table -->
+  <div class="table-container fade-in delay-3">
+    <div class="table-header">PICKED-UP ORDERS: {{ in_transit_count }}</div>
+    <table class="courier-table">
+      <thead>
+        <tr>
+          <th>Order ID</th>
+          <th>Description</th>
+          <th>Time</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for shipping in shippings %}
+          {% if shipping.status == 'in_transit' %}
+          <tr>
+            <td>{{ shipping.order.order_id }}</td>
+            <td>The order is in transit</td>
+            <td>{{ shipping.shipping_date|date:"g:i a" }}</td>
+          </tr>
+          {% endif %}
+        {% empty %}
+          <tr>
+            <td colspan="3" style="text-align: center;">No picked-up orders found</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Delivered orders table -->
+  <div class="table-container fade-in delay-4">
+    <div class="table-header">DELIVERED ORDERS: {{ delivered_count }}</div>
+    <table class="courier-table">
+      <thead>
+        <tr>
+          <th>Order ID</th>
+          <th>Description</th>
+          <th>Time</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for shipping in shippings %}
+          {% if shipping.status == 'delivered' %}
+          <tr>
+            <td>{{ shipping.order.order_id }}</td>
+            <td>The order has been delivered</td>
+            <td>{{ shipping.shipping_date|date:"g:i a" }}</td>
+          </tr>
+          {% endif %}
+        {% empty %}
+          <tr>
+            <td colspan="3" style="text-align: center;">No delivered orders found</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Reached orders section -->
+  <div class="table-container fade-in delay-2">
+    <div class="table-header">REACHED ORDERS: {{ returned_count }}</div>
+    <table class="courier-table">
+      <thead>
+        <tr>
+          <th>Order ID</th>
+          <th>Description</th>
+          <th>Time</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for shipping in shippings %}
+          {% if shipping.status == 'returned' %}
+          <tr>
+            <td>{{ shipping.order.order_id }}</td>
+            <td>The order has been returned</td>
+            <td>{{ shipping.shipping_date|date:"g:i a" }}</td>
+          </tr>
+          {% endif %}
+        {% empty %}
+          <tr>
+            <td colspan="3" style="text-align: center;">No returned orders found</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Overall summary section -->
+  <div class="summary-container">
+    <div class="summary-box fade-in delay-3">
+      <div class="summary-title">OVERALL</div>
+      <div class="summary-row">
+        <div class="summary-label">Orders</div>
+        <div class="summary-value">Total</div>
+      </div>
+      <div class="summary-row">
+        <div class="summary-label">Placed</div>
+        <div class="summary-value">
+          <div class="progress-container">
+            <div class="progress-bar" style="width: 0%;"></div>
+          </div>
+          {{ pending_count }}
+        </div>
+      </div>
+      <div class="summary-row">
+        <div class="summary-label">Picked-up</div>
+        <div class="summary-value">
+          <div class="progress-container">
+            <div class="progress-bar" style="width: 0%;"></div>
+          </div>
+          {{ in_transit_count }}
+        </div>
+      </div>
+      <div class="summary-row">
+        <div class="summary-label">Reached</div>
+        <div class="summary-value">
+          <div class="progress-container">
+            <div class="progress-bar" style="width: 0%;"></div>
+          </div>
+          {{ returned_count }}
+        </div>
+      </div>
+      <div class="summary-row">
+        <div class="summary-label">Delivered</div>
+        <div class="summary-value">
+          <div class="progress-container">
+            <div class="progress-bar" style="width: 0%;"></div>
+          </div>
+          {{ delivered_count }}
+        </div>
+      </div>
+      <div class="summary-row">
+        <div class="summary-label">Received(TK)</div>
+        <div class="summary-value">
+          <div class="progress-container">
+            <div class="progress-bar" style="width: 0%;"></div>
+          </div>
+          {{ total_count }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Action buttons -->
+  <div style="text-align: center; margin: 30px 0;">
+    <a href="{% url 'admin:courier_shipping_add' %}" class="courier-button primary fade-in delay-4">{% trans 'Add New Shipping' %}</a>
+    <a href="{% url 'admin:index' %}" class="courier-button fade-in delay-4">{% trans 'Back to Dashboard' %}</a>
+  </div>
+
+  <!-- All shipments table -->
+  <div class="table-container fade-in delay-4">
+    <div class="table-header">ALL SHIPMENTS</div>
+    <table class="courier-table">
+      <thead>
+        <tr>
+          <th>Shipping ID</th>
+          <th>Order ID</th>
+          <th>Tracking Number</th>
+          <th>Carrier</th>
+          <th>Status</th>
+          <th>Shipping Date</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for shipping in shippings %}
+        <tr>
+          <td>{{ shipping.shipping_id }}</td>
+          <td>
+            <a href="{% url 'admin:courier_order_change' shipping.order.pk %}">{{ shipping.order.order_id }}</a>
+          </td>
+          <td>{{ shipping.tracking_number }}</td>
+          <td>{{ shipping.carrier }}</td>
+          <td>
+            <span class="status-indicator status-{{ shipping.status }}"></span>
+            {{ shipping.get_status_display }}
+          </td>
+          <td>{{ shipping.shipping_date|date:"M d, Y g:i a" }}</td>
+          <td>
+            <a href="{% url 'admin:courier_shipping_change' shipping.pk %}" class="courier-button">{% trans 'Edit' %}</a>
+            <a href="{% url 'admin:courier_shipping_delete' shipping.pk %}" class="courier-button primary">{% trans 'Delete' %}</a>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="7" style="text-align: center; padding: 20px;">
+            <p>{% trans 'No shipping records found.' %}</p>
+            <a href="{% url 'admin:courier_shipping_add' %}" class="courier-button primary">{% trans 'Add Your First Shipping Record' %}</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

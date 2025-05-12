@@ -1,0 +1,134 @@
+/* Order History Table Improvements */
+.order-history-content {
+  width: 80%; /* Match the width with our main content */
+  margin: 2rem auto; /* Add top and bottom margins and center */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Same shadow as main content */
+  overflow: hidden; /* Keep children within rounded corners */
+}
+
+/* Order history title styling */
+.order-history-content .content1 {
+  background-color: #8cd8ff; /* Match with main tracking section */
+  padding: 1.5em 2em; /* Consistent padding */
+}
+
+/* Column width distribution */
+.history-column {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  min-width: 0; /* Allow flex items to shrink below their minimum content size */
+}
+
+.history-column-location {
+  width: 35%; /* More space for location which often has longer text */
+}
+
+.history-column-time {
+  width: 25%;
+}
+
+.history-column-status {
+  width: 25%;
+}
+
+.history-column-progress {
+  width: 15%;
+}
+
+/* Better handling of long text in badges */
+.history-badge {
+  display: inline-block;
+  white-space: normal; /* Allow text to wrap */
+  text-align: left;
+  word-break: break-word;
+  max-width: 100%;
+  padding: 0.5em 0.6em;
+  font-size: 0.85em;
+  font-weight: 700;
+  border-radius: 0.25rem;
+  background-color: #007bff;
+  color: black !important; /* Force black color with !important */
+}
+
+/* Ensure all text in the columns has proper contrast */
+.history-column, 
+.history-column span, 
+.order-history-row .history-badge {
+  color: black !important; /* Force black for all history text */
+}
+
+/* Table header styling */
+.history-header {
+  font-weight: bold;
+  color: white;
+}
+
+/* Add some spacing and styling to the order history table */
+.order-history-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 4px;
+  margin-bottom: 0; /* Remove bottom margin */
+}
+
+.order-history-row {
+  margin-bottom: 5px;
+  transition: background-color 0.2s;
+  border-left: none; /* Remove default border */
+  border-right: none; /* Remove default border */
+}
+
+.order-history-row:hover {
+  background-color: rgba(140, 216, 255, 0.1);
+}
+
+/* Add some subtle separation between rows */
+.order-history-row + .order-history-row {
+  border-top: 1px solid rgba(0,0,0,0.05);
+}
+
+/* Improved header row - Changed to dark background with white text */
+.order-history-row.text-black {
+  background-color: #444; /* Darker background to contrast with white text */
+  font-weight: 600;
+  color: white; /* White text color */
+}
+
+/* Add styling for any other text-black elements in order history */
+.order-history-content .text-black {
+  color: white !important; /* Override black text with white */
+}
+
+/* Ensure text in the list header stands out */
+.order-history-header {
+  background-color: #333; /* Even darker background for the header */
+  color: white;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .order-history-content {
+    width: 90%; /* Match with main content's responsive width */
+  }
+  
+  .history-column {
+    margin-bottom: 0.5rem;
+    width: 100% !important; /* Full width on mobile */
+  }
+}
+
+@media (max-width: 414px) {
+  .order-history-content {
+    width: 95%; /* Match with main content's responsive width */
+    margin: 1.5rem auto; /* Less margin on small screens */
+  }
+  
+  .order-history-content .content1 {
+    padding: 1em; /* Less padding on small screens */
+  }
+  
+  .order-history-content .content1 h2 {
+    font-size: 1.3rem; /* Smaller heading on mobile */
+  }
+} 

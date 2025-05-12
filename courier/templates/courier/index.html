@@ -1,0 +1,369 @@
+{% extends 'courier/basic.html' %}
+{% load static %}
+
+{% block title%} Home {% endblock %}
+{% block body %}
+
+    <!-- Custom styles -->
+    <style>
+        /* Removed custom .courier-image styles */
+    </style>
+
+    <!-- Hero Section -->
+    <section id="home" class="py-20 bg-gradient-to-b from-gray-100 to-white overflow-hidden">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center md:gap-12 lg:gap-16">
+                <div class="md:w-1/2 mb-10 md:mb-0" data-aos="fade-right" data-aos-delay="100">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-6 leading-tight animate__animated animate__fadeInUp">Streamlined <span class="text-orange-500">Courier</span> Management System</h1>
+                    <p class="text-lg text-gray-600 mb-8 animate__animated animate__fadeInUp animate__delay-1s">AiCL provides a comprehensive web-based platform for efficient courier services. Track shipments in real-time, manage orders with ease, and deliver exceptional customer experience.</p>
+                    <div class="mb-8 animate__animated animate__fadeInUp animate__delay-2s">
+                        <form method="post" {% if user.is_authenticated %}action="/tracker/" {% else %} action="/login/" {% endif %} onsubmit="return validateTrackingForm()" class="tracking-form-container">
+                            {% csrf_token %}
+                            <input type="hidden" name="itemJson" id="itemJson">
+                            <div class="tracking-form-group">
+                                <input type="text" class="tracking-input" id="orderId" name="orderId" placeholder="Enter your tracking number" required>
+                                <button type="submit" class="track-button primary-btn">Track Now</button>
+                            </div>
+                            <div id="trackingError" class="tracking-error" style="display: none;">Please enter a valid tracking number</div>
+                        </form>
+                    </div>
+                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 animate__animated animate__fadeInUp animate__delay-3s">
+                        <a href="#services-section" class="primary-btn text-center animate__animated animate__pulse animate__infinite animate__slower">Explore Services</a>
+                        <a href="#about-section" class="secondary-btn text-center">About Us</a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 flex justify-center md:justify-end" data-aos="fade-left" data-aos-delay="200">
+                    <div class="relative animate__animated animate__fadeInRight mx-auto md:w-11/12 lg:w-10/12">
+                        <div class="absolute -top-10 -right-10 w-40 h-40 bg-orange-400 rounded-full opacity-20 animate__animated animate__pulse animate__infinite animate__slow"></div>
+                        <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-gray-400 rounded-full opacity-20 animate__animated animate__pulse animate__infinite animate__slow" style="animation-delay: 1s;"></div>
+                        <img src="{% static 'courier/images/cargo_delivery_big.jpg' %}" alt="AICALS COURIERS Management System" class="relative z-10 max-w-full h-auto rounded-lg shadow-2xl transform transition-transform duration-500 hover:scale-105" loading="lazy">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services-section" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div data-aos="fade-up">
+                <h2 class="text-3xl font-bold text-center section-title">Our Services</h2>
+                <p class="text-center text-gray-600 max-w-3xl mx-auto mb-12">Our courier management system offers comprehensive services designed to optimize your logistics operations and enhance customer satisfaction.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="feature-card p-6 bg-white" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mb-4 transform transition-transform duration-500 hover:rotate-12">
+                        <i class="flaticon-ferry text-orange-500 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Sea Freight</h3>
+                    <p class="text-gray-600">Right place, right time and cost efficient. Extensive equipment and consolidation options.</p>
+                </div>
+
+                <div class="feature-card p-6 bg-white" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mb-4 transform transition-transform duration-500 hover:rotate-12">
+                        <i class="flaticon-airplane text-orange-500 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Air Freight</h3>
+                    <p class="text-gray-600">Reliable and hassle free. Broad range of delivery speeds and service options.</p>
+                </div>
+
+                <div class="feature-card p-6 bg-white" data-aos="fade-up" data-aos-delay="300">
+                    <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mb-4 transform transition-transform duration-500 hover:rotate-12">
+                        <i class="flaticon-box text-orange-500 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Package Forwarding</h3>
+                    <p class="text-gray-600">Reliable and hassle free. Broad range of delivery speeds and service options.</p>
+                </div>
+
+                <div class="feature-card p-6 bg-white" data-aos="fade-up" data-aos-delay="400">
+                    <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mb-4 transform transition-transform duration-500 hover:rotate-12">
+                        <i class="flaticon-lorry text-orange-500 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Trucking</h3>
+                    <p class="text-gray-600">Right place, right time and cost efficient services for all your trucking needs.</p>
+                </div>
+
+                <div class="feature-card p-6 bg-white" data-aos="fade-up" data-aos-delay="500">
+                    <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mb-4 transform transition-transform duration-500 hover:rotate-12">
+                        <i class="flaticon-warehouse text-orange-500 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Warehouse</h3>
+                    <p class="text-gray-600">Right place and cost efficient. Extensive equipment and consolidation options.</p>
+                </div>
+
+                <div class="feature-card p-6 bg-white" data-aos="fade-up" data-aos-delay="600">
+                    <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mb-4 transform transition-transform duration-500 hover:rotate-12">
+                        <i class="flaticon-add text-orange-500 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Delivery</h3>
+                    <p class="text-gray-600">Right place, right time and cost efficient delivery options for all your needs.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section id="about-section" class="py-20 bg-gray-100">
+        <div class="container mx-auto px-4">
+            <div data-aos="fade-up">
+                <h2 class="text-3xl font-bold text-center section-title">About Us</h2>
+                <p class="text-center text-gray-600 max-w-3xl mx-auto mb-12">PROVIDING THE HIGHEST QUALITY SERVICE 24 HOURS A DAY.</p>
+            </div>
+
+            <div class="max-w-4xl mx-auto mb-12">
+                <div class="bg-white p-8 rounded-lg shadow-md transform transition-transform duration-500 hover:scale-102" data-aos="zoom-in">
+                    <figure class="block-img-video-1 mb-8 mx-auto md:mx-8 lg:mx-12" data-aos="fade">
+                        <a href="https://vimeo.com/45830194" data-fancybox data-ratio="2" class="block relative rounded-lg overflow-hidden">
+                            <span class="icon absolute inset-0 flex items-center justify-center z-10">
+                                <span class="w-16 h-16 bg-orange-500 text-white rounded-full flex items-center justify-center animate__animated animate__pulse animate__infinite">
+                                    <i class="icon-play"></i>
+                                </span>
+                            </span>
+                            <img src="{% static 'courier/images/cargo_delivery_big.jpg' %}" alt="Image" class="img-fluid w-full rounded-lg transform transition-transform duration-700 hover:scale-105 shadow-xl" style="max-width: 90%; margin-left: auto; margin-right: auto;" loading="lazy">
+                        </a>
+                    </figure>
+
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                        <div class="p-4 transform transition-transform duration-500 hover:scale-110" data-aos="fade-up" data-aos-delay="">
+                            <div class="block-counter-1">
+                                <span class="text-4xl font-bold text-orange-500"><span data-number="5">0</span>+</span>
+                                <span class="block text-gray-600 mt-2">Years of Experience</span>
+                            </div>
+                        </div>
+                        <div class="p-4 transform transition-transform duration-500 hover:scale-110" data-aos="fade-up" data-aos-delay="100">
+                            <div class="block-counter-1">
+                                <span class="text-4xl font-bold text-orange-500"><span data-number="300">0</span>+</span>
+                                <span class="block text-gray-600 mt-2">Companies</span>
+                            </div>
+                        </div>
+                        <div class="p-4 transform transition-transform duration-500 hover:scale-110" data-aos="fade-up" data-aos-delay="200">
+                            <div class="block-counter-1">
+                                <span class="text-4xl font-bold text-orange-500"><span data-number="108">0</span>+</span>
+                                <span class="block text-gray-600 mt-2">Covered Countries</span>
+                            </div>
+                        </div>
+                        <div class="p-4 transform transition-transform duration-500 hover:scale-110" data-aos="fade-up" data-aos-delay="300">
+                            <div class="block-counter-1">
+                                <span class="text-4xl font-bold text-orange-500"><span data-number="1500">0</span>+</span>
+                                <span class="block text-gray-600 mt-2">Couriers</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team-section" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div data-aos="fade-up">
+                <h2 class="text-3xl font-bold text-center section-title">Our Staff</h2>
+                <p class="text-center text-gray-600 max-w-3xl mx-auto mb-12">Working with our team has been a wonderful and seamless experience for our clients. The whole staff is highly competent, friendly and professional.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 mx-auto max-w-4xl">
+                <div class="testimonial-card text-center" data-aos="fade-up" data-aos-delay="100">
+                    <figure class="mb-4">
+                        <div class="w-24 h-24 mx-auto rounded-full mb-4 border-4 border-orange-500 overflow-hidden transform transition-transform duration-500 hover:scale-110">
+                            <!-- Image removed -->
+                        </div>
+                    </figure>
+                    <h3 class="text-xl font-bold text-gray-800">Dashrath Jadav</h3>
+                    <span class="block text-gray-500 text-sm uppercase tracking-wider mb-3">Owner</span>
+                    <p class="text-gray-600 mb-4">Founder and Owner of AiCL with 15+ years of experience in logistics and courier services. Providing leadership and strategic vision for the company.</p>
+                    <div class="flex justify-center space-x-3">
+                        <a href="tel:+918511245404" class="flex items-center text-gray-700 hover:text-orange-500 transition duration-300 mb-2">
+                            <i class="fas fa-phone-alt mr-2"></i> +91 85112 45404
+                        </a>
+                    </div>
+                    <div class="flex justify-center space-x-3">
+                        <a href="#" class="w-8 h-8 bg-gray-200 hover:bg-orange-500 text-gray-700 hover:text-white rounded-full flex items-center justify-center transition duration-300" aria-label="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-8 h-8 bg-gray-200 hover:bg-orange-500 text-gray-700 hover:text-white rounded-full flex items-center justify-center transition duration-300" aria-label="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-8 h-8 bg-gray-200 hover:bg-orange-500 text-gray-700 hover:text-white rounded-full flex items-center justify-center transition duration-300" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="testimonial-card text-center" data-aos="fade-up" data-aos-delay="200">
+                    <figure class="mb-4">
+                        <div class="w-24 h-24 mx-auto rounded-full mb-4 border-4 border-orange-500 overflow-hidden transform transition-transform duration-500 hover:scale-110">
+                            <!-- Image removed -->
+                        </div>
+                    </figure>
+                    <h3 class="text-xl font-bold text-gray-800">Sanjay Khuman</h3>
+                    <span class="block text-gray-500 text-sm uppercase tracking-wider mb-3">Distributor</span>
+                    <p class="text-gray-600 mb-4">Regional Distribution Manager with expertise in supply chain management. Responsible for efficient distribution of packages and maintaining quality service.</p>
+                    <div class="flex justify-center space-x-3">
+                        <a href="tel:+916353253396" class="flex items-center text-gray-700 hover:text-orange-500 transition duration-300 mb-2">
+                            <i class="fas fa-phone-alt mr-2"></i> +91 6353253396
+                        </a>
+                    </div>
+                    <div class="flex justify-center space-x-3">
+                        <a href="#" class="w-8 h-8 bg-gray-200 hover:bg-orange-500 text-gray-700 hover:text-white rounded-full flex items-center justify-center transition duration-300" aria-label="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-8 h-8 bg-gray-200 hover:bg-orange-500 text-gray-700 hover:text-white rounded-full flex items-center justify-center transition duration-300" aria-label="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-8 h-8 bg-gray-200 hover:bg-orange-500 text-gray-700 hover:text-white rounded-full flex items-center justify-center transition duration-300" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 bg-gradient-to-r from-gray-700 to-gray-900 text-white">
+        <div class="container mx-auto px-4 text-center" data-aos="fade-up">
+            <h2 class="text-3xl font-bold mb-6">Ready to Transform Your Courier Operations?</h2>
+            <p class="text-xl mb-8 max-w-3xl mx-auto">Join thousands of businesses that are streamlining their logistics with AiCL COURIERS Management System.</p>
+            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                <a href="/contact/" class="primary-btn text-lg px-8 py-4 transform transition-transform duration-300 hover:scale-105">Contact Us</a>
+                <a href="/order/" class="bg-white text-gray-800 hover:bg-gray-100 text-lg font-bold px-8 py-4 rounded-md transition-all transform duration-300 hover:scale-105">Place Order</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Keep the rest of the original content -->
+    <!-- ... existing code ... -->
+
+{% endblock %}
+
+{% block js %}
+<script>
+    function validateTrackingForm() {
+        const orderId = document.getElementById('orderId').value;
+        const errorElement = document.getElementById('trackingError');
+
+        if (!orderId || orderId.trim() === '') {
+            errorElement.style.display = 'block';
+            errorElement.textContent = 'Please enter a valid tracking number';
+
+            // Add shake animation to the input
+            const inputElement = document.getElementById('orderId');
+            inputElement.classList.add('animate__animated', 'animate__shakeX');
+
+            // Remove animation classes after animation completes
+            setTimeout(() => {
+                inputElement.classList.remove('animate__animated', 'animate__shakeX');
+            }, 1000);
+
+            return false;
+        }
+
+        // If tracking number format validation is needed, add it here
+        // For example, if tracking numbers should be alphanumeric and at least 6 characters:
+        if (!/^[a-zA-Z0-9]{6,}$/.test(orderId)) {
+            errorElement.style.display = 'block';
+            errorElement.textContent = 'Tracking number should be at least 6 alphanumeric characters';
+            return false;
+        }
+
+        errorElement.style.display = 'none';
+
+        // Add a loading state to the button
+        const button = document.querySelector('.track-button');
+        const originalText = button.innerHTML;
+        button.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Tracking...';
+        button.disabled = true;
+
+        // Restore button after 2 seconds if the form is not submitted
+        // (this will be overridden by the actual form submission)
+        setTimeout(() => {
+            if (button.innerHTML.includes('Tracking')) {
+                button.innerHTML = originalText;
+                button.disabled = false;
+            }
+        }, 2000);
+
+        return true;
+    }
+
+    // Initialize counters animation
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize AOS animation library
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true
+        });
+
+        // Enhanced tracking form interactions
+        const trackingInput = document.getElementById('orderId');
+        const trackingForm = document.querySelector('.tracking-form-container');
+
+        if (trackingInput && trackingForm) {
+            // Focus animation
+            trackingInput.addEventListener('focus', function() {
+                trackingForm.classList.add('scale-in');
+                trackingForm.style.boxShadow = '0 15px 40px rgba(0, 0, 0, 0.15), 0 0 0 3px rgba(255, 140, 0, 0.2)';
+            });
+
+            // Blur animation
+            trackingInput.addEventListener('blur', function() {
+                trackingForm.classList.remove('scale-in');
+                trackingForm.style.boxShadow = '';
+            });
+
+            // Auto-format tracking number as user types (optional)
+            trackingInput.addEventListener('input', function() {
+                // Convert to uppercase for better readability
+                this.value = this.value.toUpperCase();
+
+                // Remove error message if user starts typing again
+                if (this.value.length > 0) {
+                    document.getElementById('trackingError').style.display = 'none';
+                }
+            });
+
+            // Add placeholder animation
+            trackingInput.addEventListener('focus', function() {
+                this.setAttribute('placeholder', 'e.g., ABC123456789');
+            });
+
+            trackingInput.addEventListener('blur', function() {
+                this.setAttribute('placeholder', 'Enter your tracking number');
+            });
+        }
+
+        // Initialize counter animations
+        const counters = document.querySelectorAll('[data-number]');
+        counters.forEach(counter => {
+            const target = parseInt(counter.getAttribute('data-number'));
+            let count = 0;
+            const interval = 2000 / target; // Adjust speed based on target number
+            const timer = setInterval(() => {
+                count++;
+                counter.textContent = count;
+                if (count >= target) {
+                    clearInterval(timer);
+                }
+            }, interval);
+        });
+
+        // Add keyboard shortcut (Ctrl+T or Cmd+T) to focus on tracking input
+        document.addEventListener('keydown', function(e) {
+            if ((e.ctrlKey || e.metaKey) && e.key === 't') {
+                e.preventDefault(); // Prevent browser's new tab shortcut
+                if (trackingInput) {
+                    trackingInput.focus();
+                }
+            }
+        });
+    });
+</script>
+{% endblock %}
+
+
+
+
+

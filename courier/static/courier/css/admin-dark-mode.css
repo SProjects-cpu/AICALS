@@ -1,0 +1,95 @@
+/* Admin Panel Light Mode (Previously Dark Mode)
+ * This file now implements light backgrounds instead of dark ones
+ * Note: All hover effects are now managed in admin-hover-effects.css
+ */
+
+:root {
+  --body-bg: #fafafa !important;
+  --card-bg: #ffffff !important;
+  --border-color: #e5e7eb !important;
+  --secondary-dark: #f5f5f5 !important;
+}
+
+/* Main background */
+body {
+  background-color: var(--body-bg) !important;
+}
+
+/* Content wrapper */
+#content-wrapper {
+  background-color: var(--card-bg) !important;
+}
+
+/* Sidebar */
+#custom-sidebar {
+  background-color: var(--card-bg) !important;
+}
+
+/* Modules */
+.module {
+  background-color: var(--card-bg) !important;
+  border: 1px solid var(--border-color) !important;
+}
+
+/* Form rows */
+.form-row {
+  border-bottom: 1px solid var(--border-color) !important;
+}
+
+/* Tables */
+#changelist table,
+.dashboard .module table {
+  background-color: var(--card-bg) !important;
+}
+
+/* Table headers */
+thead th {
+  background-color: var(--secondary-dark) !important;
+}
+
+/* Table rows */
+#changelist table tbody tr:nth-child(odd),
+.dashboard .module table tr:nth-child(odd) {
+  background-color: #f9f9f9 !important;
+}
+
+/* Form inputs */
+input, textarea, select, .select2-container--admin-autocomplete .select2-selection {
+  background-color: #ffffff !important;
+  border-color: var(--border-color) !important;
+  color: #333333 !important;
+}
+
+/* Sidebar link hover states */
+#custom-sidebar li a:hover {
+  background-color: #f5f5f5 !important;
+  border-radius: 6px;
+}
+
+/* Paginator */
+.paginator {
+  background-color: var(--card-bg) !important;
+  border-color: var(--border-color) !important;
+}
+
+/* Login form */
+.login #content {
+  background-color: var(--card-bg) !important;
+}
+
+/* Recent actions module */
+#recent-actions-module h2,
+#content-related .module h2 {
+  background-color: var(--secondary-dark) !important;
+  color: #333 !important;
+}
+
+#recent-actions-module h3,
+#content-related .module h3 {
+  color: #000000 !important;
+}
+
+#recent-actions-module p,
+#content-related .module p {
+  color: #000000 !important;
+} 

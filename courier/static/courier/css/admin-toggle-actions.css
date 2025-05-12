@@ -1,0 +1,78 @@
+/* Admin Toggle Actions Button Styles */
+
+/* Increase width of Recent Actions module */
+#recent-actions-module {
+  width: 100%; /* Full width within its container */
+  min-width: 500px; /* Minimum width - increase as needed */
+  max-width: 800px; /* Maximum width to prevent excessive stretching */
+  margin: 0 auto; /* Center if smaller than parent */
+}
+
+/* Header with button */
+#recent-actions-module h2 {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+}
+
+/* Adjust the buttons container styling */
+#recent-actions-module .buttons-container {
+  display: flex;
+  gap: 10px; /* Space between buttons */
+  flex-wrap: nowrap; /* Prevent wrapping on smaller screens */
+  margin-left: 20px; /* Add more space between title and buttons */
+}
+
+/* Toggle button styles */
+.toggle-actions-btn {
+  background-color: #FFA500;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-left: 10px;
+  z-index: 10;
+  position: relative;
+}
+
+.toggle-actions-btn:hover {
+  background-color: #e69500;
+  transform: translateY(-2px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.toggle-actions-btn:active {
+  transform: translateY(0);
+}
+
+/* Actions content visibility */
+.actions-content {
+  display: none !important;
+  animation: fadeIn 0.3s ease;
+  width: 100%;
+  padding: 10px 15px; /* Add some padding for readability */
+}
+
+.actions-content.show {
+  display: block !important;
+}
+
+/* Fade in animation */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  #recent-actions-module {
+    min-width: 100%; /* On smaller screens, use full width */
+  }
+  
+  #recent-actions-module .buttons-container {
+    flex-wrap: wrap; /* Allow wrapping on very small screens */
+  }
+} 

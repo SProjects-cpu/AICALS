@@ -1,0 +1,49 @@
+{% load i18n %}
+<nav class="sticky" id="nav-sidebar">
+  {% if available_apps %}
+    <div class="app-filter">
+      <div class="app-filter-toggle">
+        <button type="button" class="app-filter-button" aria-haspopup="true" aria-expanded="false">
+          <span class="app-filter-icon"></span>
+          {% trans 'Filter navigation items' %}
+        </button>
+      </div>
+      <div class="app-filter-content">
+        <div class="app-filter-content-inner">
+        {% for app in available_apps %}
+          <div class="app-filter-item">
+            <input type="checkbox" name="app_{{ app.app_label|lower }}" id="app_{{ app.app_label|lower }}"{% if app.allowed %} checked{% endif %}>
+            <label for="app_{{ app.app_label|lower }}">{{ app.name }}</label>
+          </div>
+        {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <div class="app-list">
+      {% for app in available_apps %}
+        <div class="app{% if app.app_url in current_url %} current-app{% endif %}" data-app-label="{{ app.app_label }}">
+          <a class="section" href="{{ app.app_url }}">{{ app.name }}</a>
+          <ul>
+            {% for model in app.models %}
+              <li class="model{% if model.admin_url in current_url %} current-model{% endif %}">
+                {% if model.admin_url %}
+                  <a href="{{ model.admin_url }}"{% if model.description %} title="{{ model.description }}"{% endif %}>{{ model.name }}</a>
+                {% else %}
+                  <span>{{ model.name }}</span>
+                {% endif %}
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="permission-warning">
+      <p>{% trans "You don't have permission to view or edit anything." %}</p>
+    </div>
+  {% endif %}
+  
+  {% block sidebar_content %}
+  {% endblock %}
+</nav> 

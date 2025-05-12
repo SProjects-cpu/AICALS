@@ -1,0 +1,461 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block extrastyle %}{{ block.super }}
+<style type="text/css">
+/* Center the login box and make it responsive */
+.login #container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  background: linear-gradient(135deg, #3a1c71 0%, #d76d77 50%, #ffaf7b 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Create animated background elements */
+.login #container:before,
+.login #container:after {
+  content: '';
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  animation: float 15s infinite alternate ease-in-out;
+}
+
+.login #container:before {
+  top: -100px;
+  left: -100px;
+  animation-delay: 0s;
+}
+
+.login #container:after {
+  bottom: -100px;
+  right: -100px;
+  width: 400px;
+  height: 400px;
+  animation-delay: -5s;
+}
+
+@keyframes float {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(50px, 30px) scale(1.1); }
+  100% { transform: translate(10px, 60px) scale(0.9); }
+}
+
+/* Hide the navigation sidebar completely */
+.login #nav-sidebar,
+body.login nav#nav-sidebar,
+nav#nav-sidebar {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
+  position: absolute !important;
+  pointer-events: none !important;
+}
+
+.login #content {
+  width: 100%;
+  max-width: 480px;
+  min-width: 350px; /* Ensure minimum width */
+  background-color: #ffffff;
+  border-radius: 1.5rem;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2), 0 10px 25px rgba(0, 0, 0, 0.1);
+  padding: 3rem;
+  animation: fadeInUp 0.8s ease;
+  position: relative;
+  overflow: hidden;
+  z-index: 10;
+}
+
+.login #content:before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+  z-index: -1;
+  opacity: 0.8;
+  animation: shimmer 10s infinite linear;
+}
+
+@keyframes shimmer {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes loginFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.login-logo {
+  text-align: center;
+  margin-bottom: 3rem;
+  position: relative;
+  animation: loginFadeIn 0.6s ease 0.2s both;
+}
+
+.login-logo:after {
+  content: '';
+  position: absolute;
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(to right, #ff9966, #ff5e62);
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 3px;
+}
+
+.login-logo .screenshot-logo {
+  width: 110px;
+  height: 110px;
+  margin: 0 auto 1.5rem;
+  display: block;
+  object-fit: scale-down;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.95);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  background: white;
+  position: relative;
+  transition: all 0.4s ease;
+  box-sizing: border-box;
+}
+
+.login-logo .screenshot-logo:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(255,105,0,0.3) 0%, rgba(255,255,255,0.1) 100%);
+  opacity: 0;
+  z-index: 2;
+  transition: opacity 0.4s ease;
+}
+
+.login-logo .screenshot-logo:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 20px 40px rgba(255, 105, 0, 0.3);
+}
+
+.login-logo .screenshot-logo:hover:before {
+  opacity: 1;
+}
+
+.login-logo .brand-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
+
+.login-logo h2 {
+  font-size: 2rem;
+  color: #333;
+  margin: 0;
+  font-weight: 700;
+  text-align: center;
+  letter-spacing: 0.5px;
+  word-wrap: break-word; /* Prevent title cutoff */
+  white-space: normal; /* Allow wrapping */
+  width: 100%; /* Ensure full width is used */
+}
+
+.login-logo p {
+  color: #666;
+  margin: 12px 0 0;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+/* Form styles */
+.form-row {
+  margin-bottom: 2rem;
+  position: relative;
+  animation: loginFadeIn 0.5s ease both;
+}
+
+.form-row:nth-child(1) {
+  animation-delay: 0.3s;
+}
+
+.form-row:nth-child(2) {
+  animation-delay: 0.4s;
+}
+
+.form-row label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+  color: #444;
+  font-size: 0.95rem;
+  transition: all 0.3s;
+  letter-spacing: 0.3px;
+}
+
+.form-row input {
+  width: 100%;
+  padding: 1.1rem 1.2rem;
+  border: 1.5px solid #e5e5e5;
+  border-radius: 0.8rem;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background-color: #f9f9f9;
+  box-sizing: border-box; /* Ensure padding doesn't expand width */
+}
+
+.form-row input:focus {
+  border-color: #ff7e5f;
+  box-shadow: 0 0 0 4px rgba(255, 126, 95, 0.15);
+  outline: none;
+  background-color: #fff;
+  transform: translateY(-2px);
+}
+
+.submit-row {
+  text-align: center;
+  margin-top: 2.5rem;
+  animation: loginFadeIn 0.5s ease 0.5s both;
+}
+
+.submit-row input {
+  background: linear-gradient(45deg, #ff9966, #ff5e62);
+  color: white;
+  border: none;
+  padding: 1.1rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 0.8rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  letter-spacing: 0.5px;
+  box-shadow: 0 8px 25px rgba(255, 94, 98, 0.25);
+  position: relative;
+  overflow: hidden;
+}
+
+.submit-row input:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0));
+  transform: translateX(-100%) skewX(-15deg);
+  transition: all 0.5s ease;
+}
+
+.submit-row input:hover {
+  background: linear-gradient(45deg, #ff8a5c, #ff4b54);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(255, 94, 98, 0.35);
+}
+
+.submit-row input:active {
+  transform: translateY(-1px);
+}
+
+.password-reset-link {
+  text-align: center;
+  margin: 2rem 0 0.5rem;
+  animation: loginFadeIn 0.5s ease 0.6s both;
+}
+
+.password-reset-link a {
+  color: #ff7e5f;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.password-reset-link a:hover {
+  color: #ff5e62;
+  text-decoration: underline;
+}
+
+.errornote {
+  background-color: #fff0f0;
+  color: #e53935;
+  padding: 1.2rem;
+  border-radius: 0.8rem;
+  margin-bottom: 2rem;
+  font-weight: 500;
+  text-align: center;
+  border-left: 4px solid #e53935;
+  box-shadow: 0 4px 15px rgba(229, 57, 53, 0.15);
+  animation: shake 0.6s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+@keyframes shake {
+  10%, 90% { transform: translate3d(-1px, 0, 0); }
+  20%, 80% { transform: translate3d(2px, 0, 0); }
+  30%, 50%, 70% { transform: translate3d(-3px, 0, 0); }
+  40%, 60% { transform: translate3d(3px, 0, 0); }
+}
+
+/* Mobile styling improvements */
+@media (max-width: 576px) {
+  .login #content {
+    width: 85%;
+    min-width: 280px;
+    max-width: 100%;
+    padding: 2rem 1.5rem;
+    margin: 0 auto;
+    border-radius: 1.2rem;
+  }
+  
+  .login-logo .screenshot-logo {
+    width: 90px;
+    height: 90px;
+    padding: 5px;
+  }
+  
+  .login-logo h2 {
+    font-size: 1.6rem;
+  }
+  
+  .form-row {
+    margin-bottom: 1.5rem;
+  }
+  
+  .form-row input {
+    padding: 0.9rem 1rem;
+  }
+  
+  .submit-row input {
+    padding: 0.9rem 1.5rem;
+    font-size: 1rem;
+  }
+}
+
+/* Fix for mobile in landscape orientation */
+@media (max-height: 600px) and (orientation: landscape) {
+  .login #container {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    min-height: 100%;
+  }
+  
+  .login #content {
+    padding: 1.5rem;
+  }
+  
+  .login-logo {
+    margin-bottom: 1.5rem;
+  }
+  
+  .login-logo .screenshot-logo {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 1rem;
+    padding: 4px;
+  }
+}
+
+/* Hide other areas that might contain nav-sidebar */
+body.login aside.main {
+  display: none !important;
+}
+</style>
+{% endblock %}
+
+{% block bodyclass %}{{ block.super }} login{% endblock %}
+
+{% block usertools %}{% endblock %}
+
+{% block nav-global %}{% endblock %}
+
+{% block content_title %}{% endblock %}
+
+{% block breadcrumbs %}{% endblock %}
+
+{% block content %}
+{% if form.errors and not form.non_field_errors %}
+<p class="errornote">
+{% if form.errors.items|length == 1 %}{% trans "Please correct the error below." %}{% else %}{% trans "Please correct the errors below." %}{% endif %}
+</p>
+{% endif %}
+
+{% if form.non_field_errors %}
+{% for error in form.non_field_errors %}
+<p class="errornote">
+    {{ error }}
+</p>
+{% endfor %}
+{% endif %}
+
+<div id="content-main">
+  <div class="login-logo">
+    <!-- Update to use the new logo -->
+    <img src="{% static 'courier/images/new_logo.png' %}" alt="Courier Management Logo" class="screenshot-logo">
+    <h2>Courier Management</h2>
+    <p>Welcome back! Please sign in to your account</p>
+  </div>
+
+  {% if user.is_authenticated %}
+  <p class="errornote">
+  {% blocktrans trimmed %}
+      You are authenticated as {{ username }}, but are not authorized to
+      access this page. Would you like to login to a different account?
+  {% endblocktrans %}
+  </p>
+  {% endif %}
+
+  <form action="{{ app_path }}" method="post" id="login-form">
+    {% csrf_token %}
+    <div class="form-row">
+      {{ form.username.errors }}
+      {{ form.username.label_tag }} {{ form.username }}
+    </div>
+    <div class="form-row">
+      {{ form.password.errors }}
+      {{ form.password.label_tag }} {{ form.password }}
+      <input type="hidden" name="next" value="{{ next }}">
+    </div>
+    {% url 'admin_password_reset' as password_reset_url %}
+    {% if password_reset_url %}
+    <div class="password-reset-link">
+      <a href="{{ password_reset_url }}">{% trans 'Forgotten your password or username?' %}</a>
+    </div>
+    {% endif %}
+    <div class="submit-row">
+      <input type="submit" value="{% trans 'Sign In' %}">
+    </div>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,159 @@
+{% extends 'admin/base_site.html' %}
+
+{% block title %}Order #{{ order.order_id }} Updates{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <a href="{% url 'admin:index' %}">Home</a> &rsaquo; 
+    <a href="{% url 'check_order_updates' %}">Order Updates Utility</a> &rsaquo;
+    Order #{{ order.order_id }}
+</div>
+{% endblock %}
+
+{% block content %}
+<div id="content-main">
+    <h1>Order #{{ order.order_id }} Details</h1>
+    
+    <!-- Display messages -->
+    {% if messages %}
+    <div class="messagelist">
+        {% for message in messages %}
+            <div{% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    
+    <div class="module">
+        <h2>Order Information</h2>
+        <table>
+            <tr>
+                <th>Sender:</th>
+                <td>{{ order.sender_name }} ({{ order.sender_phone }})</td>
+            </tr>
+            <tr>
+                <th>Sender Address:</th>
+                <td>{{ order.sender_address }}</td>
+            </tr>
+            <tr>
+                <th>Receiver:</th>
+                <td>{{ order.receiver_name }} ({{ order.receiver_phone }})</td>
+            </tr>
+            <tr>
+                <th>Receiver Address:</th>
+                <td>{{ order.receiver_address }}</td>
+            </tr>
+            <tr>
+                <th>Product:</th>
+                <td>{{ order.product_name }}</td>
+            </tr>
+            <tr>
+                <th>Order Date:</th>
+                <td>{{ order.dateTime }}</td>
+            </tr>
+        </table>
+    </div>
+    
+    <div class="module">
+        <h2>Shipping Information</h2>
+        {% if shippings %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Tracking Number</th>
+                    <th>Carrier</th>
+                    <th>Status</th>
+                    <th>Ship Date</th>
+                    <th>Estimated Delivery</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for shipping in shippings %}
+                <tr>
+                    <td>{{ shipping.tracking_number }}</td>
+                    <td>{{ shipping.carrier }}</td>
+                    <td>{{ shipping.get_status_display }}</td>
+                    <td>{{ shipping.shipping_date }}</td>
+                    <td>{{ shipping.estimated_delivery }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>No shipping records found for this order.</p>
+        {% endif %}
+    </div>
+    
+    <div class="module">
+        <h2>Order Updates History</h2>
+        {% if updates %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Date & Time</th>
+                    <th>Status</th>
+                    <th>Location</th>
+                    <th>Progress</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for update in updates %}
+                <tr>
+                    <td>{{ update.time }}</td>
+                    <td>{{ update.status }}</td>
+                    <td>{{ update.location }}</td>
+                    <td>{{ update.progress }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="submit-row" style="margin-top: 10px;">
+            <a href="{% url 'clear_admin_actions_for_order' order.order_id %}" 
+               onclick="return confirm('Are you sure you want to clear all updates for this order? This will reset to the initial state.')"
+               class="button" style="background-color: #dc3545; color: white;">
+                Clear All Updates for This Order
+            </a>
+        </div>
+        {% else %}
+        <p>No update records found for this order.</p>
+        <a href="{% url 'check_order_updates' order.order_id %}?fix=1" 
+           class="button" style="background-color: #28a745; color: white;">
+            Create Default Update
+        </a>
+        {% endif %}
+    </div>
+    
+    <div class="module">
+        <h2>Add New Update</h2>
+        <form method="post" action="{% url 'add_order_update' %}">
+            {% csrf_token %}
+            <input type="hidden" name="order_id" value="{{ order.order_id }}">
+            
+            <div class="form-row">
+                <label for="id_status">Status:</label>
+                <select name="status" id="id_status">
+                    <option value="Placed Order">Placed Order</option>
+                    <option value="Confirmed Order">Confirmed Order</option>
+                    <option value="Picked-up">Picked-up</option>
+                    <option value="Dispatched Product">Dispatched Product</option>
+                    <option value="Reached Product">Reached Product</option>
+                    <option value="Delivered Product">Delivered Product</option>
+                </select>
+            </div>
+            
+            <div class="form-row">
+                <label for="id_location">Location:</label>
+                <input type="text" name="location" id="id_location" value="{{ order.receiver_address }}">
+            </div>
+            
+            <div class="form-row">
+                <label for="id_progress">Progress:</label>
+                <textarea name="progress" id="id_progress" rows="3">Update for order #{{ order.order_id }}</textarea>
+            </div>
+            
+            <div class="submit-row">
+                <input type="submit" value="Add Update" class="default">
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %} 

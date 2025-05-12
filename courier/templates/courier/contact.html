@@ -1,0 +1,155 @@
+{% extends 'courier/basic.html' %}
+
+{% block title%} contact {% endblock %}
+
+{% block css %}
+<style>
+  /* Custom styles for contact page */
+  .contact-icon-container {
+    background-color: #4636a6 !important; /* Updated to match AiCL blue/purple color */
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(70, 54, 166, 0.2);
+  }
+
+  .contact-icon-container:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 12px rgba(70, 54, 166, 0.3);
+  }
+
+  .contact-info-item {
+    transition: all 0.3s ease;
+  }
+
+  .contact-info-item:hover {
+    transform: translateX(5px);
+  }
+
+  .contact-form-submit {
+    background-color: #4636a6 !important;
+    border-color: #4636a6 !important;
+    padding: 12px 30px !important;
+    margin: 10px 0 !important;
+    transition: all 0.3s ease;
+  }
+
+  .contact-form-submit:hover {
+    background-color: #3d2e95 !important;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(70, 54, 166, 0.25);
+  }
+  
+  .company-name {
+    color: #d31919; /* Red color for AIR INTERNATIONAL text */
+    font-weight: bold;
+  }
+  
+  .company-subtitle {
+    color: #4636a6; /* Blue/Purple for COURIER & LOGISTIC text */
+    font-weight: bold;
+  }
+</style>
+{% endblock %}
+
+{% block body %}
+    <div style="background-color: #faf2ff" class="container py-5">
+        <div class="row">
+          <div class="col-12 text-center mb-5" data-aos="fade-up" data-aos-delay="">
+            <div class="block-heading-1">
+              <span>Get In Touch</span>
+              <h2>Contact Us</h2>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6 mb-5" data-aos="fade-up" data-aos-delay="100">
+            <form action="#" method="post"> {% csrf_token %}
+              <div class="form-group row">
+                <div class="col-md-6 mb-4 mb-lg-0">
+                  <input type="text" class="form-control" placeholder="First name" name="fname" id="fname">
+                </div>
+                <div class="col-md-6">
+                  <input type="text" class="form-control" placeholder="Last name" name="lname" id="lname">
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <div class="col-md-12">
+                  <input type="text" class="form-control" placeholder="Email address" name="email" id="email">
+                </div>
+              </div>
+                <div class="form-group row">
+                <div class="col-md-12">
+                  <input type="text" class="form-control" placeholder="Mobile" name="mobile" id="mobile">
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <div class="col-md-12">
+                  <textarea name="description" id="description" class="form-control" placeholder="Write your message." cols="30" rows="10"></textarea>
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-md-6 mr-auto">
+                  <input type="submit" class="btn btn-block contact-form-submit text-white py-3 px-5" value="Send Message">
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="col-lg-4 ml-auto mb-5" data-aos="fade-up" data-aos-delay="200">
+            <div class="bg-white p-3 p-md-5">
+              <h3 class="text-black mb-4">Contact Info</h3>
+              <div class="mb-4 text-center">
+                <h4><span class="company-name text-purple-700">AiCL</span></h4>
+              </div>
+              <ul class="list-unstyled footer-link">
+                <li class="d-block mb-4 d-flex align-items-start contact-info-item">
+                  <div class="flex-shrink-0 contact-icon-container p-2 rounded-full mr-3 mt-1">
+                    <i class="fas fa-map-marker-alt text-white text-sm"></i>
+                  </div>
+                  <div>
+                    <span class="d-block text-black font-weight-bold">Address:</span>
+                    <span>U-14 Neptune Tower, Opp. Platinum Arcade, Kalawad Road, Rajkot - 360001</span>
+                  </div>
+                </li>
+                <li class="d-block mb-4 d-flex align-items-start contact-info-item">
+                  <div class="flex-shrink-0 contact-icon-container p-2 rounded-full mr-3 mt-1">
+                    <i class="fas fa-phone-alt text-white text-sm"></i>
+                  </div>
+                  <div>
+                    <span class="d-block text-black font-weight-bold">Owner:</span>
+                    <span>Dashrath Jadav: +91 85112 45404</span>
+                  </div>
+                </li>
+                <li class="d-block mb-4 d-flex align-items-start contact-info-item">
+                  <div class="flex-shrink-0 contact-icon-container p-2 rounded-full mr-3 mt-1">
+                    <i class="fas fa-phone-alt text-white text-sm"></i>
+                  </div>
+                  <div>
+                    <span class="d-block text-black font-weight-bold">Distributor:</span>
+                    <span>Sanjay Khuman: +91 6353253396</span>
+                  </div>
+                </li>
+                <li class="d-block mb-4 d-flex align-items-start contact-info-item">
+                  <div class="flex-shrink-0 contact-icon-container p-2 rounded-full mr-3 mt-1">
+                    <i class="fas fa-envelope text-white text-sm"></i>
+                  </div>
+                  <div>
+                    <span class="d-block text-black font-weight-bold">Email:</span>
+                    <span>airinternationalcouriers@gmail.com</span>
+                  </div>
+                </li>
+                <li class="d-block mb-4 d-flex align-items-start contact-info-item">
+                  <div class="flex-shrink-0 contact-icon-container p-2 rounded-full mr-3 mt-1">
+                    <i class="fas fa-clock text-white text-sm"></i>
+                  </div>
+                  <div>
+                    <span class="d-block text-black font-weight-bold">Business Hours:</span>
+                    <span>Mon-Sat: 9AM - 7PM</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+{% endblock %}

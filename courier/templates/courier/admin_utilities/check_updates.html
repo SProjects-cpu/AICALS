@@ -1,0 +1,73 @@
+{% extends 'admin/base_site.html' %}
+
+{% block title %}Order Updates Utility{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <a href="{% url 'admin:index' %}">Home</a> &rsaquo; Order Updates Utility
+</div>
+{% endblock %}
+
+{% block content %}
+<div id="content-main">
+    <h1>Order Updates Utility</h1>
+    <p>This utility helps identify and fix orders that are missing update records.</p>
+    
+    <!-- Display messages -->
+    {% if messages %}
+    <div class="messagelist">
+        {% for message in messages %}
+            <div{% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    
+    <div class="module">
+        <!-- Button to clear all admin actions -->
+        <div style="margin-bottom: 15px;">
+            <a href="{% url 'clear_admin_actions' %}" 
+               onclick="return confirm('WARNING: This will clear ALL order updates across ALL orders. This action cannot be undone. Are you sure?')"
+               class="button" style="background-color: #dc3545; color: white;">
+                Clear All Admin Actions (Reset All Order Updates)
+            </a>
+        </div>
+        
+        <table style="width:100%">
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Sender</th>
+                    <th>Receiver</th>
+                    <th>Date</th>
+                    <th>Updates</th>
+                    <th>Shipping</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr {% if order.updates_count == 0 %}style="background-color: #ffdddd;"{% endif %}>
+                    <td>{{ order.order_id }}</td>
+                    <td>{{ order.sender }}</td>
+                    <td>{{ order.receiver }}</td>
+                    <td>{{ order.date }}</td>
+                    <td>{{ order.updates_count }}</td>
+                    <td>{{ order.shipping_count }}</td>
+                    <td>
+                        <a href="{% url 'check_order_updates' order.order_id %}" class="button">View</a>
+                        {% if order.updates_count == 0 %}
+                        <a href="{% url 'check_order_updates' order.order_id %}?fix=1" 
+                           class="button" style="background-color: #28a745; color: white;">Fix</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="7">No orders found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %} 

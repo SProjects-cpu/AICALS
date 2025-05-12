@@ -1,0 +1,158 @@
+/* Custom admin styles */
+
+/* Administration heading */
+#site-name a {
+    color: #ffa500 !important;
+}
+
+/* Recent actions heading */
+#recent-actions-module h2 {
+    color: white !important;
+    background-color: #595959 !important;
+}
+
+/* None available text */
+#recent-actions-module p {
+    color: white !important;
+}
+
+/* "My actions" heading - change to black */
+#recent-actions-module h3 {
+    color: #000000 !important;
+}
+
+/* Logo styles */
+.custom-logo {
+    background: white !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 50% !important;
+    border: 3px solid rgba(255, 255, 255, 0.9) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+    overflow: hidden !important;
+    transition: all 0.3s ease !important;
+}
+
+.custom-logo:before {
+    content: '' !important;
+    position: absolute !important;
+    top: -2px !important;
+    left: -2px !important;
+    right: -2px !important;
+    bottom: -2px !important;
+    border-radius: 50% !important;
+    background: linear-gradient(135deg, rgba(255,165,0,0.4) 0%, rgba(255,255,255,0.1) 100%) !important;
+    opacity: 0 !important;
+    z-index: 2 !important;
+    transition: opacity 0.3s ease !important;
+}
+
+.custom-logo img {
+    max-width: 85% !important;
+    height: auto !important;
+    object-fit: contain !important;
+    position: relative !important;
+    z-index: 1 !important;
+    transition: transform 0.3s ease !important;
+}
+
+#branding h1 a:hover .custom-logo {
+    box-shadow: 0 6px 16px rgba(255, 165, 0, 0.3) !important;
+    transform: translateY(-2px) !important;
+}
+
+#branding h1 a:hover .custom-logo:before {
+    opacity: 1 !important;
+}
+
+#branding h1 a:hover .custom-logo img {
+    transform: scale(1.08) !important;
+}
+
+/* Admin Custom CSS */
+
+/* Target the "My actions" heading and paragraph directly */
+.dashboard .module:last-child h2 {
+  color: #FFF !important;
+}
+
+.dashboard .module:last-child p {
+  color: #FFF !important;
+}
+
+/* Alternative targeting method */
+#recent-actions-module h2 {
+  color: #FFF !important;
+}
+
+#recent-actions-module .actionlist {
+  color: #FFF !important;
+}
+
+/* Another alternative targeting method */
+div[class*="recent-actions"] h2 {
+  color: #FFF !important;
+}
+
+div[class*="recent-actions"] p {
+  color: #FFF !important;
+}
+
+.model-recent-actions h3 {
+  color: #FFF !important;
+}
+
+.model-recent-actions p {
+  color: #FFF !important;
+}
+
+/* Try with more specific selector */
+#content-related .module h2, 
+#content-related .module h3 {
+  color: #FFF !important;
+}
+
+#content-related .module p {
+  color: #FFF !important;
+}
+
+/* Another attempt with action list */
+.actionlist h3 {
+  color: #FFF !important;
+}
+
+.actionlist p {
+  color: #FFF !important;
+}
+
+/* Most specific selector for recent actions */
+.module.recent-actions h3,
+.module.dashboard-module-recent-actions h3 {
+  color: #FFF !important;
+}
+
+.module.recent-actions p,
+.module.dashboard-module-recent-actions p {
+  color: #FFF !important;
+}
+
+/* Even more specific attempt */
+h3:contains("My actions") {
+  color: #FFF !important;
+}
+
+p:contains("None available") {
+  color: #FFF !important;
+}
+
+/* Final attempt with inline style */
+#content-related [id*="recent_actions"] h3,
+#content-related [id*="recent-actions"] h3 {
+  color: #FFF !important;
+}
+
+#content-related [id*="recent_actions"] p,
+#content-related [id*="recent-actions"] p {
+  color: #FFF !important;
+} 

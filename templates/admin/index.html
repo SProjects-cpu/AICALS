@@ -1,0 +1,554 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block extrastyle %}{{ block.super }}
+<link rel="stylesheet" type="text/css" href="{% static "admin/css/dashboard.css" %}">
+<style>
+  /* Dashboard grid 
+   * Note: All hover effects are now managed in admin-hover-effects.css
+   */
+  .dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .dashboard-grid .module {
+    height: 100%;
+    margin-bottom: 0;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s ease;
+  }
+  
+  .dashboard-grid .module h2 {
+    font-size: 1rem;
+    font-weight: 600;
+    background: linear-gradient(90deg, #FFA500 0%, #e69500 100%);
+    color: white !important;
+    padding: 0.75rem 1rem;
+  }
+  
+  .dashboard-grid .module table {
+    margin-bottom: 0;
+    flex: 1;
+  }
+  
+  .dashboard-grid .module table th,
+  .dashboard-grid .module table td {
+    padding: 0.75rem 1rem;
+    color: #000000;
+  }
+  
+  .dashboard-grid .module table th {
+    background-color: #f3f4f6;
+    font-weight: 600;
+  }
+  
+  .dashboard-grid .module table tbody tr:nth-child(odd) {
+    background-color: #f9fafb;
+  }
+  
+  /* Recent actions */
+  #content-related .module {
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+  
+  #content-related .module h2 {
+    background: linear-gradient(90deg, #595959 0%, #4a4a4a 100%);
+    color: white !important;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 0.75rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  #content-related .module h2 .buttons-container {
+    display: flex;
+    gap: 0.5rem;
+  }
+  
+  #content-related .module h3 {
+    color: #000000 !important;
+    font-size: 0.875rem;
+    font-weight: 600;
+    padding: 0.75rem 1rem;
+    margin: 0;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  
+  /* White text color for "My actions" heading */
+  #recent-actions-module h3 {
+    color: #000000 !important;
+  }
+  
+  #content-related .module p {
+    color: #000000 !important;
+    padding: 0.75rem 1rem;
+  }
+  
+  /* White text color for "None available" paragraph */
+  #recent-actions-module p {
+    color: #000000 !important;
+  }
+  
+  .actionlist {
+    margin: 0;
+    padding: 0.5rem 0;
+  }
+  
+  .actionlist li {
+    list-style: none;
+    padding: 0.5rem 1rem;
+    border-bottom: 1px solid #f5f5f5;
+    color: #000000 !important;
+    font-size: 0.875rem;
+  }
+  
+  .actionlist li:last-child {
+    border-bottom: none;
+  }
+  
+  .actionlist li a {
+    color: var(--primary) !important;
+    text-decoration: none;
+  }
+  
+  .actionlist .mini, .mini {
+    color: #000000 !important;
+    font-size: 0.75rem;
+  }
+  
+  /* Fix logo */
+  .custom-logo {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background-color: white !important;
+    border-radius: 50% !important;
+    border: 3px solid rgba(255, 255, 255, 0.9) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+    overflow: hidden !important;
+    transition: all 0.3s ease !important;
+  }
+  
+  .custom-logo:before {
+    content: '' !important;
+    position: absolute !important;
+    top: -2px !important;
+    left: -2px !important;
+    right: -2px !important;
+    bottom: -2px !important;
+    border-radius: 50% !important;
+    background: linear-gradient(135deg, rgba(255,165,0,0.4) 0%, rgba(255,255,255,0.1) 100%) !important;
+    opacity: 0 !important;
+    z-index: 2 !important;
+    transition: opacity 0.3s ease !important;
+  }
+  
+  /* Button styles */
+  .toggle-actions-btn {
+    background-color: #FFA500;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-left: 10px;
+    z-index: 10;
+    position: relative;
+  }
+  
+  .toggle-actions-btn:hover {
+    background-color: #e69500;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .toggle-actions-btn:active {
+    transform: translateY(0);
+  }
+  
+  /* Style for Clear Actions button */
+  #clear-actions-btn {
+    background-color: #dc3545;
+  }
+  
+  #clear-actions-btn:hover {
+    background-color: #c82333;
+  }
+</style>
+{% endblock %}
+
+{% block coltype %}colMS{% endblock %}
+
+{% block bodyclass %}{{ block.super }} dashboard{% endblock %}
+
+{% block breadcrumbs %}{% endblock %}
+
+{% block nav-sidebar %}{% endblock %}
+
+{% block content %}
+<div id="content-main">
+  {% include "admin/app_list.html" with app_list=app_list show_changelinks=True %}
+</div>
+{% endblock %}
+
+{% block sidebar %}
+<div id="content-related">
+  <!-- Add CSRF token form to ensure token is available -->
+  <form id="csrf-form" method="post" style="position: absolute; visibility: hidden; height: 0;">
+    {% csrf_token %}
+  </form>
+  
+  <!-- Direct form submission for debugging -->
+  <form id="delete-log-form" action="/custom_admin/delete_log/?all=true" method="post" style="display: none;">
+    {% csrf_token %}
+    <input type="submit" value="Delete Log (Direct Form)" />
+  </form>
+  
+  <div class="module" id="recent-actions-module">
+    <h2>
+      <span>{% translate 'Recent actions' %}</span>
+      <div class="buttons-container">
+        <button id="toggle-actions-btn" class="toggle-actions-btn">Show Actions</button>
+        <button id="clear-actions-btn" class="toggle-actions-btn">Clear All Actions</button>
+        <button id="debug-clear-btn" class="toggle-actions-btn" style="background-color: #6c757d;">Debug Clear</button>
+      </div>
+    </h2>
+    <div id="actions-content" class="actions-content">
+      <h3>{% translate 'My actions' %}</h3>
+      {% load log %}
+      {% get_admin_log 10 as admin_log for_user user %}
+      {% if not admin_log %}
+      <p>{% translate 'None available' %}</p>
+      {% else %}
+      <ul class="actionlist">
+        {% for entry in admin_log %}
+        <li class="{% if entry.is_addition %}addlink{% endif %}{% if entry.is_change %}changelink{% endif %}{% if entry.is_deletion %}deletelink{% endif %}">
+          {% if entry.is_deletion or not entry.get_admin_url %}
+          {{ entry.object_repr }}
+          {% else %}
+          <a href="{{ entry.get_admin_url }}">{{ entry.object_repr }}</a>
+          {% endif %}
+          <br>
+          {% if entry.content_type %}
+          <span class="mini">{% filter capfirst %}{{ entry.content_type.name }}{% endfilter %}</span>
+          {% else %}
+          <span class="mini">{% translate 'Unknown content' %}</span>
+          {% endif %}
+          <br>
+          <span class="mini">{{ entry.timestamp|date:"jS M Y H:i" }}</span>
+        </li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<!-- Inline script for functionality -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Get elements for toggle button
+    var toggleBtn = document.getElementById('toggle-actions-btn');
+    var actionsContent = document.getElementById('actions-content');
+    
+    if (toggleBtn && actionsContent) {
+      // Initial state for visibility
+      var isVisible = localStorage.getItem('actionsVisible') === 'true';
+      
+      // Set initial visibility state
+      updateVisibility(isVisible);
+      
+      // Toggle visibility event
+      toggleBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        isVisible = !isVisible;
+        updateVisibility(isVisible);
+        localStorage.setItem('actionsVisible', isVisible);
+      });
+      
+      // Helper function to update visibility
+      function updateVisibility(visible) {
+        if (visible) {
+          actionsContent.style.display = 'block';
+          actionsContent.classList.add('show');
+          toggleBtn.textContent = 'Hide Actions';
+        } else {
+          actionsContent.style.display = 'none';
+          actionsContent.classList.remove('show');
+          toggleBtn.textContent = 'Show Actions';
+        }
+      }
+    }
+
+    // Functionality for Clear All Actions button
+    const clearActionsBtn = document.getElementById('clear-actions-btn');
+    if (clearActionsBtn) {
+      clearActionsBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        console.log('Clear All Actions button clicked');
+        
+        if (!confirm('Are you sure you want to clear all recent actions? This cannot be undone.')) {
+            console.log('User cancelled the action');
+            return;
+        }
+
+        console.log('User confirmed deletion');
+        
+        try {
+          // Get CSRF token
+          let csrfToken = document.querySelector('#csrf-form [name=csrfmiddlewaretoken]');
+          
+          if (!csrfToken) {
+            console.error('CSRF token not found in #csrf-form');
+            
+            // Try to find any CSRF token on the page
+            const allTokens = document.querySelectorAll('[name=csrfmiddlewaretoken]');
+            console.log('CSRF tokens found on page:', allTokens.length);
+            
+            if (allTokens.length === 0) {
+              alert('CSRF token not found. Cannot proceed.');
+              return;
+            }
+            
+            console.log('Using first available CSRF token');
+            csrfToken = allTokens[0];
+          }
+          
+          console.log('CSRF token found, length:', csrfToken.value.length);
+          
+          // Direct XHR request instead of form submission
+          console.log('Creating XHR request to /custom_admin/delete_log/?all=true');
+          const xhr = new XMLHttpRequest();
+          xhr.open('POST', '/custom_admin/delete_log/?all=true', true);
+          xhr.setRequestHeader('X-CSRFToken', csrfToken.value);
+          xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+          xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+          
+          console.log('XHR request headers set, sending request...');
+          
+          xhr.onload = function() {
+            console.log('Response received with status:', xhr.status);
+            console.log('Response headers:', xhr.getAllResponseHeaders());
+            
+            if (xhr.status >= 200 && xhr.status < 300) {
+              try {
+                console.log('Raw response:', xhr.responseText);
+                const data = JSON.parse(xhr.responseText);
+                console.log('Parsed response data:', data);
+                
+                if (data.status === 'success') {
+                  // Update the UI
+                  const actionsList = document.querySelector('#recent-actions-module .actionlist');
+                  console.log('Found actionsList element:', actionsList ? 'Yes' : 'No');
+                  const actionsContent = document.querySelector('#actions-content');
+                  
+                  if (actionsList) {
+                    actionsList.remove();
+                    console.log('Removed actionsList');
+                    
+                    // Add "None available" paragraph if it doesn't exist
+                    if (!document.querySelector('#actions-content p')) {
+                      console.log('Creating "None available" paragraph');
+                      const noActions = document.createElement('p');
+                      noActions.textContent = 'None available';
+                      
+                      const heading = document.querySelector('#actions-content h3');
+                      if (heading) {
+                        heading.insertAdjacentElement('afterend', noActions);
+                        console.log('Added "None available" after heading');
+                      } else if (actionsContent) {
+                        actionsContent.appendChild(noActions);
+                        console.log('Added "None available" to actionsContent');
+                      }
+                    }
+                    
+                    alert(`Successfully cleared ${data.deleted_count} action(s)`);
+                    
+                    // Reload the page to ensure everything is updated
+                    setTimeout(function() {
+                      window.location.reload();
+                    }, 1000);
+                  } else {
+                    console.error('Could not find .actionlist element');
+                    alert('Actions cleared successfully.');
+                    
+                    // Reload the page to ensure everything is updated
+                    setTimeout(function() {
+                      window.location.reload();
+                    }, 1000);
+                  }
+                } else {
+                  console.error('Error in response:', data);
+                  alert('Error: ' + (data.message || 'Unknown error'));
+                }
+              } catch (parseError) {
+                console.error('Error parsing response:', parseError);
+                console.error('Response text:', xhr.responseText.substring(0, 100) + '...');
+                alert('Error processing server response. The page will be refreshed.');
+                window.location.reload();
+              }
+            } else if (xhr.status === 404) {
+              console.error('404 Error: Endpoint not found');
+              alert('Error: The delete_log endpoint was not found. Please check server configuration.');
+            } else {
+              console.error(`HTTP Error ${xhr.status}:`, xhr.responseText);
+              alert('Error: Server returned status code ' + xhr.status);
+            }
+          };
+          
+          xhr.onerror = function() {
+            console.error('Network request failed', xhr);
+            alert('Request failed. Please check your network connection.');
+          };
+          
+          xhr.send();
+          console.log('XHR request sent');
+        } catch (error) {
+          console.error('Exception in Clear All Actions handler:', error);
+          alert('An error occurred: ' + error.message);
+        }
+      });
+    } else {
+      console.error('Clear actions button not found in DOM');
+    }
+
+    // Debug button functionality
+    const debugClearBtn = document.getElementById('debug-clear-btn');
+    if (debugClearBtn) {
+      debugClearBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        console.log('Debug Clear button clicked');
+        
+        try {
+          // Use the form for direct submission
+          const deleteForm = document.getElementById('delete-log-form');
+          console.log('Delete form found:', deleteForm ? 'Yes' : 'No');
+          
+          if (!deleteForm) {
+            console.error('Delete form not found');
+            
+            // Create a form dynamically if it doesn't exist
+            console.log('Creating form dynamically');
+            const newForm = document.createElement('form');
+            newForm.method = 'POST';
+            newForm.action = '/custom_admin/delete_log/?all=true';
+            
+            // Add CSRF token
+            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]');
+            if (csrfToken) {
+              const tokenInput = document.createElement('input');
+              tokenInput.type = 'hidden';
+              tokenInput.name = 'csrfmiddlewaretoken';
+              tokenInput.value = csrfToken.value;
+              newForm.appendChild(tokenInput);
+              
+              // Append to body and submit
+              document.body.appendChild(newForm);
+              
+              if (confirm('Debug: Submit form directly to clear all actions?')) {
+                console.log('Submitting dynamically created form');
+                newForm.submit();
+              }
+            } else {
+              alert('CSRF token not found. Cannot proceed.');
+            }
+            return;
+          }
+          
+          const csrfToken = deleteForm.querySelector('[name=csrfmiddlewaretoken]');
+          console.log('CSRF token in form:', csrfToken ? 'Yes' : 'No');
+          
+          if (csrfToken) {
+            console.log('CSRF token length:', csrfToken.value.length);
+          } else {
+            console.error('CSRF token not found in delete form');
+            
+            // Try to find any CSRF token and add it to the form
+            const anyToken = document.querySelector('[name=csrfmiddlewaretoken]');
+            if (anyToken) {
+              console.log('Found CSRF token elsewhere, adding to form');
+              const tokenInput = document.createElement('input');
+              tokenInput.type = 'hidden';
+              tokenInput.name = 'csrfmiddlewaretoken';
+              tokenInput.value = anyToken.value;
+              deleteForm.appendChild(tokenInput);
+            } else {
+              alert('CSRF token not found. Cannot proceed.');
+              return;
+            }
+          }
+          
+          console.log('Form action:', deleteForm.action);
+          console.log('Form method:', deleteForm.method);
+          
+          if (confirm('Debug: Submit form directly to clear all actions?')) {
+            console.log('User confirmed debug form submission');
+            
+            // Add event listener to catch form submission
+            deleteForm.addEventListener('submit', function(submitEvent) {
+              console.log('Form submit event fired');
+            });
+            
+            // Submit the form
+            console.log('Submitting form...');
+            deleteForm.submit();
+            console.log('Form submit called');
+            
+            // Reload the page after a delay
+            setTimeout(function() {
+              window.location.reload();
+            }, 2000);
+          } else {
+            console.log('User cancelled debug form submission');
+          }
+        } catch (error) {
+          console.error('Exception in Debug Clear handler:', error);
+          alert('An error occurred: ' + error.message);
+        }
+      });
+    } else {
+      console.error('Debug clear button not found in DOM');
+    }
+  });
+</script>
+
+<!-- Debug script -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    console.log('Debug script loaded - Updated version');
+    
+    // Verify clear button exists
+    const clearBtn = document.getElementById('clear-actions-btn');
+    console.log('Clear button exists:', clearBtn ? 'Yes' : 'No');
+    
+    // Verify CSRF token form exists
+    const csrfForm = document.getElementById('csrf-form');
+    console.log('CSRF form exists:', csrfForm ? 'Yes' : 'No');
+    
+    if (csrfForm) {
+      // Check if CSRF token input exists
+      const csrfInput = csrfForm.querySelector('[name=csrfmiddlewaretoken]');
+      console.log('CSRF token input exists:', csrfInput ? 'Yes' : 'No');
+      
+      if (csrfInput) {
+        // Log CSRF token length without exposing the actual token
+        console.log('CSRF token length:', csrfInput.value.length);
+      }
+    }
+    
+    // Log the delete log URL
+    console.log('Delete log URL:', '/custom_admin/delete_log/?all=true');
+  });
+</script>
+{% endblock %} 

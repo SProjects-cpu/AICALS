@@ -1,0 +1,215 @@
+{% extends 'courier/basic.html' %}
+
+{% block title %} Track {% endblock %}
+{% block body %}
+    <div class="container">
+        {% if error %}
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+        <div class="mt-4">
+            <p>Please make sure you entered the correct tracking number and try again.</p>
+            <a href="{% url 'home' %}" class="btn btn-primary">Back to Home</a>
+        </div>
+        {% else %}
+        <!-- Order Tracking Section -->
+        <div class="content tracking-section">
+            <div class="content1">
+                <h2>Order Tracking</h2>
+                {% if shipping %}
+                <p class="font-weight-bold mt-2">Tracking Number: {{ shipping.tracking_number }} | Carrier: {{ shipping.carrier }}</p>
+                {% endif %}
+            </div>
+            <div class="content2">
+                <div class="content2-header1">
+                    {% if shipping %}
+                        <h2 style="color: black">Status: <span class="status-{{ shipping.status }}">
+                            {% if shipping.status == 'pending' %}Pending
+                            {% elif shipping.status == 'in_transit' %}In Transit
+                            {% elif shipping.status == 'delivered' %}Delivered
+                            {% elif shipping.status == 'returned' %}Returned
+                            {% endif %}
+                        </span></h2>
+                        </div>
+                    {% else %}
+                        {% for i in updates %}
+                            {% if forloop.last %}
+                                <h2 style="color: black">Status : <span>{{ i.status }}</span></h2>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                <div class="content2-header1">
+                    {% if shipping %}
+                        <p>Expected Delivery: <span>{{ shipping.estimated_delivery|date:"F j, Y" }}</span></p>
+                    {% else %}
+                        <p>Expected Date: <span>3 days after picked-up</span></p>
+                    {% endif %}
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="content3 status-image-container">
+                {% if shipping %}
+                    <div class="status-image-wrapper">
+                    {% if shipping.status == 'pending' %}
+                        <img src="../../static/courier/images/placed.PNG" alt="Pending" class="status-image">
+                    {% elif shipping.status == 'in_transit' %}
+                        <img src="../../static/courier/images/dispatched.PNG" alt="In Transit" class="status-image">
+                    {% elif shipping.status == 'delivered' %}
+                        <img src="../../static/courier/images/delivered.PNG" alt="Delivered" class="status-image">
+                    {% elif shipping.status == 'returned' %}
+                        <img src="../../static/courier/images/reached.PNG" alt="Returned" class="status-image">
+                    {% endif %}
+                    </div>
+                {% else %}
+                    <div class="status-image-wrapper">
+                    {% if most_update.status == 'Placed Order' %}
+                        <img src="../../static/courier/images/placed.PNG" alt="Placed" class="status-image">
+                    {% endif %}
+                    {% if most_update.status == 'Confirmed Order' %}
+                        <img src="../../static/courier/images/confirmed.PNG" alt="confirmed" class="status-image">
+                    {% endif %}
+                    {% if most_update.status == 'Picked-up' %}
+                        <img src="../../static/courier/images/picked-up.PNG" alt="Picked-up" class="status-image">
+                    {% endif %}
+                    {% if most_update.status == 'Dispatched Product' %}
+                        <img src="../../static/courier/images/dispatched.PNG" alt="Dispatched Product" class="status-image">
+                    {% endif %}
+                    {% if most_update.status == 'Reached Product' %}
+                        <img src="../../static/courier/images/reached.PNG" alt="Reached Product" class="status-image">
+                    {% endif %}
+                    {% if most_update.status == 'Delivered Product' %}
+                        <img src="../../static/courier/images/delivered.PNG" alt="Delivered Product" class="status-image">
+                    {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- History of Order Section -->
+        <div class="content order-history-content">
+            <div class="content1">
+                <h2>History of order</h2>
+            </div>
+            
+            <!-- Debug information to help troubleshoot -->
+            {% if updates %}
+                <div class="alert alert-info d-none">
+                    Updates found: {{ updates|length }} update(s)
+                </div>
+            {% else %}
+                <div class="alert alert-warning d-none">
+                    No updates found for this order.
+                </div>
+            {% endif %}
+            
+            <!-- Scrollable container for order history -->
+            <div class="order-history-scrollable">
+                <!-- List group for order history with improved layout -->
+                <ul class="list-group order-history-table" id="items">
+                    <li class="list-group-item order-history-header order-history-row d-flex flex-column flex-md-row justify-content-between align-items-center text-black">
+                        <span class="history-column history-column-location history-header mb-2 mb-md-0">Location</span>
+                        <span class="history-column history-column-time history-header mb-2 mb-md-0">Time</span>
+                        <span class="history-column history-column-status history-header mb-2 mb-md-0">Status</span>
+                        <span class="history-column history-column-progress history-header">Progress</span>
+                    </li>
+                    
+                    {% if shipping %}
+                    <!-- Display shipping information as a history entry -->
+                    <li class="list-group-item order-history-row d-flex flex-column flex-md-row justify-content-between align-items-center">
+                        <span class="history-column history-column-location history-badge mb-2 mb-md-0">{{ shipping.order.receiver_address }}</span>
+                        <span class="history-column history-column-time history-badge mb-2 mb-md-0">{{ shipping.shipping_date }}</span>
+                        <span class="history-column history-column-status history-badge mb-2 mb-md-0">
+                            {% if shipping.status == 'pending' %}Pending
+                            {% elif shipping.status == 'in_transit' %}In Transit
+                            {% elif shipping.status == 'delivered' %}Delivered
+                            {% elif shipping.status == 'returned' %}Returned
+                            {% endif %}
+                        </span>
+                        <span class="history-column history-column-progress history-badge">Initial</span>
+                    </li>
+                    
+                    {% if shipping.notes %}
+                    <li class="my-2"></li>
+                    <li class="text-lg-center text-black my-2">{{ shipping.notes }}</li>
+                    {% endif %}
+                    {% endif %}
+                    
+                    <!-- Display all order updates -->
+                    {% for i in updates %}
+                    <li class="list-group-item order-history-row d-flex flex-column flex-md-row justify-content-between align-items-center">
+                        <span class="history-column history-column-location history-badge mb-2 mb-md-0">{{ i.location }}</span>
+                        <span class="history-column history-column-time history-badge mb-2 mb-md-0">{{ i.time }}</span>
+                        <span class="history-column history-column-status history-badge mb-2 mb-md-0">{{ i.status }}</span>
+                        <span class="history-column history-column-progress history-badge">{{ i.progress }}</span>
+                    </li>
+                    {% empty %}
+                    <!-- Show a message if no updates exist -->
+                    <li class="list-group-item text-center">
+                        No order history available yet. Check back later for updates.
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+<!-- Script to remove any dummy elements that might be added dynamically -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log("DOM loaded, running cleanup script");
+    
+    // Only remove elements that are clearly dummy data
+    function isDummyElement(element) {
+        // Check if the element contains known dummy text
+        if (element.textContent.toLowerCase().includes('product will delivered') || 
+            element.textContent.toLowerCase().includes('rajkot,gujarat')) {
+            return true;
+        }
+        return false;
+    }
+    
+    // 1. Remove dummy elements with more targeted approach
+    const listItems = document.querySelectorAll('#items li.list-group-item');
+    console.log("Found " + listItems.length + " list items to check");
+    
+    listItems.forEach(function(item) {
+        if (isDummyElement(item)) {
+            console.log("Removing dummy element:", item.textContent);
+            item.remove();
+        }
+    });
+    
+    // Display count of updates after cleaning
+    const remainingItems = document.querySelectorAll('#items li.list-group-item').length;
+    console.log("After cleanup: " + remainingItems + " items remain");
+    
+    // Make sure we don't accidentally hide the History of Order section
+    const historySection = document.querySelector('.content.order-history-content');
+    if (historySection) {
+        historySection.style.display = 'block';
+    }
+});
+</script>
+
+<!-- Script to force black text color for all history items -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Apply black text to all history columns
+        const historyElements = document.querySelectorAll('.history-badge, .history-column');
+        historyElements.forEach(function(element) {
+            element.style.color = 'black';
+        });
+        
+        // Specifically target any elements with problematic text
+        const allHistoryTexts = document.querySelectorAll('.history-column-progress');
+        allHistoryTexts.forEach(function(element) {
+            if (element.textContent.includes('sondkhsoyktoK')) {
+                element.style.color = 'black';
+                element.style.backgroundColor = 'rgba(140, 216, 255, 0.4)';
+            }
+        });
+    });
+</script>
+{% endblock %}

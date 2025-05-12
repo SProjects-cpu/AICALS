@@ -1,0 +1,103 @@
+/* Admin Panel Text Color Overrides
+ * This file overrides text color for specific elements
+ */
+
+:root {
+  /* Override default variable colors */
+  --body-fg: #000000 !important;
+  --body-quiet-color: #000000 !important;
+  --body-loud-color: #000000 !important;
+}
+
+/* Global text color overrides */
+body, p, a, li, td, th, label, select, input, textarea, div, span {
+  color: #000000;
+}
+
+/* Override help text */
+.help, p.help, form p.help, div.help, form div.help, div.help li {
+  color: #000000 !important;
+}
+
+/* Override quiet text */
+.quiet, a.quiet:link, a.quiet:visited {
+  color: #000000 !important;
+}
+
+/* Override description text */
+.description {
+  color: #000000 !important;
+}
+
+/* Override header text colors while preserving white text on colored backgrounds */
+#header, #header a:link, #header a:visited, 
+div.breadcrumbs, div.breadcrumbs a,
+.module h2, .module caption, .inline-group h2 {
+  color: var(--primary-fg) !important;
+}
+
+/* Fix form labels */
+.aligned label {
+  color: #000000 !important;
+}
+
+/* Fix code and pre elements */
+code, pre {
+  color: #000000 !important;
+}
+
+/* Fix h3 headers that are often gray */
+h3, h4, h5 {
+  color: #000000 !important;
+}
+
+/* Dashboard action lists */
+#content-related .actionlist li {
+  color: #000000 !important;
+}
+
+/* Recent actions module */
+#recent-actions-module p {
+  color: #000000 !important;
+}
+
+/* User tools section */
+#user-tools, #user-tools a {
+  color: var(--primary-fg) !important;
+}
+
+/* Fix table header text */
+thead th, thead th a:link, thead th a:visited {
+  color: #000000 !important;
+}
+
+/* Fix fieldset text */
+fieldset.collapsed h2 {
+  color: #000000 !important;
+}
+
+/* Filter sidebar text */
+.sidebar .filter-title {
+  color: #000000 !important;
+}
+
+/* List filter options */
+.sidebar .filter-options a {
+  color: #000000 !important;
+}
+
+/* SPECIFIC ELEMENTS WITH WHITE TEXT */
+.module h3:contains-text("My actions") {
+  color: #000000 !important;
+}
+.module h3:contains-text("My actions") + p {
+  color: #FFFFFF !important;
+}
+
+/* Alternative approach if the above doesn't work */
+#content-related .module h3 {
+  color: #000000 !important;
+}
+#content-related .module p {
+  color: #FFFFFF !important;
+} 

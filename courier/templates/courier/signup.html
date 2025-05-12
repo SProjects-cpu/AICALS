@@ -1,0 +1,27 @@
+{% extends 'courier/basic.html' %}
+
+{% block title%} Sign up {% endblock %}
+{% load crispy_forms_tags %}
+{% block body %}
+    <div class="container py-5">
+       <div class="row justify-content-center">
+           <div class="col-md-8">
+               <div class="card">
+                   <div class="card-header">
+                       <h3 class="agileinfo_sign mb-0">Sign Up</h3>
+                   </div>
+                   <div class="card-body">
+                       <form method="post" class="form-group">
+                         {% csrf_token %}
+                         {{ form | crispy}}
+                         {{ profile_form | crispy }}
+                         <div class="form-group text-center mt-4">
+                             <button type="submit" class="btn btn-success btn-lg px-5">Sign up</button>
+                         </div>
+                       </form>
+                   </div>
+               </div>
+           </div>
+       </div>
+    </div>
+{% endblock %}

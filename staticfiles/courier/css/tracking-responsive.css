@@ -1,0 +1,308 @@
+/* 
+   Tracking Responsive Styles
+   Purpose: Comprehensive responsive fixes for the tracker view
+*/
+
+/* Global responsive adjustments */
+:root {
+  --tracking-section-width-xl: 80%;
+  --tracking-section-width-lg: 85%;
+  --tracking-section-width-md: 90%;
+  --tracking-section-width-sm: 95%;
+  --tracking-section-width-xs: 98%;
+  --tracking-bg: #F5F5F5;
+  --tracking-header-bg: #8cd8ff;
+}
+
+/* Base container styles */
+.tracking-section, 
+.order-history-content {
+  width: var(--tracking-section-width-xl);
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 2rem;
+  background-color: var(--tracking-bg);
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+/* Status images responsive handling */
+.status-image-container {
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+.status-image-wrapper {
+  display: inline-block;
+  max-width: 100%;
+}
+
+.status-image {
+  max-width: 100%;
+  height: auto;
+  max-height: 180px;
+  display: block;
+  margin: 0 auto;
+}
+
+/* Order history table responsive improvements */
+.order-history-table {
+  width: 100%;
+  padding: 0;
+  margin-bottom: 0;
+}
+
+.order-history-row {
+  border: none;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  margin-bottom: 0.5rem;
+}
+
+.order-history-header {
+  background-color: rgba(140, 216, 255, 0.1);
+  font-weight: bold;
+}
+
+/* History columns handling */
+.history-column {
+  padding: 0.5rem;
+}
+
+.history-header {
+  font-weight: 600;
+  color: #333;
+}
+
+.history-badge {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  background-color: rgba(140, 216, 255, 0.1);
+  color: black;
+}
+
+/* Scrollable order history table for smaller screens */
+.order-history-scrollable {
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.order-history-scrollable::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.order-history-scrollable {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+/* Standardized Media Queries */
+
+/* Large Desktop */
+@media (max-width: 1200px) {
+  .tracking-section,
+  .order-history-content {
+    width: var(--tracking-section-width-lg);
+  }
+}
+
+/* Desktop */
+@media (max-width: 992px) {
+  .tracking-section,
+  .order-history-content {
+    width: var(--tracking-section-width-md);
+  }
+  
+  .content2-header1 {
+    width: 100%;
+    float: none;
+    padding: 0.5rem 1rem;
+  }
+  
+  .status-image {
+    max-height: 150px;
+  }
+  
+  /* Enable scrollable history with fixed height */
+  .order-history-scrollable {
+    max-height: 350px;
+  }
+  
+  /* Make header sticky */
+  .order-history-header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background-color: rgba(140, 216, 255, 0.1);
+  }
+}
+
+/* Tablet */
+@media (max-width: 768px) {
+  .tracking-section,
+  .order-history-content {
+    width: var(--tracking-section-width-md);
+  }
+  
+  .content1 h2 {
+    font-size: 1.5rem;
+  }
+  
+  .content2-header1 p {
+    font-size: 14px;
+  }
+  
+  .order-history-row {
+    padding: 0.75rem;
+  }
+  
+  /* Improve stacking on mobile */
+  .history-column {
+    width: 100%;
+    text-align: left !important;
+  }
+  
+  .history-column-location,
+  .history-column-time,
+  .history-column-status,
+  .history-column-progress {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .history-column-location::before {
+    content: "Location:";
+    font-weight: 600;
+    margin-right: 0.5rem;
+  }
+  
+  .history-column-time::before {
+    content: "Time:";
+    font-weight: 600;
+    margin-right: 0.5rem;
+  }
+  
+  .history-column-status::before {
+    content: "Status:";
+    font-weight: 600;
+    margin-right: 0.5rem;
+  }
+  
+  .history-column-progress::before {
+    content: "Progress:";
+    font-weight: 600;
+    margin-right: 0.5rem;
+  }
+  
+  /* Hide headers on mobile since we show the labels inline */
+  .order-history-header {
+    display: none !important;
+  }
+  
+  /* Adjust scrollable height for tablets */
+  .order-history-scrollable {
+    max-height: 300px;
+  }
+}
+
+/* Mobile Large */
+@media (max-width: 576px) {
+  .tracking-section,
+  .order-history-content {
+    width: var(--tracking-section-width-sm);
+    border-radius: 6px;
+  }
+  
+  .content1 {
+    padding: 1rem;
+  }
+  
+  .content1 h2 {
+    font-size: 1.3rem;
+  }
+  
+  .content2-header1 p {
+    font-size: 12px;
+  }
+  
+  .status-image-container {
+    padding: 1rem 0;
+  }
+  
+  .history-column {
+    padding: 0.25rem;
+    font-size: 0.85rem;
+  }
+  
+  /* Adjust scrollable height for mobile */
+  .order-history-scrollable {
+    max-height: 250px;
+  }
+}
+
+/* Mobile Small */
+@media (max-width: 414px) {
+  .tracking-section,
+  .order-history-content {
+    width: var(--tracking-section-width-xs);
+    margin-left: 0;
+    margin-right: 0;
+    border-radius: 4px;
+  }
+  
+  .container {
+    padding: 0.5rem;
+  }
+  
+  .content1 {
+    padding: 0.75rem;
+  }
+  
+  .content1 h2 {
+    font-size: 1.2rem;
+  }
+  
+  .status-image {
+    max-height: 120px;
+  }
+  
+  .history-header {
+    font-size: 0.8rem;
+  }
+  
+  .history-badge {
+    font-size: 0.75rem;
+    padding: 0.2rem 0.4rem;
+  }
+  
+  /* Further reduce height for very small screens */
+  .order-history-scrollable {
+    max-height: 220px;
+  }
+}
+
+/* Very Small Mobile */
+@media (max-width: 320px) {
+  .tracking-section,
+  .order-history-content {
+    width: 100%;
+    border-radius: 0;
+  }
+  
+  .content1 h2 {
+    font-size: 1.1rem;
+  }
+  
+  .content2-header1 p,
+  .content2-header1 span {
+    font-size: 11px;
+  }
+  
+  /* Minimal height for very small screens */
+  .order-history-scrollable {
+    max-height: 200px;
+  }
+} 

@@ -1,0 +1,76 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block content %}
+<div class="admin-panel-wrapper">
+  <div id="custom-sidebar">
+    <h3 class="text-xl font-bold mb-4 border-l-4 border-orange-500 pl-3">Test Navigation</h3>
+    <ul class="space-y-2">
+      <li><a href="#" class="active">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+        Active Link
+      </a></li>
+      <li><a href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+        Hover Me
+      </a></li>
+    </ul>
+  </div>
+  <div id="content-wrapper">
+    <h1>Hover Effects Test Page</h1>
+    <p>This page tests all hover effects in the admin panel.</p>
+
+    <h2>Buttons</h2>
+    <div class="buttons-test" style="display: flex; gap: 10px; margin: 20px 0;">
+      <a href="#" class="button">Regular Button</a>
+      <a href="#" class="button default">Default Button</a>
+      <button class="primary-btn">Primary Button</button>
+      <button class="secondary-btn">Secondary Button</button>
+    </div>
+
+    <h2>Table Hover Effects</h2>
+    <table id="changelist">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>Item 1</td>
+          <td>Description for item 1</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Item 2</td>
+          <td>Description for item 2</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>Item 3</td>
+          <td>Description for item 3</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Link Hover Effects</h2>
+    <div style="margin: 20px 0;">
+      <a href="#">Regular Link</a>
+    </div>
+
+    <h2>Form Elements</h2>
+    <form action="#">
+      <div class="form-row">
+        <label for="test-input">Text Input:</label>
+        <input type="text" id="test-input" value="Test value">
+      </div>
+      <div class="submit-row">
+        <input type="submit" value="Submit">
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %} 

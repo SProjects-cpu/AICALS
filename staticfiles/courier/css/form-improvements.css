@@ -1,0 +1,71 @@
+/* Form Error Styling Improvements */
+
+/* Reduce height and improve styling of errorlist */
+.errorlist {
+    list-style-type: none;
+    padding: 6px 10px;
+    margin: 4px 0 15px 0;
+    border-radius: 4px;
+    border-left: 3px solid #dc3545;
+    background-color: #f8d7da;
+    color: #721c24;
+    font-size: 0.8rem;
+    max-width: 100%;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    min-height: auto;
+}
+
+.errorlist li {
+    padding: 0;
+    margin: 0;
+    line-height: 1.3;
+}
+
+/* Position error messages relative to form fields */
+.form-group .errorlist {
+    margin-top: 3px;
+    margin-bottom: 12px;
+}
+
+/* Add spacing after the element containing the errorlist */
+.form-group:has(.errorlist) {
+    margin-bottom: 5px;
+}
+
+/* Handle empty elements after errorlist */
+.errorlist + * {
+    margin-top: 8px;
+}
+
+/* Fade-in animation for error messages */
+@keyframes errorFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.errorlist {
+    animation: errorFadeIn 0.3s ease-in-out;
+}
+
+/* Improve error styling on different form layouts */
+.form-inline .errorlist {
+    margin-left: 10px;
+    margin-bottom: 10px;
+    display: inline-block;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .errorlist {
+        font-size: 0.75rem;
+        padding: 5px 8px;
+        margin-bottom: 12px;
+    }
+} 

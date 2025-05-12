@@ -1,0 +1,33 @@
+/*
+ * Order History Text Color Fix
+ * High-specificity rules to ensure order history text is black
+ */
+
+/* Target each specific column in order history rows */
+.list-group-item.order-history-row .history-column.history-column-location,
+.list-group-item.order-history-row .history-column.history-column-time,
+.list-group-item.order-history-row .history-column.history-column-status,
+.list-group-item.order-history-row .history-column.history-column-progress {
+    color: black !important;
+}
+
+/* Target the badge elements */
+.list-group-item.order-history-row .history-column .history-badge {
+    color: black !important;
+    background-color: rgba(140, 216, 255, 0.4) !important; /* Lighter blue background for better contrast */
+}
+
+/* Target any spans within the history columns */
+.list-group-item.order-history-row .history-column span {
+    color: black !important;
+}
+
+/* Corrected text for the example that had strange characters */
+.list-group-item.order-history-row .history-column-progress:contains("sondkhsoyktoK<TLMLE:T<:LGMFDG") {
+    color: black !important;
+}
+
+/* Set background color for order history header row to light blue */
+.list-group-item.order-history-header.order-history-row {
+    background-color: #e6f7ff !important; /* Light blue background */
+} 

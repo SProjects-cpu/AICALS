@@ -1,0 +1,29 @@
+# Database
+db.sqlite3
+db.sqlite3-journal
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+newenv/
+env/
+ENV/
+
+# Local media files
+media/
+
+# Log files
+*.log
+
+# Sensitive information
+.env
+*.pem
+*.key
+
+# OS specific files
+.DS_Store
+Thumbs.db 

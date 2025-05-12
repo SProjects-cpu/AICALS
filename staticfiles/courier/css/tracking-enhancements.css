@@ -1,0 +1,125 @@
+/* Enhanced Tracker UI Improvements */
+
+/* Better content spacing and organization */
+.content {
+    transition: all 0.3s ease;
+}
+
+/* Enhance the Order Tracking title */
+.content1 {
+    position: relative;
+    overflow: hidden;
+}
+
+.content1::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, rgba(255,255,255,0.2), rgba(255,255,255,0.8), rgba(255,255,255,0.2));
+}
+
+/* Tracking number display */
+.content1 p.font-weight-bold {
+    margin-top: 0.5rem !important;
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.9);
+    background-color: rgba(0,0,0,0.1);
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+}
+
+/* Status display improvements */
+.content2-header1 h2 {
+    margin-bottom: 0.5rem;
+    font-size: 1.4rem;
+}
+
+.content2-header1 h2 span {
+    font-weight: 700;
+    color: #fff;
+    background-color: rgba(0,0,0,0.1);
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+}
+
+/* Status colors */
+.content2-header1 h2 span.status-pending {
+    background-color: #f0ad4e;
+}
+
+.content2-header1 h2 span.status-in_transit {
+    background-color: #5bc0de;
+}
+
+.content2-header1 h2 span.status-delivered {
+    background-color: #5cb85c;
+}
+
+.content2-header1 h2 span.status-returned {
+    background-color: #d9534f;
+}
+
+/* Tracking image container */
+.content3 {
+    padding: 2.5rem 1rem;
+    text-align: center;
+}
+
+/* Enhance visual clarity on small screens */
+@media (max-width: 768px) {
+    .content1 p.font-weight-bold {
+        font-size: 0.85rem;
+        padding: 0.3rem 0.8rem;
+    }
+    
+    .content2-header1 h2 {
+        font-size: 1.2rem;
+    }
+    
+    .content2-header1 h2 span {
+        font-size: 1rem;
+    }
+}
+
+/* Add animated pulse to track current status */
+@keyframes statusPulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(0, 123, 255, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(0, 123, 255, 0);
+    }
+}
+
+/* Add some animation to delivery status indicators */
+.content2-header1 h2 span {
+    animation: statusPulse 2s infinite;
+}
+
+/* Custom scrollbar for order history */
+.order-history-table::-webkit-scrollbar {
+    width: 8px;
+}
+
+.order-history-table::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.order-history-table::-webkit-scrollbar-thumb {
+    background: #8cd8ff;
+    border-radius: 10px;
+}
+
+.order-history-table::-webkit-scrollbar-thumb:hover {
+    background: #7bc8ff;
+} 

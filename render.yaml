@@ -1,0 +1,32 @@
+services:
+  - type: web
+    name: courier-management
+    env: python
+    buildCommand: ./build.sh
+    startCommand: gunicorn CourierManagement.wsgi:application
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: false
+      - key: PYTHON_VERSION
+        value: 3.10.0
+      - key: DATABASE_URL
+        fromDatabase:
+          name: courier_db
+          property: connectionString
+      - key: RENDER_EXTERNAL_HOSTNAME
+        value: www.aicals.com
+      # Admin user environment variables  
+      - key: ADMIN_USERNAME
+        value: admin
+      - key: ADMIN_EMAIL
+        value: admin@example.com
+      - key: ADMIN_PASSWORD
+        value: admin@123456
+        # Note: For production, set these via Render Dashboard for security
+
+databases:
+  - name: courier_db
+    databaseName: courier_db
+    user: courier_admin 

@@ -1,0 +1,73 @@
+/* Errorlist Height and Spacing Fixes */
+
+/* Targeted fixes for errorlist height and spacing issues */
+.errorlist {
+    /* Ensure compact size with minimal vertical space */
+    padding: 4px 8px !important;
+    margin-bottom: 12px !important;
+    height: auto !important; /* Override any fixed height */
+    min-height: 0 !important; /* Allow it to be as small as content requires */
+    max-height: none !important; /* Don't artificially constrain height */
+    line-height: 1.2 !important; /* Tighter line height */
+    display: block !important; /* Ensure proper display */
+    box-sizing: border-box !important;
+}
+
+/* Make sure list items are as compact as possible */
+.errorlist li {
+    padding: 0 !important;
+    margin: 0 !important;
+    line-height: 1.2 !important; /* Tighter line height */
+    height: auto !important;
+    min-height: 0 !important;
+}
+
+/* Ensure space after error messages */
+.errorlist + input,
+.errorlist + select,
+.errorlist + textarea,
+.errorlist + button,
+.errorlist + .form-control,
+.errorlist + div,
+.errorlist + span,
+.errorlist + label,
+.errorlist + fieldset {
+    margin-top: 12px !important; /* Space after errorlist before any form element */
+}
+
+/* Special case for empty elements */
+.errorlist + :empty {
+    margin-top: 8px !important;
+    display: block !important;
+    content: "" !important;
+    height: 8px !important;
+}
+
+/* Form groups containing errors need some breathing room */
+.form-group:has(.errorlist),
+.form-row:has(.errorlist),
+.field-box:has(.errorlist) {
+    margin-bottom: 16px !important;
+}
+
+/* Avoid double spacing in common layouts */
+.form-row .errorlist + .form-row,
+.form-group .errorlist + .form-group {
+    margin-top: 0 !important; /* Avoid double spacing between groups */
+}
+
+/* Fix for forms with multiple fields in a row */
+.row:has(.errorlist) {
+    margin-bottom: 10px !important;
+}
+
+/* Ensure these overrides apply regardless of specificity */
+body .errorlist {
+    font-size: 0.75rem !important;
+}
+
+/* Adjust spacing in RTL languages */
+[dir="rtl"] .errorlist {
+    border-left: none !important; 
+    border-right: 3px solid #dc3545 !important;
+} 
