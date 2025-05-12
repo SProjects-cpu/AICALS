@@ -1,6 +1,7 @@
 {% extends "admin/base_site.html" %}
 {% load i18n static %}
 
+<!-- Removed Clear All Actions button - GitTest -->
 {% block extrastyle %}{{ block.super }}
 <link rel="stylesheet" type="text/css" href="{% static "admin/css/dashboard.css" %}">
 <style>
@@ -174,15 +175,6 @@
   .toggle-actions-btn:active {
     transform: translateY(0);
   }
-  
-  /* Style for Clear Actions button */
-  #clear-actions-btn {
-    background-color: #dc3545;
-  }
-  
-  #clear-actions-btn:hover {
-    background-color: #c82333;
-  }
 </style>
 {% endblock %}
 
@@ -218,7 +210,6 @@
       <span>{% translate 'Recent actions' %}</span>
       <div class="buttons-container">
         <button id="toggle-actions-btn" class="toggle-actions-btn">Show Actions</button>
-        <button id="clear-actions-btn" class="toggle-actions-btn">Clear All Actions</button>
         <button id="debug-clear-btn" class="toggle-actions-btn" style="background-color: #6c757d;">Debug Clear</button>
       </div>
     </h2>
@@ -287,139 +278,6 @@
           toggleBtn.textContent = 'Show Actions';
         }
       }
-    }
-
-    // Functionality for Clear All Actions button
-    const clearActionsBtn = document.getElementById('clear-actions-btn');
-    if (clearActionsBtn) {
-      clearActionsBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        
-        console.log('Clear All Actions button clicked');
-        
-        if (!confirm('Are you sure you want to clear all recent actions? This cannot be undone.')) {
-            console.log('User cancelled the action');
-            return;
-        }
-
-        console.log('User confirmed deletion');
-        
-        try {
-          // Get CSRF token
-          let csrfToken = document.querySelector('#csrf-form [name=csrfmiddlewaretoken]');
-          
-          if (!csrfToken) {
-            console.error('CSRF token not found in #csrf-form');
-            
-            // Try to find any CSRF token on the page
-            const allTokens = document.querySelectorAll('[name=csrfmiddlewaretoken]');
-            console.log('CSRF tokens found on page:', allTokens.length);
-            
-            if (allTokens.length === 0) {
-              alert('CSRF token not found. Cannot proceed.');
-              return;
-            }
-            
-            console.log('Using first available CSRF token');
-            csrfToken = allTokens[0];
-          }
-          
-          console.log('CSRF token found, length:', csrfToken.value.length);
-          
-          // Direct XHR request instead of form submission
-          console.log('Creating XHR request to /custom_admin/delete_log/?all=true');
-          const xhr = new XMLHttpRequest();
-          xhr.open('POST', '/custom_admin/delete_log/?all=true', true);
-          xhr.setRequestHeader('X-CSRFToken', csrfToken.value);
-          xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-          xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-          
-          console.log('XHR request headers set, sending request...');
-          
-          xhr.onload = function() {
-            console.log('Response received with status:', xhr.status);
-            console.log('Response headers:', xhr.getAllResponseHeaders());
-            
-            if (xhr.status >= 200 && xhr.status < 300) {
-              try {
-                console.log('Raw response:', xhr.responseText);
-                const data = JSON.parse(xhr.responseText);
-                console.log('Parsed response data:', data);
-                
-                if (data.status === 'success') {
-                  // Update the UI
-                  const actionsList = document.querySelector('#recent-actions-module .actionlist');
-                  console.log('Found actionsList element:', actionsList ? 'Yes' : 'No');
-                  const actionsContent = document.querySelector('#actions-content');
-                  
-                  if (actionsList) {
-                    actionsList.remove();
-                    console.log('Removed actionsList');
-                    
-                    // Add "None available" paragraph if it doesn't exist
-                    if (!document.querySelector('#actions-content p')) {
-                      console.log('Creating "None available" paragraph');
-                      const noActions = document.createElement('p');
-                      noActions.textContent = 'None available';
-                      
-                      const heading = document.querySelector('#actions-content h3');
-                      if (heading) {
-                        heading.insertAdjacentElement('afterend', noActions);
-                        console.log('Added "None available" after heading');
-                      } else if (actionsContent) {
-                        actionsContent.appendChild(noActions);
-                        console.log('Added "None available" to actionsContent');
-                      }
-                    }
-                    
-                    alert(`Successfully cleared ${data.deleted_count} action(s)`);
-                    
-                    // Reload the page to ensure everything is updated
-                    setTimeout(function() {
-                      window.location.reload();
-                    }, 1000);
-                  } else {
-                    console.error('Could not find .actionlist element');
-                    alert('Actions cleared successfully.');
-                    
-                    // Reload the page to ensure everything is updated
-                    setTimeout(function() {
-                      window.location.reload();
-                    }, 1000);
-                  }
-                } else {
-                  console.error('Error in response:', data);
-                  alert('Error: ' + (data.message || 'Unknown error'));
-                }
-              } catch (parseError) {
-                console.error('Error parsing response:', parseError);
-                console.error('Response text:', xhr.responseText.substring(0, 100) + '...');
-                alert('Error processing server response. The page will be refreshed.');
-                window.location.reload();
-              }
-            } else if (xhr.status === 404) {
-              console.error('404 Error: Endpoint not found');
-              alert('Error: The delete_log endpoint was not found. Please check server configuration.');
-            } else {
-              console.error(`HTTP Error ${xhr.status}:`, xhr.responseText);
-              alert('Error: Server returned status code ' + xhr.status);
-            }
-          };
-          
-          xhr.onerror = function() {
-            console.error('Network request failed', xhr);
-            alert('Request failed. Please check your network connection.');
-          };
-          
-          xhr.send();
-          console.log('XHR request sent');
-        } catch (error) {
-          console.error('Exception in Clear All Actions handler:', error);
-          alert('An error occurred: ' + error.message);
-        }
-      });
-    } else {
-      console.error('Clear actions button not found in DOM');
     }
 
     // Debug button functionality
@@ -527,10 +385,6 @@
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     console.log('Debug script loaded - Updated version');
-    
-    // Verify clear button exists
-    const clearBtn = document.getElementById('clear-actions-btn');
-    console.log('Clear button exists:', clearBtn ? 'Yes' : 'No');
     
     // Verify CSRF token form exists
     const csrfForm = document.getElementById('csrf-form');
