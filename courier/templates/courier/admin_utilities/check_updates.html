@@ -1,17 +1,17 @@
 {% extends 'admin/base_site.html' %}
 
-{% block title %}Order Updates Utility{% endblock %}
+{% block title %}Shipment Updates Utility{% endblock %}
 
 {% block breadcrumbs %}
 <div class="breadcrumbs">
-    <a href="{% url 'admin:index' %}">Home</a> &rsaquo; Order Updates Utility
+    <a href="{% url 'admin:index' %}">Home</a> &rsaquo; Shipment Updates Utility
 </div>
 {% endblock %}
 
 {% block content %}
 <div id="content-main">
-    <h1>Order Updates Utility</h1>
-    <p>This utility helps identify and fix orders that are missing update records.</p>
+    <h1>Shipment Updates Utility</h1>
+    <p>This utility helps identify and fix shipments that are missing update records.</p>
     
     <!-- Display messages -->
     {% if messages %}
@@ -26,16 +26,16 @@
         <!-- Button to clear all admin actions -->
         <div style="margin-bottom: 15px;">
             <a href="{% url 'clear_admin_actions' %}" 
-               onclick="return confirm('WARNING: This will clear ALL order updates across ALL orders. This action cannot be undone. Are you sure?')"
+               onclick="return confirm('WARNING: This will clear ALL shipment updates across ALL shipments. This action cannot be undone. Are you sure?')"
                class="button" style="background-color: #dc3545; color: white;">
-                Clear All Admin Actions (Reset All Order Updates)
+                Clear All Admin Actions (Reset All Shipment Updates)
             </a>
         </div>
         
         <table style="width:100%">
             <thead>
                 <tr>
-                    <th>Order ID</th>
+                    <th>Shipment ID</th>
                     <th>Sender</th>
                     <th>Receiver</th>
                     <th>Date</th>
@@ -63,7 +63,7 @@
                 </tr>
                 {% empty %}
                 <tr>
-                    <td colspan="7">No orders found.</td>
+                    <td colspan="7">No shipments found.</td>
                 </tr>
                 {% endfor %}
             </tbody>

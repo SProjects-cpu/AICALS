@@ -52,4 +52,32 @@ document.addEventListener('DOMContentLoaded', function() {
       localStorage.setItem('actionsVisible', 'true');
     }
   });
+
+  // Debug clear functionality (for developers/admins)
+  const debugClearBtn = document.getElementById('debug-clear-btn');
+  if (debugClearBtn) {
+    debugClearBtn.addEventListener('click', function() {
+      console.log('Debug clear button clicked');
+      // This would typically connect to a backend API to clear logs
+      // For now, just show a message
+      alert('Debug clear functionality is active. In production, this would clear debug logs.');
+    });
+  }
+});
+
+// Resize handling for responsive layout
+window.addEventListener('resize', function() {
+  const recentActionsModule = document.getElementById('recent-actions-module');
+  const buttonsContainer = document.querySelector('#recent-actions-module .buttons-container');
+  
+  if (recentActionsModule && buttonsContainer) {
+    // Adjust button container layout based on available width
+    if (recentActionsModule.offsetWidth < 500) {
+      buttonsContainer.style.flexDirection = 'column';
+      buttonsContainer.style.gap = '5px';
+    } else {
+      buttonsContainer.style.flexDirection = 'row';
+      buttonsContainer.style.gap = '10px';
+    }
+  }
 }); 

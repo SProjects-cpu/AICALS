@@ -1,0 +1,40 @@
+/* 
+ * History Section Wrapper Styles
+ * This file ensures the History section wrapper contains both the header and table correctly
+ */
+
+.history-section-wrapper {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Remove individual shadows and borders to create one unified component */
+.history-section-wrapper .content1,
+.history-section-wrapper .history-card {
+    box-shadow: none;
+    margin: 0;
+}
+
+/* Ensure the history card doesn't have its own border radius since it's contained */
+.history-section-wrapper .history-card {
+    border-radius: 0 0 8px 8px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 991px) {
+    .history-section-wrapper {
+        width: 100%;
+    }
+}
+
+@media (max-width: 414px) {
+    .history-section-wrapper {
+        border-radius: 4px;
+    }
+} 

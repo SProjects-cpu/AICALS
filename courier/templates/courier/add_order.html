@@ -1,6 +1,6 @@
 {% extends 'courier/emp_basic.html' %}
 
-{% block title%} New Order {% endblock %}
+{% block title%} New Shipment {% endblock %}
 {% block body %}
     <div class = "container">
         <div class="col my-4">
@@ -75,7 +75,7 @@
 <script>
 
 {% if thank %}
-alert('Thanks for ordering with us. Your order is  {{id}}. Use it to track your order using our order tracker');
+alert('Thanks for ordering with us. Your shipment is {{id}}. Use it to track your shipment using our shipment tracker');
 
 {% endif %}
 </script>

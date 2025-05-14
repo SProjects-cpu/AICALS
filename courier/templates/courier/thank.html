@@ -82,14 +82,14 @@
     <div class="thank-you-container">
         <h1 class="display-3">Thank You!</h1>
 
-        <p class="lead"><strong>Your order has been placed successfully.</strong></p>
-        <p>We'll process your order right away and keep you updated on its status.</p>
+        <p class="lead"><strong>Your shipment has been placed successfully.</strong></p>
+        <p>We'll process your shipment right away and keep you updated on its status.</p>
 
         <div class="tracking-number">
             Tracking Number: {{ id }}
         </div>
 
-        <a href="{% url 'TrackingStatus' %}" class="btn-track">Track Your Order</a>
+        <a href="{% url 'TrackingStatus' %}" class="btn-track">Track Your Shipment</a>
     </div>
 </div>
 {% endblock %}

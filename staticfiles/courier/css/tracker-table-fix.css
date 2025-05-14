@@ -1,0 +1,67 @@
+/**
+ * Tracker Table Fix CSS
+ * Purpose: Fix for the "HISTORY OF SHIPMENT" table in the tracker view
+ * Ensures that all columns (Date, Time, Location, Progress) display on a single line on screens > 1000px
+ * and fully shows the content without hiding text
+ */
+
+/* Media query for screens above 1000px - Single line per column fix */
+@media (min-width: 1000px) {
+    /* Allow table to expand based on content rather than fixed layout */
+    .history-table {
+        table-layout: auto !important;
+        width: 100% !important;
+        border-collapse: separate !important;
+        border-spacing: 0 !important;
+    }
+    
+    /* Force single line for all cell contents without hiding overflow */
+    .history-table th, 
+    .history-table td {
+        white-space: nowrap !important;
+        /* Remove overflow hidden and ellipsis to show full content */
+        padding: 12px 15px !important; /* Slightly more padding for better readability */
+        vertical-align: middle !important; /* Better vertical alignment */
+    }
+    
+    /* Set minimum widths for columns instead of fixed widths */
+    .history-table th:first-child,
+    .history-table td:first-child {
+        min-width: 140px !important;
+    }
+    
+    .history-table th:nth-child(2),
+    .history-table td:nth-child(2) {
+        min-width: 100px !important;
+    }
+    
+    .history-table th:nth-child(3),
+    .history-table td:nth-child(3) {
+        min-width: 150px !important;
+    }
+    
+    .history-table th:nth-child(4),
+    .history-table td:nth-child(4) {
+        min-width: 150px !important;
+    }
+    
+    /* Ensure the table container can scroll horizontally if needed */
+    .table-responsive {
+        overflow-x: auto !important;
+    }
+    
+    /* Add a subtle hover effect to improve readability when rows are long */
+    .history-table tbody tr:hover {
+        background-color: rgba(0, 0, 0, 0.03) !important;
+    }
+    
+    /* Fix striping to ensure it works with the hover effect */
+    .history-table-striped tbody tr:nth-of-type(odd) {
+        background-color: rgba(0, 0, 0, 0.02) !important;
+    }
+    
+    /* Add a subtle shadow to the table to make it stand out better */
+    .history-card {
+        box-shadow: 0 0.125rem 0.375rem rgba(0, 0, 0, 0.1) !important;
+    }
+} 

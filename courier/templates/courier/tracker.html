@@ -1,8 +1,79 @@
 {% extends 'courier/basic.html' %}
+{% load static %}
 
 {% block title %} Track {% endblock %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'courier/css/history-table-style.css' %}">
+<link rel="stylesheet" href="{% static 'courier/css/tracker-table-fix.css' %}">
+<style>
+/* Critical inline styles to ensure they get applied */
+.strivedi-tracking-container article.card {
+    border: none !important;
+    box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.15) !important;
+    margin-top: 2rem !important;
+    margin-bottom: 2rem !important;
+    overflow: hidden !important;
+    background-color: #fff !important;
+}
+
+.strivedi-tracking-container .card-header {
+    background: linear-gradient(to right, #2c3e50, #4a5568) !important;
+    border-radius: 0.25rem 0.25rem 0 0 !important;
+    border-bottom: none !important;
+    padding: 1rem 1.5rem !important;
+    color: white !important;
+}
+
+/* Enhanced shipment tracking box styles */
+.shipment-tracking-details .col strong {
+    color: #000 !important;
+    font-weight: 700 !important;
+    font-family: 'Roboto', sans-serif !important;
+    font-size: 13px !important;
+    text-transform: uppercase !important;
+}
+
+.shipment-tracking-details .col b {
+    color: #000 !important;
+    font-weight: 700 !important;
+    font-family: 'Roboto', sans-serif !important;
+    font-size: 15px !important;
+    display: block !important;
+    margin-top: 5px !important;
+}
+
+/* Status colors for tracking */
+.status-delivered {
+    color: #0abb87 !important; 
+    font-size: 15px !important;
+}
+.status-in-transit {
+    color: #5bc0de !important; 
+    font-size: 15px !important;
+}
+.status-pending {
+    color: #f0ad4e !important; 
+    font-size: 15px !important;
+}
+</style>
+{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<link rel="stylesheet" href="{% static 'courier/css/tracking-card.css' %}">
+<link rel="stylesheet" href="{% static 'courier/css/strivedi-style.css' %}">
+<link rel="stylesheet" href="{% static 'courier/css/tracking-roboto.css' %}">
+<style>
+/* Direct rule for card-body and all its child elements */
+.shipment-tracking-details .card-body.row.text-center,
+.shipment-tracking-details .card-body.row.text-center .col,
+.shipment-tracking-details .card-body.row.text-center .col * {
+  font-size: 15px !important;
+}
+</style>
+{% endblock %}
+
 {% block body %}
-    <div class="container">
+    <div class="container strivedi-tracking-container">
         {% if error %}
         <div class="alert alert-danger" role="alert">
             {{ error }}
@@ -12,149 +83,185 @@
             <a href="{% url 'home' %}" class="btn btn-primary">Back to Home</a>
         </div>
         {% else %}
-        <!-- Order Tracking Section -->
-        <div class="content tracking-section">
-            <div class="content1">
-                <h2>Order Tracking</h2>
-                {% if shipping %}
-                <p class="font-weight-bold mt-2">Tracking Number: {{ shipping.tracking_number }} | Carrier: {{ shipping.carrier }}</p>
-                {% endif %}
-            </div>
-            <div class="content2">
-                <div class="content2-header1">
-                    {% if shipping %}
-                        <h2 style="color: black">Status: <span class="status-{{ shipping.status }}">
-                            {% if shipping.status == 'pending' %}Pending
-                            {% elif shipping.status == 'in_transit' %}In Transit
-                            {% elif shipping.status == 'delivered' %}Delivered
-                            {% elif shipping.status == 'returned' %}Returned
-                            {% endif %}
-                        </span></h2>
-                        </div>
-                    {% else %}
-                        {% for i in updates %}
-                            {% if forloop.last %}
-                                <h2 style="color: black">Status : <span>{{ i.status }}</span></h2>
-                                </div>
-                            {% endif %}
-                        {% endfor %}
-                    {% endif %}
-                <div class="content2-header1">
-                    {% if shipping %}
-                        <p>Expected Delivery: <span>{{ shipping.estimated_delivery|date:"F j, Y" }}</span></p>
-                    {% else %}
-                        <p>Expected Date: <span>3 days after picked-up</span></p>
-                    {% endif %}
+        <!-- Tracking details begin -->
+        <article class="card main-tracking-card">
+            <header class="card-header"> 
+                <div class="row">
+                    <div class="col-md-6"><h5 class="upper">Shipment Tracking</h5></div>
+                    <div class="col-md-6" style="text-align:right"> 
+                        <h5><b>Tracking Number: <span style="color:#fff">
+                        {% if shipping %}
+                            {{ shipping.tracking_number }}
+                        {% else %}
+                            {{ orderId }}
+                        {% endif %}
+                        </span></b> | Carrier: 
+                        {% if shipping %}
+                            {{ shipping.carrier }}
+                        {% else %}
+                            truck
+                        {% endif %}
+                        </h5>
+                    </div>
                 </div>
-                <div class="clear"></div>
-            </div>
-            <div class="content3 status-image-container">
-                {% if shipping %}
-                    <div class="status-image-wrapper">
-                    {% if shipping.status == 'pending' %}
-                        <img src="../../static/courier/images/placed.PNG" alt="Pending" class="status-image">
-                    {% elif shipping.status == 'in_transit' %}
-                        <img src="../../static/courier/images/dispatched.PNG" alt="In Transit" class="status-image">
-                    {% elif shipping.status == 'delivered' %}
-                        <img src="../../static/courier/images/delivered.PNG" alt="Delivered" class="status-image">
-                    {% elif shipping.status == 'returned' %}
-                        <img src="../../static/courier/images/reached.PNG" alt="Returned" class="status-image">
-                    {% endif %}
+            </header>
+            <div class="card-body">
+                <!-- Replacing the track div with a responsive image container -->
+                <div class="tracking-image-container">
+                    <div class="tracking-image-wrapper">
+                        <img src="{% static 'courier/images/Screenshot 2025-05-13 162149.png' %}" alt="Shipment Tracking Status" class="tracking-status-image img-fluid">
                     </div>
-                {% else %}
-                    <div class="status-image-wrapper">
-                    {% if most_update.status == 'Placed Order' %}
-                        <img src="../../static/courier/images/placed.PNG" alt="Placed" class="status-image">
-                    {% endif %}
-                    {% if most_update.status == 'Confirmed Order' %}
-                        <img src="../../static/courier/images/confirmed.PNG" alt="confirmed" class="status-image">
-                    {% endif %}
-                    {% if most_update.status == 'Picked-up' %}
-                        <img src="../../static/courier/images/picked-up.PNG" alt="Picked-up" class="status-image">
-                    {% endif %}
-                    {% if most_update.status == 'Dispatched Product' %}
-                        <img src="../../static/courier/images/dispatched.PNG" alt="Dispatched Product" class="status-image">
-                    {% endif %}
-                    {% if most_update.status == 'Reached Product' %}
-                        <img src="../../static/courier/images/reached.PNG" alt="Reached Product" class="status-image">
-                    {% endif %}
-                    {% if most_update.status == 'Delivered Product' %}
-                        <img src="../../static/courier/images/delivered.PNG" alt="Delivered Product" class="status-image">
-                    {% endif %}
-                    </div>
-                {% endif %}
-            </div>
-        </div>
+                </div>
 
-        <!-- History of Order Section -->
-        <div class="content order-history-content">
-            <div class="content1">
-                <h2>History of order</h2>
-            </div>
-            
-            <!-- Debug information to help troubleshoot -->
-            {% if updates %}
-                <div class="alert alert-info d-none">
-                    Updates found: {{ updates|length }} update(s)
-                </div>
-            {% else %}
-                <div class="alert alert-warning d-none">
-                    No updates found for this order.
-                </div>
-            {% endif %}
-            
-            <!-- Scrollable container for order history -->
-            <div class="order-history-scrollable">
-                <!-- List group for order history with improved layout -->
-                <ul class="list-group order-history-table" id="items">
-                    <li class="list-group-item order-history-header order-history-row d-flex flex-column flex-md-row justify-content-between align-items-center text-black">
-                        <span class="history-column history-column-location history-header mb-2 mb-md-0">Location</span>
-                        <span class="history-column history-column-time history-header mb-2 mb-md-0">Time</span>
-                        <span class="history-column history-column-status history-header mb-2 mb-md-0">Status</span>
-                        <span class="history-column history-column-progress history-header">Progress</span>
-                    </li>
-                    
-                    {% if shipping %}
-                    <!-- Display shipping information as a history entry -->
-                    <li class="list-group-item order-history-row d-flex flex-column flex-md-row justify-content-between align-items-center">
-                        <span class="history-column history-column-location history-badge mb-2 mb-md-0">{{ shipping.order.receiver_address }}</span>
-                        <span class="history-column history-column-time history-badge mb-2 mb-md-0">{{ shipping.shipping_date }}</span>
-                        <span class="history-column history-column-status history-badge mb-2 mb-md-0">
-                            {% if shipping.status == 'pending' %}Pending
-                            {% elif shipping.status == 'in_transit' %}In Transit
-                            {% elif shipping.status == 'delivered' %}Delivered
-                            {% elif shipping.status == 'returned' %}Returned
+                <article class="card shipment-tracking-details" style="background-color: #fff">
+                    <div class="card-body row text-center" style="font-size: 15px !important; border: 2px solid black;">
+                        <div class="col" style="font-size: 15px !important;"> 
+                            <strong style="font-size: 15px !important;">Forward No:</strong><br>
+                            <span class="forward-no-value" style="color: #CA353B !important; font-weight: bold !important; font-size: 15px !important;"><br>
+                            {% if shipping %}
+                                {{ shipping.forward_no }}
                             {% endif %}
-                        </span>
-                        <span class="history-column history-column-progress history-badge">Initial</span>
-                    </li>
-                    
-                    {% if shipping.notes %}
-                    <li class="my-2"></li>
-                    <li class="text-lg-center text-black my-2">{{ shipping.notes }}</li>
-                    {% endif %}
-                    {% endif %}
-                    
-                    <!-- Display all order updates -->
-                    {% for i in updates %}
-                    <li class="list-group-item order-history-row d-flex flex-column flex-md-row justify-content-between align-items-center">
-                        <span class="history-column history-column-location history-badge mb-2 mb-md-0">{{ i.location }}</span>
-                        <span class="history-column history-column-time history-badge mb-2 mb-md-0">{{ i.time }}</span>
-                        <span class="history-column history-column-status history-badge mb-2 mb-md-0">{{ i.status }}</span>
-                        <span class="history-column history-column-progress history-badge">{{ i.progress }}</span>
-                    </li>
-                    {% empty %}
-                    <!-- Show a message if no updates exist -->
-                    <li class="list-group-item text-center">
-                        No order history available yet. Check back later for updates.
-                    </li>
-                    {% endfor %}
-                </ul>
+                            </span>
+                        </div>
+                        <div class="col" style="font-size: 15px !important;"> 
+                            <strong style="font-size: 15px !important;">Customer:</strong> <br>
+                            <span class="tracking-value" style="font-size: 15px !important;">
+                            {% if shipping %}
+                                {{ shipping.customer }}
+                            {% endif %}
+                            </span>
+                        </div>
+                        <div class="col" style="font-size: 15px !important;"> 
+                            <strong style="font-size: 15px !important;">Signed By:</strong> <br>
+                            <span class="tracking-value" style="font-size: 15px !important;">
+                            {% if shipping %}
+                                {{ shipping.signed_by }}
+                            {% endif %}
+                            </span>
+                        </div>
+                        <div class="col" style="font-size: 15px !important;"> 
+                            <strong style="font-size: 15px !important;">Status:</strong> <br>
+                            <span class="{% if shipping and shipping.status == 'delivered' %}status-delivered{% elif shipping and shipping.status == 'in_transit' %}status-in-transit{% elif most_update and most_update.status == 'Delivered Product' %}status-delivered{% elif most_update and most_update.status == 'Dispatched Product' %}status-in-transit{% else %}status-pending{% endif %}">
+                                <span class="cl" style="font-size: 15px !important;">
+                                {% if shipping %}
+                                    {{ shipping.status }}
+                                {% elif most_update %}
+                                    {{ most_update.status }}
+                                {% endif %}
+                                </span>
+                            </span>
+                        </div>
+                        <div class="col" style="font-size: 15px !important;"> 
+                            <strong style="font-size: 15px !important;">Expected Delivery:</strong> <br>
+                            <span class="tracking-value" style="font-size: 15px !important;">
+                            {% if shipping %}
+                                {{ shipping.estimated_delivery|date:"F j, Y" }}
+                            {% else %}
+                                3 days after picked-up
+                            {% endif %}
+                            </span>
+                        </div>
+                    </div>
+                </article><br>
+
+                <article class="card shipment-tracking-details" style="background-color: #fff;">
+                    <div class="card-body row text-center" style="font-size: 15px !important; border: 2px solid black;">
+                        <div class="col" style="font-size: 15px !important;"> 
+                            <strong style="font-size: 15px !important;">Shipment Date:</strong>
+                            <br>
+                            <span style="font-size: 15px !important;">
+                            {% if shipping %}
+                                {{ shipping.shipping_date|date:"F j, Y" }}
+                            {% endif %}
+                            </span>
+                        </div>
+                        <div class="col" style="font-size: 15px !important;"> 
+                            <strong style="font-size: 15px !important;">Origin:</strong> <br>
+                            <span style="font-size: 15px !important;">
+                            {% if shipping %}
+                                {{ shipping.origin }}
+                            {% endif %}
+                            </span>
+                        </div>
+                        <div class="col" style="font-size: 15px !important;"> 
+                            <strong style="font-size: 15px !important;">Destination:</strong> <br>
+                            <span style="font-size: 15px !important;">
+                            {% if shipping %}
+                                {{ shipping.destination }}
+                            {% endif %}
+                            </span>
+                        </div>
+                        <div class="col" style="font-size: 15px !important;"> 
+                            <strong style="font-size: 15px !important;">No of pcs:</strong> <br>
+                            <span style="font-size: 15px !important;">
+                            {% if shipping %}
+                                {{ shipping.no_of_pcs }}
+                            {% endif %}
+                            </span>
+                        </div>
+                    </div>
+                </article>
+
             </div>
-        </div>
+        </article>
+
+        <!-- History of Shipment Section -->
+        <section class="container history-section-container pt-1">
+            <div class="history-section-wrapper">
+                <div class="content1">
+                    <h2>History of shipment</h2>
+                </div>
+                
+                <div class="card history-card">
+                    <div class="card-body history-card-body">
+                        <div class="table-responsive" style="overflow-x: auto; width: 100%;">
+                            <table class="table table-striped history-table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" style="font-weight: 700 !important; color: #000 !important;">Date</th>
+                                        <th scope="col" style="font-weight: 700 !important; color: #000 !important;">Time</th>
+                                        <th scope="col" style="font-weight: 700 !important; color: #000 !important;">Location</th>
+                                        <th scope="col" style="font-weight: 700 !important; color: #000 !important;">Progress</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Display all shipment updates -->
+                                    {% for i in updates %}
+                                    <tr>
+                                        <th>{{ i.time|date:"D, d M Y" }}</th>
+                                        <td>{{ i.time|time:"h:i A" }}</td>
+                                        <td>{{ i.location }}</td>
+                                        <td>
+                                            {% if 'Delivered' in i.status %}
+                                            <span class="status-delivered">{{ i.progress }}</span>
+                                            {% elif 'Transit' in i.status or 'way' in i.status %}
+                                            <span class="status-in-transit">{{ i.progress }}</span>
+                                            {% else %}
+                                            <span>{{ i.progress }}</span>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    {% empty %}
+                                    <!-- Show a message if no updates exist -->
+                                    <tr>
+                                        <td colspan="4" class="text-center">
+                                            No shipment history available yet. Check back later for updates.
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
         {% endif %}
     </div>
+{% endblock %}
 
+{% block scripts %}
 <!-- Script to remove any dummy elements that might be added dynamically -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -170,46 +277,152 @@ document.addEventListener('DOMContentLoaded', function() {
         return false;
     }
     
-    // 1. Remove dummy elements with more targeted approach
-    const listItems = document.querySelectorAll('#items li.list-group-item');
-    console.log("Found " + listItems.length + " list items to check");
+    // Clean up dummy data if any
+    const tableRows = document.querySelectorAll('.history-table tbody tr');
+    console.log("Found " + tableRows.length + " table rows to check");
     
-    listItems.forEach(function(item) {
-        if (isDummyElement(item)) {
-            console.log("Removing dummy element:", item.textContent);
-            item.remove();
+    tableRows.forEach(function(row) {
+        if (isDummyElement(row)) {
+            console.log("Removing dummy element:", row.textContent);
+            row.remove();
         }
     });
     
     // Display count of updates after cleaning
-    const remainingItems = document.querySelectorAll('#items li.list-group-item').length;
-    console.log("After cleanup: " + remainingItems + " items remain");
+    const remainingRows = document.querySelectorAll('.history-table tbody tr').length;
+    console.log("After cleanup: " + remainingRows + " rows remain");
     
-    // Make sure we don't accidentally hide the History of Order section
-    const historySection = document.querySelector('.content.order-history-content');
-    if (historySection) {
-        historySection.style.display = 'block';
-    }
-});
-</script>
-
-<!-- Script to force black text color for all history items -->
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Apply black text to all history columns
-        const historyElements = document.querySelectorAll('.history-badge, .history-column');
-        historyElements.forEach(function(element) {
-            element.style.color = 'black';
+    // Apply critical styles programmatically to ensure they get applied
+    const applyTrackingStyles = () => {
+        // Get the main tracking container and card
+        const trackingContainer = document.querySelector('.strivedi-tracking-container');
+        if (!trackingContainer) return;
+        
+        const mainCard = trackingContainer.querySelector('article.card');
+        if (!mainCard) return;
+        
+        // Apply styles to main card
+        Object.assign(mainCard.style, {
+            border: 'none',
+            boxShadow: '0 0.75rem 1.5rem rgba(0, 0, 0, 0.15)',
+            marginTop: '2rem',
+            marginBottom: '2rem',
+            overflow: 'hidden',
+            backgroundColor: '#fff'
         });
         
-        // Specifically target any elements with problematic text
-        const allHistoryTexts = document.querySelectorAll('.history-column-progress');
-        allHistoryTexts.forEach(function(element) {
-            if (element.textContent.includes('sondkhsoyktoK')) {
-                element.style.color = 'black';
-                element.style.backgroundColor = 'rgba(140, 216, 255, 0.4)';
+        // Style the card header
+        const cardHeader = mainCard.querySelector('.card-header');
+        if (cardHeader) {
+            cardHeader.style.background = 'linear-gradient(to right, #2c3e50, #4a5568)';
+            cardHeader.style.borderRadius = '0.25rem 0.25rem 0 0';
+            cardHeader.style.borderBottom = 'none';
+            cardHeader.style.padding = '1rem 1.5rem';
+            cardHeader.style.color = 'white';
+        }
+        
+        // Set font size for tracking details
+        const shipmentTrackingDetails = document.querySelectorAll('.shipment-tracking-details .card-body');
+        shipmentTrackingDetails.forEach(card => {
+            // Set font size for all elements in the card
+            card.style.fontSize = '15px';
+            
+            // Get all text elements and set font size
+            const allTextElements = card.querySelectorAll('*');
+            allTextElements.forEach(el => {
+                if (el.textContent.trim()) {
+                    el.style.fontSize = '15px';
+                }
+            });
+        });
+        
+        // Track styling removed
+        
+        // Style status indicators
+        const statusElements = mainCard.querySelectorAll('b[style*="color"]');
+        statusElements.forEach(element => {
+            const currentStyle = element.getAttribute('style');
+            
+            if (currentStyle && currentStyle.includes('color:#f0ad4e')) {
+                element.style.backgroundColor = 'rgba(240, 173, 78, 0.1)';
+                element.style.padding = '3px 8px';
+                element.style.borderRadius = '4px';
+                element.style.display = 'inline-block';
+                element.style.fontSize = '15px';
+            } else if (currentStyle && currentStyle.includes('color:#5bc0de')) {
+                element.style.backgroundColor = 'rgba(91, 192, 222, 0.1)';
+                element.style.padding = '3px 8px';
+                element.style.borderRadius = '4px';
+                element.style.display = 'inline-block';
+                element.style.fontSize = '15px';
+            } else if (currentStyle && currentStyle.includes('color:#0abb87')) {
+                element.style.backgroundColor = 'rgba(10, 187, 135, 0.1)';
+                element.style.padding = '3px 8px';
+                element.style.borderRadius = '4px';
+                element.style.display = 'inline-block';
+                element.style.fontSize = '15px';
             }
         });
-    });
+        
+        // Apply the Roboto bold styling to the shipment tracking details
+        const trackingDetailsCards = document.querySelectorAll('.shipment-tracking-details');
+        trackingDetailsCards.forEach(card => {
+            // Apply styling to all strong elements (labels)
+            const strongLabels = card.querySelectorAll('.col strong');
+            strongLabels.forEach(label => {
+                Object.assign(label.style, {
+                    color: '#000',
+                    fontWeight: '700',
+                    fontFamily: '"Roboto", sans-serif',
+                    fontSize: '15px',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.5px',
+                    display: 'block',
+                    marginBottom: '5px'
+                });
+            });
+            
+            // Apply styling to all b elements (values)
+            const bValues = card.querySelectorAll('.col b:not(.forward-no-value)');
+            bValues.forEach(value => {
+                if (!value.hasAttribute('style')) { // Don't override status styling
+                    Object.assign(value.style, {
+                        color: '#000',
+                        fontWeight: '700',
+                        fontFamily: '"Roboto", sans-serif',
+                        fontSize: '15px',
+                        display: 'block',
+                        marginTop: '5px'
+                    });
+                }
+            });
+            
+            // Apply special styling to Forward No value
+            const forwardNoValue = card.querySelector('.forward-no-value');
+            if (forwardNoValue) {
+                Object.assign(forwardNoValue.style, {
+                    color: '#CA353B',
+                    fontWeight: 'bold',
+                    fontFamily: '"Roboto", sans-serif',
+                    fontSize: '15px',
+                    display: 'block',
+                    marginTop: '5px'
+                });
+            }
+
+            // Make sure all text elements have the correct font size
+            const allSpans = card.querySelectorAll('span');
+            allSpans.forEach(span => {
+                span.style.fontSize = '15px';
+            });
+        });
+    };
+    
+    // Apply styles on load
+    applyTrackingStyles();
+    
+    // Apply again after a short delay to handle any dynamic content
+    setTimeout(applyTrackingStyles, 500);
+});
 </script>
 {% endblock %}

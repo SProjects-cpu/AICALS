@@ -1,0 +1,44 @@
+/* 
+ * History Table Font Fix
+ * This file ensures all elements inside the history table use Roboto font
+ */
+
+/* Apply Roboto font to entire history table section */
+.history-section-container *,
+.history-section-container .history-section-wrapper *,
+.history-section-container .history-card *,
+.history-section-container .card-body.history-card-body *,
+.history-section-container .table-responsive *,
+.table.table-striped.history-table,
+.table.table-striped.history-table * {
+    font-family: 'Roboto', sans-serif !important;
+}
+
+/* Make sure all text elements in the table use Roboto */
+.history-table th,
+.history-table td,
+.history-table span,
+.history-table p,
+.history-table div {
+    font-family: 'Roboto', sans-serif !important;
+}
+
+/* Make date values bold */
+.history-section-container .history-card .history-card-body .table-responsive .history-table tbody tr th,
+.table.table-striped.history-table tbody tr th {
+    font-weight: 700 !important;
+}
+
+/* Ensure status spans use Roboto font */
+.status-delivered,
+.status-in-transit,
+.status-on-the-way,
+.status-pending,
+.status-picked-up {
+    font-family: 'Roboto', sans-serif !important;
+}
+
+/* For placeholder empty state text */
+.history-table .text-center {
+    font-family: 'Roboto', sans-serif !important;
+} 

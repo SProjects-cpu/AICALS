@@ -612,3 +612,17 @@ span.line {
 }
 }
 
+/* Styles for new shipment details section */
+.content2 + .content2 {
+    margin-top: 15px;
+    border-radius: 8px;
+}
+
+.content2-header1 p[style*="Roboto"] {
+    margin-bottom: 5px;
+}
+
+.content2-header1 p[style*="Roboto"] span {
+    margin-left: 5px;
+}
+

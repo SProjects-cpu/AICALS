@@ -15,7 +15,7 @@
             <div class="flex flex-col md:flex-row items-center md:gap-12 lg:gap-16">
                 <div class="md:w-1/2 mb-10 md:mb-0" data-aos="fade-right" data-aos-delay="100">
                     <h1 class="text-4xl md:text-5xl font-bold mb-6 leading-tight animate__animated animate__fadeInUp">Streamlined <span class="text-orange-500">Courier</span> Management System</h1>
-                    <p class="text-lg text-gray-600 mb-8 animate__animated animate__fadeInUp animate__delay-1s">AiCL provides a comprehensive web-based platform for efficient courier services. Track shipments in real-time, manage orders with ease, and deliver exceptional customer experience.</p>
+                    <p class="text-lg text-gray-600 mb-8 animate__animated animate__fadeInUp animate__delay-1s">AiCL provides a comprehensive web-based platform for efficient courier services. Track shipments in real-time, manage shipments with ease, and deliver exceptional customer experience.</p>
                     <div class="mb-8 animate__animated animate__fadeInUp animate__delay-2s">
                         <form method="post" {% if user.is_authenticated %}action="/tracker/" {% else %} action="/login/" {% endif %} onsubmit="return validateTrackingForm()" class="tracking-form-container">
                             {% csrf_token %}
@@ -178,17 +178,6 @@
                             <i class="fas fa-phone-alt mr-2"></i> +91 85112 45404
                         </a>
                     </div>
-                    <div class="flex justify-center space-x-3">
-                        <a href="#" class="w-8 h-8 bg-gray-200 hover:bg-orange-500 text-gray-700 hover:text-white rounded-full flex items-center justify-center transition duration-300" aria-label="Facebook">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="#" class="w-8 h-8 bg-gray-200 hover:bg-orange-500 text-gray-700 hover:text-white rounded-full flex items-center justify-center transition duration-300" aria-label="Twitter">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="#" class="w-8 h-8 bg-gray-200 hover:bg-orange-500 text-gray-700 hover:text-white rounded-full flex items-center justify-center transition duration-300" aria-label="LinkedIn">
-                            <i class="fab fa-linkedin-in"></i>
-                        </a>
-                    </div>
                 </div>
 
                 <div class="testimonial-card text-center" data-aos="fade-up" data-aos-delay="200">
@@ -205,17 +194,6 @@
                             <i class="fas fa-phone-alt mr-2"></i> +91 6353253396
                         </a>
                     </div>
-                    <div class="flex justify-center space-x-3">
-                        <a href="#" class="w-8 h-8 bg-gray-200 hover:bg-orange-500 text-gray-700 hover:text-white rounded-full flex items-center justify-center transition duration-300" aria-label="Facebook">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="#" class="w-8 h-8 bg-gray-200 hover:bg-orange-500 text-gray-700 hover:text-white rounded-full flex items-center justify-center transition duration-300" aria-label="Twitter">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="#" class="w-8 h-8 bg-gray-200 hover:bg-orange-500 text-gray-700 hover:text-white rounded-full flex items-center justify-center transition duration-300" aria-label="LinkedIn">
-                            <i class="fab fa-linkedin-in"></i>
-                        </a>
-                    </div>
                 </div>
             </div>
         </div>
@@ -228,7 +206,6 @@
             <p class="text-xl mb-8 max-w-3xl mx-auto">Join thousands of businesses that are streamlining their logistics with AiCL COURIERS Management System.</p>
             <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
                 <a href="/contact/" class="primary-btn text-lg px-8 py-4 transform transition-transform duration-300 hover:scale-105">Contact Us</a>
-                <a href="/order/" class="bg-white text-gray-800 hover:bg-gray-100 text-lg font-bold px-8 py-4 rounded-md transition-all transform duration-300 hover:scale-105">Place Order</a>
             </div>
         </div>
     </section>

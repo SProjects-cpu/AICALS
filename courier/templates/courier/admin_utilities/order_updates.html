@@ -1,18 +1,18 @@
 {% extends 'admin/base_site.html' %}
 
-{% block title %}Order #{{ order.order_id }} Updates{% endblock %}
+{% block title %}Shipment #{{ order.order_id }} Updates{% endblock %}
 
 {% block breadcrumbs %}
 <div class="breadcrumbs">
     <a href="{% url 'admin:index' %}">Home</a> &rsaquo; 
-    <a href="{% url 'check_order_updates' %}">Order Updates Utility</a> &rsaquo;
-    Order #{{ order.order_id }}
+    <a href="{% url 'check_order_updates' %}">Shipment Updates Utility</a> &rsaquo;
+    Shipment #{{ order.order_id }}
 </div>
 {% endblock %}
 
 {% block content %}
 <div id="content-main">
-    <h1>Order #{{ order.order_id }} Details</h1>
+    <h1>Shipment #{{ order.order_id }} Details</h1>
     
     <!-- Display messages -->
     {% if messages %}
@@ -24,7 +24,7 @@
     {% endif %}
     
     <div class="module">
-        <h2>Order Information</h2>
+        <h2>Shipment Information</h2>
         <table>
             <tr>
                 <th>Sender:</th>
@@ -47,7 +47,7 @@
                 <td>{{ order.product_name }}</td>
             </tr>
             <tr>
-                <th>Order Date:</th>
+                <th>Shipment Date:</th>
                 <td>{{ order.dateTime }}</td>
             </tr>
         </table>
@@ -79,12 +79,12 @@
             </tbody>
         </table>
         {% else %}
-        <p>No shipping records found for this order.</p>
+        <p>No shipping records found for this shipment.</p>
         {% endif %}
     </div>
     
     <div class="module">
-        <h2>Order Updates History</h2>
+        <h2>Shipment Updates History</h2>
         {% if updates %}
         <table>
             <thead>
@@ -108,13 +108,13 @@
         </table>
         <div class="submit-row" style="margin-top: 10px;">
             <a href="{% url 'clear_admin_actions_for_order' order.order_id %}" 
-               onclick="return confirm('Are you sure you want to clear all updates for this order? This will reset to the initial state.')"
+               onclick="return confirm('Are you sure you want to clear all updates for this shipment? This will reset to the initial state.')"
                class="button" style="background-color: #dc3545; color: white;">
-                Clear All Updates for This Order
+                Clear All Updates for This Shipment
             </a>
         </div>
         {% else %}
-        <p>No update records found for this order.</p>
+        <p>No update records found for this shipment.</p>
         <a href="{% url 'check_order_updates' order.order_id %}?fix=1" 
            class="button" style="background-color: #28a745; color: white;">
             Create Default Update
@@ -131,8 +131,8 @@
             <div class="form-row">
                 <label for="id_status">Status:</label>
                 <select name="status" id="id_status">
-                    <option value="Placed Order">Placed Order</option>
-                    <option value="Confirmed Order">Confirmed Order</option>
+                    <option value="Placed Order">Placed Shipment</option>
+                    <option value="Confirmed Order">Confirmed Shipment</option>
                     <option value="Picked-up">Picked-up</option>
                     <option value="Dispatched Product">Dispatched Product</option>
                     <option value="Reached Product">Reached Product</option>
@@ -147,7 +147,7 @@
             
             <div class="form-row">
                 <label for="id_progress">Progress:</label>
-                <textarea name="progress" id="id_progress" rows="3">Update for order #{{ order.order_id }}</textarea>
+                <textarea name="progress" id="id_progress" rows="3">Update for shipment #{{ order.order_id }}</textarea>
             </div>
             
             <div class="submit-row">

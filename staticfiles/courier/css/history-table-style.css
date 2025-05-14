@@ -1,0 +1,150 @@
+/* History Table Styling 
+   Based on the reference design from strivediservices.com/track
+*/
+
+/* Set Roboto font for all elements in the history table */
+.history-section-container .history-card .history-card-body .table-responsive .history-table,
+.history-section-container .history-card .history-card-body .table-responsive .history-table th,
+.history-section-container .history-card .history-card-body .table-responsive .history-table td,
+.history-section-container .history-card .history-card-body .table-responsive .history-table span,
+.history-section-container .history-card .history-card-body .table-responsive .history-table tr {
+    font-family: 'Roboto', sans-serif !important;
+}
+
+/* Container for the history table section */
+.history-section-container {
+    padding-top: 1rem;
+}
+
+/* Card styling for the table container */
+.history-card {
+    background-color: #fff;
+    border-radius: 0.25rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    margin-bottom: 1.5rem;
+}
+
+.history-card-body {
+    padding: 1.25rem;
+}
+
+/* Table basic styling */
+.history-table {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #212529;
+    border-collapse: collapse;
+}
+
+/* Striped rows styling */
+.history-table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* Table header styling */
+.history-table thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #dee2e6;
+    font-weight: 700 !important;
+    color: #000 !important;
+    padding: 0.75rem;
+    text-align: left;
+}
+
+/* Table cell styling */
+.history-table td, .history-table th {
+    padding: 0.75rem;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+}
+
+/* Status cell styling for different statuses */
+.status-delivered {
+    font-weight: 500;
+    color: #28a745;
+}
+
+.status-in-transit, .status-on-the-way {
+    font-weight: 500;
+    color: #007bff;
+}
+
+.status-pending, .status-picked-up {
+    font-weight: 500;
+    color: #ffc107;
+}
+
+/* Media query for screens above 1000px - Single line per column fix */
+@media (min-width: 1000px) {
+    /* Allow table to expand based on content */
+    .history-table {
+        table-layout: auto;
+    }
+    
+    /* Force single line for all cell contents without hiding overflow */
+    .history-table th, 
+    .history-table td {
+        white-space: nowrap;
+        /* No overflow hidden or ellipsis to allow content to display fully */
+    }
+    
+    /* Set minimum widths for columns instead of fixed widths */
+    .history-table th:first-child,
+    .history-table td:first-child {
+        min-width: 140px;
+    }
+    
+    .history-table th:nth-child(2),
+    .history-table td:nth-child(2) {
+        min-width: 100px;
+    }
+    
+    .history-table th:nth-child(3),
+    .history-table td:nth-child(3) {
+        min-width: 150px;
+    }
+    
+    .history-table th:nth-child(4),
+    .history-table td:nth-child(4) {
+        min-width: 150px;
+    }
+    
+    /* Ensure the table container can scroll horizontally if needed */
+    .table-responsive {
+        overflow-x: auto;
+    }
+}
+
+/* Responsive table container */
+@media (max-width: 767.98px) {
+    .table-responsive {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    /* Adjust padding for smaller screens */
+    .history-card-body {
+        padding: 0.75rem;
+    }
+    
+    .history-table td, .history-table th {
+        padding: 0.5rem;
+    }
+}
+
+/* Very small screens */
+@media (max-width: 575.98px) {
+    .history-table {
+        font-size: 0.875rem;
+    }
+    
+    .history-table td, .history-table th {
+        padding: 0.4rem;
+    }
+    
+    .history-section-container {
+        padding-top: 0.5rem;
+    }
+} 

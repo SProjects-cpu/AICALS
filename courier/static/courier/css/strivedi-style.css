@@ -1,0 +1,310 @@
+/* Strivedi Tracking Style - Based on strivediservices.com */
+
+/* Force styles to override any existing styles */
+.strivedi-tracking-container article.card {
+    border: none !important;
+    box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.15) !important;
+    margin-top: 2rem !important;
+    margin-bottom: 2rem !important;
+    overflow: hidden !important;
+    background-color: #fff !important;
+}
+
+/* Updated header styling to match request */
+.strivedi-tracking-container article.card > .card-header {
+    background: linear-gradient(to right, rgb(44, 62, 80), rgb(74, 85, 104)) !important;
+    border-radius: 0.25rem 0.25rem 0 0 !important;
+    border-bottom: none !important;
+    padding: 1rem 1.5rem !important;
+    color: white !important;
+}
+
+.strivedi-tracking-container .card-header .row {
+    align-items: center !important;
+}
+
+.strivedi-tracking-container .card-header h5 {
+    margin-bottom: 0 !important;
+    font-size: 1.15rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.5px !important;
+    color: white !important;
+}
+
+.strivedi-tracking-container .card-header h5 span {
+    display: inline-block !important;
+    padding: 2px 8px !important;
+    border-radius: 4px !important;
+    background-color: rgba(0, 0, 0, 0.2) !important;
+    color: #fff !important;
+}
+
+.strivedi-tracking-container article.card > .card-body {
+    padding: 1.5rem !important;
+}
+
+/* Updated track styling to match request */
+.strivedi-tracking-container article.card > .card-body .track {
+    background-color: rgb(233, 236, 239) !important;
+    border-radius: 3px !important;
+    height: 4px !important;
+    margin: 40px 0 60px !important;
+}
+
+.strivedi-tracking-container .track .step::before {
+    transition: background 0.3s ease !important;
+    height: 4px !important;
+}
+
+.strivedi-tracking-container .track .step.active::before {
+    background: #0abb87 !important;
+}
+
+/* Step icon styling to match request */
+.strivedi-tracking-container .track .step .icon {
+    display: inline-block !important;
+    width: 40px !important;
+    height: 40px !important;
+    line-height: 40px !important;
+    border-radius: 100% !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Active step styling */
+.strivedi-tracking-container .track .step.active .icon {
+    background-color: rgb(240, 173, 78) !important;
+    color: white !important;
+}
+
+/* Inactive step styling */
+.strivedi-tracking-container .track .step:not(.active) .icon {
+    background-color: rgb(221, 221, 221) !important;
+    color: rgb(85, 85, 85) !important;
+}
+
+.strivedi-tracking-container .track .step:first-child.active .icon {
+    background-color: #f0ad4e !important;
+    color: white !important;
+}
+
+.strivedi-tracking-container .track .step:nth-child(2).active .icon {
+    background-color: #5bc0de !important;
+    color: white !important;
+}
+
+.strivedi-tracking-container .track .step:last-child.active .icon {
+    background-color: #0abb87 !important;
+    color: white !important;
+}
+
+.strivedi-tracking-container .track .step.active .text {
+    font-weight: 600 !important;
+    color: #000 !important;
+}
+
+.strivedi-tracking-container .track .step .text {
+    display: block !important;
+    margin-top: 8px !important;
+    font-size: 14px !important;
+    color: #666 !important;
+}
+
+/* Card styling for shipment details */
+.strivedi-tracking-container article.card > .card-body article.card {
+    transition: transform 0.2s !important;
+    border: 1px solid rgba(0, 0, 0, 0.05) !important;
+    margin-bottom: 15px !important;
+    border-radius: 5px !important;
+    background-color: #fff !important;
+}
+
+.strivedi-tracking-container article.card > .card-body article.card:hover {
+    transform: translateY(-2px) !important;
+}
+
+.strivedi-tracking-container article.card > .card-body .row {
+    padding: 0.5rem !important;
+}
+
+.strivedi-tracking-container article.card > .card-body .col strong {
+    color: #000 !important;
+    font-size: 13px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    display: block !important;
+    margin-bottom: 5px !important;
+    font-weight: 700 !important;
+    font-family: 'Roboto', sans-serif !important;
+}
+
+.strivedi-tracking-container article.card > .card-body .col b {
+    display: block !important;
+    margin-top: 5px !important;
+    font-size: 15px !important;
+    color: #000 !important;
+    font-weight: 700 !important;
+    font-family: 'Roboto', sans-serif !important;
+}
+
+/* Status color styling to match request */
+.strivedi-tracking-container .cl {
+    font-weight: 600 !important;
+}
+
+/* Media queries to ensure responsiveness like the history table */
+@media (max-width: 768px) {
+    .strivedi-tracking-container .card-header .col-md-6 {
+        text-align: center !important;
+    }
+    
+    .strivedi-tracking-container .card-header .col-md-6:last-child {
+        text-align: left !important;
+        margin-top: 10px !important;
+    }
+    
+    .strivedi-tracking-container .card-header h5 {
+        font-size: 1rem !important;
+        margin-bottom: 10px !important;
+    }
+    
+    .strivedi-tracking-container .track {
+        margin: 30px 0 50px !important;
+    }
+    
+    .strivedi-tracking-container .track .step .icon {
+        width: 35px !important;
+        height: 35px !important;
+        line-height: 35px !important;
+    }
+    
+    /* Responsive styles for tracking image container on medium screens */
+    .tracking-image-container {
+        padding: 15px 10px !important;
+        margin: 30px 0 50px !important;
+    }
+    
+    .strivedi-tracking-container .card-body .col {
+        padding: 8px 5px !important;
+        margin-bottom: 15px !important;
+    }
+    
+    .strivedi-tracking-container .card-body .col strong {
+        font-size: 12px !important;
+        color: #000 !important;
+        font-weight: 700 !important;
+    }
+    
+    .strivedi-tracking-container .card-body .col b {
+        font-size: 14px !important;
+        color: #000 !important;
+        font-weight: 700 !important;
+    }
+}
+
+/* Very small screens */
+@media (max-width: 575.98px) {
+    .strivedi-tracking-container .card-header h5 {
+        font-size: 0.95rem !important;
+    }
+    
+    .strivedi-tracking-container .track .step .text {
+        font-size: 12px !important;
+    }
+    
+    /* Responsive styles for tracking image container on small screens */
+    .tracking-image-container {
+        padding: 10px 5px !important;
+        margin: 20px 0 40px !important;
+    }
+    
+    .strivedi-tracking-container .card-body .col strong,
+    .strivedi-tracking-container .card-body .col b {
+        font-size: 13px !important;
+        color: #000 !important;
+        font-weight: 700 !important;
+    }
+}
+
+.strivedi-tracking-container .card-body br {
+    display: block !important;
+    content: "" !important;
+    margin-bottom: 5px !important;
+}
+
+/* Status styling with background colors to match request */
+.strivedi-tracking-container b[style*="color:#f0ad4e"] {
+    background-color: rgba(240, 173, 78, 0.1) !important;
+    padding: 3px 8px !important;
+    border-radius: 4px !important;
+    display: inline-block !important;
+    color: #f0ad4e !important;
+}
+
+.strivedi-tracking-container b[style*="color:#5bc0de"] {
+    background-color: rgba(91, 192, 222, 0.1) !important;
+    padding: 3px 8px !important;
+    border-radius: 4px !important;
+    display: inline-block !important;
+    color: #5bc0de !important;
+}
+
+.strivedi-tracking-container b[style*="color:#0abb87"] {
+    background-color: rgba(10, 187, 135, 0.1) !important;
+    padding: 3px 8px !important;
+    border-radius: 4px !important;
+    display: inline-block !important;
+    color: #0abb87 !important;
+}
+
+/* Fix for icons in the tracking progress */
+.strivedi-tracking-container .track .step .icon i {
+    position: relative !important;
+    top: 1px !important;
+    color: inherit !important;
+} 
+
+/* Additional tweaks for better alignment with history table */
+.strivedi-tracking-container .main-tracking-card,
+.history-section-container .history-card {
+    margin-bottom: 1.5rem !important;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+}
+
+/* Make row spacing consistent with history table */
+.strivedi-tracking-container article.card > .card-body .col,
+.history-table td, .history-table th {
+    padding: 0.75rem !important;
+    vertical-align: top !important;
+}
+
+/* Ensure consistent padding between the tracking section and history table */
+.history-section-container {
+    padding-top: 1rem !important;
+}
+
+/* Match fonts between tracking and history */
+.strivedi-tracking-container .card-body,
+.history-section-container .history-card {
+    font-family: 'Roboto', sans-serif !important;
+}
+
+/* New tracking image container styles */
+.tracking-image-container {
+    width: 100% !important;
+    padding: 20px 15px !important;
+    margin: 40px 0 60px !important;
+}
+
+.tracking-image-wrapper {
+    max-width: 100% !important;
+    text-align: center !important;
+}
+
+.tracking-status-image {
+    max-width: 100% !important;
+    height: auto !important;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1) !important;
+    border-radius: 5px !important;
+    display: inline-block !important;
+} 

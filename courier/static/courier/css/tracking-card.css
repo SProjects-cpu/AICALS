@@ -1,0 +1,187 @@
+/* Tracking Card Styles */
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: 0.25rem;
+    margin-bottom: 30px;
+    box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.15);
+}
+
+.card-header {
+    padding: 1rem 1.5rem;
+    margin-bottom: 0;
+    background-color: #343a40;
+    border-bottom: 1px solid rgba(0,0,0,.125);
+    color: white;
+}
+
+.card-header .upper {
+    text-transform: uppercase;
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+.card-body {
+    flex: 1 1 auto;
+    padding: 1.5rem;
+}
+
+.track {
+    position: relative;
+    background-color: #ddd;
+    height: 5px;
+    display: flex;
+    margin-bottom: 60px;
+    margin-top: 50px;
+}
+
+.track .step {
+    flex: 1;
+    width: 33%;
+    margin-top: -18px;
+    text-align: center;
+    position: relative;
+}
+
+.track .step::before {
+    height: 5px;
+    position: absolute;
+    content: "";
+    width: 100%;
+    left: 0;
+    top: 18px;
+}
+
+.track .step.active::before {
+    background: #0abb87;
+}
+
+.track .step.active .icon {
+    background: #0abb87;
+    color: #fff;
+}
+
+.track .step .icon {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    position: relative;
+    border-radius: 100%;
+    background: #ddd;
+    color: #555;
+}
+
+.track .step.active .text {
+    font-weight: 600;
+    color: #000;
+}
+
+.track .step .text {
+    display: block;
+    margin-top: 8px;
+    font-size: 14px;
+    color: #666;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+.col-md-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+}
+
+.col {
+    flex-basis: 0;
+    flex-grow: 1;
+    max-width: 100%;
+    padding: 8px;
+}
+
+.text-center {
+    text-align: center !important;
+}
+
+/* Color status indicators */
+b[style*="color:#0abb87"] {
+    color: #0abb87 !important; /* Delivered status color */
+}
+
+b[style*="color:#5bc0de"] {
+    color: #5bc0de !important; /* In Transit status color */
+}
+
+b[style*="color:#f0ad4e"] {
+    color: #f0ad4e !important; /* Pending status color */
+}
+
+/* Inner card styling */
+article.card {
+    margin-bottom: 15px;
+    border-radius: 5px;
+}
+
+/* Strong and b tag styling */
+.card-body strong {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+    font-size: 14px;
+}
+
+.card-body b {
+    font-weight: 600;
+    color: #333;
+    font-size: 15px;
+}
+
+@media (max-width: 767.98px) {
+    .col-md-6 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    
+    .card-header .col-md-6:last-child {
+        text-align: left !important;
+        margin-top: 10px;
+    }
+    
+    .track {
+        margin-top: 20px;
+    }
+    
+    .track .text {
+        font-size: 12px;
+    }
+    
+    .card-body .col {
+        margin-bottom: 15px;
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+
+/* Enhanced styling for better visual appeal */
+.card-header h5 b span {
+    background-color: #444;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+/* Make icons better aligned */
+.track .step .icon i {
+    position: relative;
+    top: 1px;
+} 

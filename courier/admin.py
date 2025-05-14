@@ -13,10 +13,13 @@ class ShippingAdmin(admin.ModelAdmin):
     readonly_fields = ('shipping_id',)
     fieldsets = (
         ('Shipping Information', {
-            'fields': ('shipping_id', 'order', 'tracking_number', 'carrier', 'status')
+            'fields': ('shipping_id', 'order', 'tracking_number', 'carrier', 'status', 'forward_no', 'customer', 'signed_by')
         }),
         ('Dates', {
             'fields': ('shipping_date', 'estimated_delivery', 'actual_delivery')
+        }),
+        ('Location Information', {
+            'fields': ('origin', 'destination', 'no_of_pcs')
         }),
         ('Additional Information', {
             'fields': ('shipping_cost', 'notes')
@@ -26,17 +29,49 @@ class ShippingAdmin(admin.ModelAdmin):
     def order_link(self, obj):
         url = f"/admin/courier/order/{obj.order.order_id}/change/"
         return format_html('<a href="{}">{}</a>', url, obj.order.order_id)
-    order_link.short_description = 'Order'
+    order_link.short_description = 'Shipment'
 
     def status_colored(self, obj):
+        """
+        Returns a colored status based on the shipping status.
+        Uses a more flexible approach to handle various status values.
+        """
+        # Expanded color mapping with more status types
         colors = {
-            'pending': '#FFA500',  # Orange
-            'in_transit': '#0000FF',  # Blue
+            # Standard statuses
+            'pending': '#FFA500',    # Orange
+            'in_transit': '#0000FF', # Blue
             'delivered': '#008000',  # Green
-            'returned': '#FF0000',  # Red
+            'returned': '#FF0000',   # Red
+            
+            # Additional statuses that might be used
+            'processing': '#9400D3',  # Purple
+            'picked_up': '#4B0082',   # Indigo
+            'out_for_delivery': '#4169E1',  # Royal Blue
+            'failed_delivery': '#DC143C',   # Crimson
+            'cancelled': '#696969',   # Dim Gray
+            'on_hold': '#DAA520',     # Goldenrod
+            'exception': '#B22222',   # FireBrick
         }
-        color = colors.get(obj.status, '#000000')
-        return format_html('<span style="color: {};">{}</span>', color, obj.get_status_display())
+        
+        # For case-insensitive matching
+        status_lower = obj.status.lower()
+        
+        # Try direct match first
+        if status_lower in colors:
+            color = colors[status_lower]
+        else:
+            # Fallback to partial matching for similar statuses
+            for key, value in colors.items():
+                if key in status_lower:
+                    color = value
+                    break
+            else:
+                # Default if no match found
+                color = '#000000'  # Black
+        
+        return format_html('<span style="color: {}; font-weight: bold;">{}</span>', 
+                          color, obj.status)
     status_colored.short_description = 'Status'
 
     class Media:
@@ -45,18 +80,22 @@ class ShippingAdmin(admin.ModelAdmin):
         }
 
 class OrderUpdateAdmin(admin.ModelAdmin):
-    list_display = ('update_id', 'order_id', 'status', 'progress', 'time', 'location')
+    list_display = ('update_id', 'shipment_id_display', 'status', 'progress', 'time', 'location')
     list_filter = ('status', 'time')
     search_fields = ('order_id', 'progress', 'location')
     readonly_fields = ('update_id',)
     fieldsets = (
-        ('Order Information', {
+        ('Shipment Information', {
             'fields': ('update_id', 'order_id', 'status')
         }),
         ('Progress Information', {
             'fields': ('progress', 'location')
         }),
     )
+    
+    def shipment_id_display(self, obj):
+        return obj.order_id
+    shipment_id_display.short_description = 'Shipment ID'
 
 # Customize admin header, title and index title
 admin.site.site_header = "Courier Management"

@@ -15,7 +15,7 @@
                         <i class="fa fa-save"></i> </a>
                 </div>
                 <div class="card-header">
-                    <p>order id ={{ id }}  .You can track your product by this id.Thank you.</p>
+                    <p>shipment id ={{ id }}  .You can track your product by this id.Thank you.</p>
                 </div>
                 <div class="card-body">
                     <div class="row mb-4">
@@ -114,12 +114,23 @@
 {% endblock %}
 
 {% block js %}
+<!-- Store data in hidden element -->
+<div id="template-data" 
+     data-thank="{% if thank %}true{% else %}false{% endif %}" 
+     data-id="{{id}}" 
+     style="display:none;"></div>
+
 <script>
-
-{% if thank %}
-alert('Thanks for ordering with us. Your order is  {{id}}. Use it to track your order using our order tracker');
-
-{% endif %}
+    // Get values from data attributes
+    var dataElement = document.getElementById('template-data');
+    if (dataElement) {
+        var showThankYouMessage = dataElement.getAttribute('data-thank') === 'true';
+        var shipmentId = dataElement.getAttribute('data-id');
+        
+        if (showThankYouMessage) {
+            alert('Thanks for ordering with us. Your shipment is ' + shipmentId + '. Use it to track your shipment using our shipment tracker');
+        }
+    }
 </script>
 {% endblock %}
 

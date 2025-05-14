@@ -1,0 +1,75 @@
+/* Admin Panel Standard Sizing Improvements */
+
+/* Dashboard layout improvements */
+.dashboard {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)) !important; /* Increase minimum column width */
+  gap: 1.8rem !important; /* Slightly increased gap between modules */
+}
+
+/* Recent actions module special treatment */
+#recent-actions-module {
+  grid-column: span 2; /* Make it span 2 columns when possible */
+  min-height: 300px; /* Ensure minimum height for better readability */
+}
+
+/* Better padding for all modules content */
+.module {
+  padding-bottom: 15px; /* Add some bottom padding */
+}
+
+.module h2 {
+  padding: 12px 16px !important; /* More generous padding for headings */
+}
+
+/* Better spacing for module content */
+.module .actionlist {
+  padding: 0 15px;
+}
+
+/* Content area improvements */
+#content {
+  padding: 25px !important;
+}
+
+/* Form field improvements */
+.form-row {
+  padding: 12px 15px !important;
+}
+
+/* Table cell improvements */
+td, th {
+  padding: 10px 15px !important;
+}
+
+/* Buttons spacing */
+.button, input[type=submit], input[type=button] {
+  padding: 10px 16px !important;
+  margin: 0 5px !important;
+}
+
+/* Admin filters sizing */
+.module.filtered h2 {
+  padding-right: 16px !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  #recent-actions-module {
+    grid-column: span 1; /* On medium screens, only span 1 column */
+  }
+  
+  .dashboard {
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)) !important;
+  }
+}
+
+@media (max-width: 768px) {
+  #content {
+    padding: 15px !important;
+  }
+  
+  .dashboard {
+    grid-template-columns: 1fr !important; /* Single column on small screens */
+  }
+} 

@@ -122,4 +122,173 @@
 
 .order-history-table::-webkit-scrollbar-thumb:hover {
     background: #7bc8ff;
+}
+
+/* Additional Enhancements for Tracking Display Based on strivediservices.com */
+
+/* Overall card container styling */
+.container .card {
+    border: none;
+    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.15);
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    overflow: hidden;
+}
+
+/* Header styling improvements */
+.card-header {
+    background: linear-gradient(to right, #2c3e50, #4a5568);
+    border-radius: 0.25rem 0.25rem 0 0 !important;
+    border-bottom: none;
+}
+
+.card-header .row {
+    align-items: center;
+}
+
+.card-header h5 {
+    margin-bottom: 0;
+    font-size: 1.15rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.card-header h5 span {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+/* Tracking progress bar improvements */
+.track {
+    background-color: #e9ecef;
+    border-radius: 3px;
+    height: 4px;
+    margin: 40px 0 60px;
+}
+
+.track .step::before {
+    transition: background 0.3s ease;
+}
+
+.track .step.active::before {
+    background: #0abb87;
+}
+
+.track .step .icon {
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Status colors styling */
+.track .step:first-child.active .icon {
+    background-color: #f0ad4e; /* Pending */
+}
+
+.track .step:nth-child(2).active .icon {
+    background-color: #5bc0de; /* In Transit */
+}
+
+.track .step:last-child.active .icon {
+    background-color: #0abb87; /* Delivered */
+}
+
+/* Inner card styling */
+article.card {
+    transition: transform 0.2s;
+    border: 1px solid rgba(0, 0, 0, 0.05) !important;
+}
+
+article.card:hover {
+    transform: translateY(-2px);
+}
+
+.card-body .row {
+    padding: 0.5rem;
+}
+
+/* Text styling for information */
+.card-body .col strong {
+    color: #555;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.card-body .col b {
+    display: block;
+    margin-top: 5px;
+    font-size: 15px;
+    color: #333;
+}
+
+/* Status colors */
+.cl {
+    font-weight: 600;
+}
+
+/* Mobile responsiveness improvements */
+@media (max-width: 768px) {
+    .card-header .col-md-6 {
+        text-align: center !important;
+    }
+    
+    .card-header h5 {
+        font-size: 1rem;
+        margin-bottom: 10px;
+    }
+    
+    .track {
+        margin: 30px 0 50px;
+    }
+    
+    .track .step .icon {
+        width: 35px;
+        height: 35px;
+        line-height: 35px;
+    }
+    
+    .card-body .col {
+        padding: 8px 5px;
+    }
+    
+    .card-body .col strong {
+        font-size: 12px;
+    }
+    
+    .card-body .col b {
+        font-size: 14px;
+    }
+}
+
+/* Additional polish */
+.card-body br {
+    display: block;
+    content: "";
+    margin-bottom: 5px;
+}
+
+/* Make Pending status more visible */
+b[style*="color:#f0ad4e"] {
+    background-color: rgba(240, 173, 78, 0.1);
+    padding: 3px 8px;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+/* Make In Transit status more visible */
+b[style*="color:#5bc0de"] {
+    background-color: rgba(91, 192, 222, 0.1);
+    padding: 3px 8px;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+/* Make Delivered status more visible */
+b[style*="color:#0abb87"] {
+    background-color: rgba(10, 187, 135, 0.1);
+    padding: 3px 8px;
+    border-radius: 4px;
+    display: inline-block;
 } 

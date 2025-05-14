@@ -1,0 +1,106 @@
+/* 
+ * Shipment Tracking Box Roboto Styling
+ * Adds bold, dark, Roboto sans-serif styling to the shipment tracking elements
+ */
+
+/* Apply Roboto font to all tracking elements */
+.strivedi-tracking-container article.card > .card-body .shipment-tracking-details {
+    font-family: 'Roboto', sans-serif !important;
+}
+
+/* Style the label elements (strong tags) */
+.shipment-tracking-details .col strong {
+    color: #000 !important;
+    font-weight: 700 !important;
+    font-family: 'Roboto', sans-serif !important;
+    font-size: 13px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    display: block !important;
+    margin-bottom: 5px !important;
+}
+
+/* Style the value elements (b tags) */
+.shipment-tracking-details .col b {
+    color: #000 !important;
+    font-weight: 700 !important;
+    font-family: 'Roboto', sans-serif !important;
+    font-size: 15px !important;
+    display: block !important;
+    margin-top: 5px !important;
+}
+
+/* Style for span value elements (replaces bold) */
+.shipment-tracking-details .col .tracking-value {
+    color: #000 !important;
+    font-weight: normal !important;
+    font-family: 'Roboto', sans-serif !important;
+    font-size: 15px !important;
+    display: block !important;
+    margin-top: 5px !important;
+}
+
+/* Special styling for Forward No value - increased specificity */
+.shipment-tracking-details .col .forward-no-value,
+.shipment-tracking-details .forward-no-value,
+.strivedi-tracking-container .forward-no-value {
+    color: #CA353B !important; /* Red color as requested */
+    font-weight: bold !important;
+    font-family: 'Roboto', sans-serif !important;
+    font-size: 15px !important;
+    display: block !important;
+    margin-top: 5px !important;
+}
+
+/* Override existing styling for mobile devices */
+@media (max-width: 768px) {
+    .shipment-tracking-details .col strong {
+        font-size: 12px !important;
+        color: #000 !important;
+        font-weight: 700 !important;
+    }
+    
+    .shipment-tracking-details .col b {
+        font-size: 14px !important;
+        color: #000 !important;
+        font-weight: 700 !important;
+    }
+    
+    .shipment-tracking-details .col .tracking-value {
+        font-size: 14px !important;
+        color: #000 !important;
+        font-weight: normal !important;
+    }
+    
+    .shipment-tracking-details .col .forward-no-value,
+    .shipment-tracking-details .forward-no-value,
+    .strivedi-tracking-container .forward-no-value {
+        font-size: 14px !important;
+        color: #CA353B !important;
+        font-weight: bold !important;
+    }
+}
+
+/* Very small screens */
+@media (max-width: 575.98px) {
+    .shipment-tracking-details .col strong {
+        font-size: 13px !important;
+        color: #000 !important;
+        font-weight: 700 !important;
+    }
+    
+    .shipment-tracking-details .col b,
+    .shipment-tracking-details .col .tracking-value {
+        font-size: 13px !important;
+        color: #000 !important;
+        font-weight: normal !important;
+    }
+    
+    .shipment-tracking-details .col .forward-no-value,
+    .shipment-tracking-details .forward-no-value,
+    .strivedi-tracking-container .forward-no-value {
+        font-size: 13px !important;
+        color: #CA353B !important;
+        font-weight: bold !important;
+    }
+} 

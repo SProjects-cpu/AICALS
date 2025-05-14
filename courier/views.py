@@ -66,6 +66,12 @@ def tracker(request):
                         )
                         updates = OrderUpdate.objects.filter(order_id=orderId).order_by('-time')
                         most_update = updates.first()
+                
+                # Check if there's a shipping record for this order
+                try:
+                    shipping = Shipping.objects.filter(order__order_id=orderId).first()
+                except Shipping.DoesNotExist:
+                    shipping = None
             else:
                 # Try to find a shipping with this tracking number
                 try:
@@ -109,7 +115,7 @@ def tracker(request):
                           'updates': []})  # Ensure updates is always provided
     
     # For GET requests, just render the empty form
-    return render(request, 'courier/tracker.html', {'updates': []})  # Ensure updates is always provided
+    return render(request, 'courier/tracker.html', {'updates': []})
 
 
 def order(request):
@@ -354,7 +360,7 @@ def thank(request):
 
 def check_order_updates(request, order_id=None):
     """
-    Administrative utility function to check order updates and fix any issues.
+    Administrative utility function to check shipment updates and fix any issues.
     This can be disabled in production by removing the URL pattern.
     """
     if not request.user.is_superuser:
@@ -393,7 +399,7 @@ def check_order_updates(request, order_id=None):
             OrderUpdate.objects.create(
                 order_id=order_id,
                 location=order.receiver_address,
-                progress="Order has been placed (auto-created)",
+                progress="Shipment has been placed (auto-created)",
                 status="Placed Order"
             )
             updates = OrderUpdate.objects.filter(order_id=order_id).order_by('-time')
@@ -405,13 +411,13 @@ def check_order_updates(request, order_id=None):
         })
     
     except Order.DoesNotExist:
-        return HttpResponse(f"Order with ID {order_id} not found.", status=404)
+        return HttpResponse(f"Shipment with ID {order_id} not found.", status=404)
 
 @staff_member_required
 def add_order_update(request):
     """
-    Handle adding a new order update from the admin utility page.
-    This ensures updates are correctly associated with the order ID.
+    Handle adding a new shipment update from the admin utility page.
+    This ensures updates are correctly associated with the shipment ID.
     """
     if request.method == 'POST':
         order_id = request.POST.get('order_id', '')
@@ -421,7 +427,7 @@ def add_order_update(request):
         
         # Validate the data
         if not order_id or not status:
-            messages.error(request, "Order ID and Status are required.")
+            messages.error(request, "Shipment ID and Status are required.")
             return redirect('check_order_updates', order_id=order_id)
             
         try:
@@ -436,12 +442,12 @@ def add_order_update(request):
                 progress=progress
             )
             
-            messages.success(request, f"Order update added successfully. Update ID: {update.update_id}")
+            messages.success(request, f"Shipment update added successfully. Update ID: {update.update_id}")
             
         except Order.DoesNotExist:
-            messages.error(request, f"Order with ID {order_id} does not exist.")
+            messages.error(request, f"Shipment with ID {order_id} does not exist.")
         except Exception as e:
-            messages.error(request, f"Error adding order update: {str(e)}")
+            messages.error(request, f"Error adding shipment update: {str(e)}")
             
         return redirect('check_order_updates', order_id=order_id)
         
@@ -451,15 +457,15 @@ def add_order_update(request):
 @staff_member_required
 def clear_admin_actions(request, order_id=None):
     """
-    Clear all admin-added order updates, either for a specific order or all orders.
-    This helps remove test data or reset order status information.
+    Clear all admin-added shipment updates, either for a specific shipment or all shipments.
+    This helps remove test data or reset shipment status information.
     """
     # Keep track of what was deleted
     deleted_count = 0
     
     try:
         if order_id:
-            # For a specific order, keep only the initial "placed" update if it exists
+            # For a specific shipment, keep only the initial "placed" update if it exists
             # First, check if there's an initial update
             initial_update = OrderUpdate.objects.filter(
                 order_id=order_id, 
@@ -467,11 +473,11 @@ def clear_admin_actions(request, order_id=None):
                 progress__contains='placed'
             ).order_by('time').first()
             
-            # Get all updates for this order
+            # Get all updates for this shipment
             updates = OrderUpdate.objects.filter(order_id=order_id)
             deleted_count = updates.count()
             
-            # Delete all updates for this order
+            # Delete all updates for this shipment
             updates.delete()
             
             # If we had an initial update, recreate it
@@ -480,17 +486,17 @@ def clear_admin_actions(request, order_id=None):
                     order_id=order_id,
                     status='Placed Order',
                     location=initial_update.location,
-                    progress="Order has been placed (system restored)"
+                    progress="Shipment has been placed (system restored)"
                 )
                 deleted_count -= 1  # Adjust count since we restored one
                 
-            messages.success(request, f"Cleared {deleted_count} updates for order #{order_id}.")
+            messages.success(request, f"Cleared {deleted_count} updates for shipment #{order_id}.")
             return redirect('check_order_updates', order_id=order_id)
         else:
-            # Clear updates for all orders, but preserve initial updates
+            # Clear updates for all shipments, but preserve initial updates
             orders = Order.objects.all()
             for order in orders:
-                # Find initial update for this order
+                # Find initial update for this shipment
                 initial_update = OrderUpdate.objects.filter(
                     order_id=order.order_id, 
                     status='Placed Order',
@@ -507,11 +513,11 @@ def clear_admin_actions(request, order_id=None):
                     order_id=order.order_id,
                     status='Placed Order',
                     location=order.receiver_address,
-                    progress="Order has been placed (system restored)"
+                    progress="Shipment has been placed (system restored)"
                 )
                 deleted_count -= 1  # Adjust count for each recreated initial update
             
-            messages.success(request, f"Cleared {deleted_count} admin updates across all orders.")
+            messages.success(request, f"Cleared {deleted_count} admin updates across all shipments.")
             return redirect('check_order_updates')
             
     except Exception as e:
