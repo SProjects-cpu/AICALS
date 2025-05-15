@@ -89,7 +89,8 @@
         <table>
             <thead>
                 <tr>
-                    <th>Date & Time</th>
+                    <th>Date</th>
+                    <th>Time</th>
                     <th>Status</th>
                     <th>Location</th>
                     <th>Progress</th>
@@ -98,7 +99,8 @@
             <tbody>
                 {% for update in updates %}
                 <tr>
-                    <td>{{ update.time }}</td>
+                    <td>{% if update.custom_date %}{{ update.custom_date }}{% else %}{{ update.time|date:"D, d M Y" }}{% endif %}</td>
+                    <td>{% if update.custom_time %}{{ update.custom_time }}{% else %}{{ update.time|time:"h:i A" }}{% endif %}</td>
                     <td>{{ update.status }}</td>
                     <td>{{ update.location }}</td>
                     <td>{{ update.progress }}</td>
@@ -148,6 +150,16 @@
             <div class="form-row">
                 <label for="id_progress">Progress:</label>
                 <textarea name="progress" id="id_progress" rows="3">Update for shipment #{{ order.order_id }}</textarea>
+            </div>
+            
+            <div class="form-row">
+                <label for="id_custom_date">Date:</label>
+                <input type="text" name="custom_date" id="id_custom_date" placeholder="Format: Day, Date Month, Year (e.g., Tue, 13 Jan, 2025)">
+            </div>
+            
+            <div class="form-row">
+                <label for="id_custom_time">Time:</label>
+                <input type="text" name="custom_time" id="id_custom_time" placeholder="Format: HH:MM AM/PM (e.g., 02:30 PM)">
             </div>
             
             <div class="submit-row">

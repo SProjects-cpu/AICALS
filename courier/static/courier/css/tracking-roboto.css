@@ -103,4 +103,36 @@
         color: #CA353B !important;
         font-weight: bold !important;
     }
+}
+
+/* Fix for text wrapping on small screens (332px-440px) */
+@media (min-width: 332px) and (max-width: 440px) {
+    /* Style for the separate word spans to ensure proper line breaks */
+    .shipment-word, .date-word,
+    .forward-word, .no-word,
+    .signed-word, .by-word,
+    .expected-word, .delivery-word {
+        display: inline-block;
+        width: 100%;
+        text-align: center;
+        color: #000 !important;
+        font-weight: 700 !important;
+        font-family: 'Roboto', sans-serif !important;
+        font-size: 15px !important;
+        text-transform: uppercase !important;
+    }
+    
+    /* For single-word labels, ensure they are properly centered */
+    .customer-word, .status-word,
+    .origin-word, .destination-word,
+    .no-of-pcs-word {
+        display: inline-block;
+        width: 100%;
+        text-align: center;
+        color: #000 !important;
+        font-weight: 700 !important;
+        font-family: 'Roboto', sans-serif !important;
+        font-size: 15px !important;
+        text-transform: uppercase !important;
+    }
 } 

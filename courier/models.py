@@ -154,6 +154,8 @@ class OrderUpdate(models.Model):
     order_id = models.IntegerField(default=0)
     progress = models.CharField(max_length=5000, default="Order status updated")
     time = models.DateTimeField(auto_now_add=True)
+    custom_date = models.CharField(max_length=50, blank=True, null=True, help_text="Format: Day, Date Month, Year (e.g., Tue, 13 Jan, 2025)")
+    custom_time = models.CharField(max_length=20, blank=True, null=True, help_text="Format: HH:MM AM/PM (e.g., 02:30 PM)")
     location = models.CharField(max_length=150)
     status = models.CharField(max_length=50,
                               choices=[('Placed Order', _('Placed Shipment')), ('Confirmed Order', _('Confirmed Shipment')),

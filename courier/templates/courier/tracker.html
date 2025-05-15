@@ -116,7 +116,7 @@
                 <article class="card shipment-tracking-details" style="background-color: #fff">
                     <div class="card-body row text-center" style="font-size: 15px !important; border: 2px solid black;">
                         <div class="col" style="font-size: 15px !important;"> 
-                            <strong style="font-size: 15px !important;">Forward No:</strong><br>
+                            <strong style="font-size: 15px !important;"><span class="forward-word">FORWARD</span> <span class="no-word">NO:</span></strong><br>
                             <span class="forward-no-value" style="color: #CA353B !important; font-weight: bold !important; font-size: 15px !important;"><br>
                             {% if shipping %}
                                 {{ shipping.forward_no }}
@@ -124,7 +124,7 @@
                             </span>
                         </div>
                         <div class="col" style="font-size: 15px !important;"> 
-                            <strong style="font-size: 15px !important;">Customer:</strong> <br>
+                            <strong style="font-size: 15px !important;"><span class="customer-word">CUSTOMER:</span></strong> <br>
                             <span class="tracking-value" style="font-size: 15px !important;">
                             {% if shipping %}
                                 {{ shipping.customer }}
@@ -132,7 +132,7 @@
                             </span>
                         </div>
                         <div class="col" style="font-size: 15px !important;"> 
-                            <strong style="font-size: 15px !important;">Signed By:</strong> <br>
+                            <strong style="font-size: 15px !important;"><span class="signed-word">SIGNED</span> <span class="by-word">BY:</span></strong> <br>
                             <span class="tracking-value" style="font-size: 15px !important;">
                             {% if shipping %}
                                 {{ shipping.signed_by }}
@@ -140,7 +140,7 @@
                             </span>
                         </div>
                         <div class="col" style="font-size: 15px !important;"> 
-                            <strong style="font-size: 15px !important;">Status:</strong> <br>
+                            <strong style="font-size: 15px !important;"><span class="status-word">STATUS:</span></strong> <br>
                             <span class="{% if shipping and shipping.status == 'delivered' %}status-delivered{% elif shipping and shipping.status == 'in_transit' %}status-in-transit{% elif most_update and most_update.status == 'Delivered Product' %}status-delivered{% elif most_update and most_update.status == 'Dispatched Product' %}status-in-transit{% else %}status-pending{% endif %}">
                                 <span class="cl" style="font-size: 15px !important;">
                                 {% if shipping %}
@@ -152,7 +152,7 @@
                             </span>
                         </div>
                         <div class="col" style="font-size: 15px !important;"> 
-                            <strong style="font-size: 15px !important;">Expected Delivery:</strong> <br>
+                            <strong style="font-size: 15px !important;"><span class="expected-word">EXPECTED</span> <span class="delivery-word">DELIVERY:</span></strong> <br>
                             <span class="tracking-value" style="font-size: 15px !important;">
                             {% if shipping %}
                                 {{ shipping.estimated_delivery|date:"F j, Y" }}
@@ -167,7 +167,7 @@
                 <article class="card shipment-tracking-details" style="background-color: #fff;">
                     <div class="card-body row text-center" style="font-size: 15px !important; border: 2px solid black;">
                         <div class="col" style="font-size: 15px !important;"> 
-                            <strong style="font-size: 15px !important;">Shipment Date:</strong>
+                            <strong style="font-size: 15px !important;"><span class="shipment-word">SHIPMENT</span> <span class="date-word">DATE:</span></strong>
                             <br>
                             <span style="font-size: 15px !important;">
                             {% if shipping %}
@@ -176,7 +176,7 @@
                             </span>
                         </div>
                         <div class="col" style="font-size: 15px !important;"> 
-                            <strong style="font-size: 15px !important;">Origin:</strong> <br>
+                            <strong style="font-size: 15px !important;"><span class="origin-word">ORIGIN:</span></strong> <br>
                             <span style="font-size: 15px !important;">
                             {% if shipping %}
                                 {{ shipping.origin }}
@@ -184,7 +184,7 @@
                             </span>
                         </div>
                         <div class="col" style="font-size: 15px !important;"> 
-                            <strong style="font-size: 15px !important;">Destination:</strong> <br>
+                            <strong style="font-size: 15px !important;"><span class="destination-word">DESTINATION:</span></strong> <br>
                             <span style="font-size: 15px !important;">
                             {% if shipping %}
                                 {{ shipping.destination }}
@@ -192,7 +192,7 @@
                             </span>
                         </div>
                         <div class="col" style="font-size: 15px !important;"> 
-                            <strong style="font-size: 15px !important;">No of pcs:</strong> <br>
+                            <strong style="font-size: 15px !important;"><span class="no-of-pcs-word">NO OF PCS:</span></strong> <br>
                             <span style="font-size: 15px !important;">
                             {% if shipping %}
                                 {{ shipping.no_of_pcs }}
@@ -228,8 +228,8 @@
                                     <!-- Display all shipment updates -->
                                     {% for i in updates %}
                                     <tr>
-                                        <th>{{ i.time|date:"D, d M Y" }}</th>
-                                        <td>{{ i.time|time:"h:i A" }}</td>
+                                        <th>{% if i.custom_date %}{{ i.custom_date }}{% else %}{{ i.time|date:"D, d M Y" }}{% endif %}</th>
+                                        <td>{% if i.custom_time %}{{ i.custom_time }}{% else %}{{ i.time|time:"h:i A" }}{% endif %}</td>
                                         <td>{{ i.location }}</td>
                                         <td>
                                             {% if 'Delivered' in i.status %}

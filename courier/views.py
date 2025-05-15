@@ -36,7 +36,6 @@ def contact(request):
         cont.save()
     return render(request, 'courier/contact.html')
 
-@login_required
 def tracker(request):
     if request.method == "POST":
         orderId = request.POST.get('orderId', '')
@@ -424,6 +423,8 @@ def add_order_update(request):
         status = request.POST.get('status', '')
         location = request.POST.get('location', '')
         progress = request.POST.get('progress', '')
+        custom_date = request.POST.get('custom_date', '')
+        custom_time = request.POST.get('custom_time', '')
         
         # Validate the data
         if not order_id or not status:
@@ -439,7 +440,9 @@ def add_order_update(request):
                 order_id=order_id,
                 status=status,
                 location=location,
-                progress=progress
+                progress=progress,
+                custom_date=custom_date,
+                custom_time=custom_time
             )
             
             messages.success(request, f"Shipment update added successfully. Update ID: {update.update_id}")
@@ -486,7 +489,9 @@ def clear_admin_actions(request, order_id=None):
                     order_id=order_id,
                     status='Placed Order',
                     location=initial_update.location,
-                    progress="Shipment has been placed (system restored)"
+                    progress="Shipment has been placed (system restored)",
+                    custom_date=datetime.datetime.now().strftime('%a, %d %b, %Y'),
+                    custom_time=datetime.datetime.now().strftime('%I:%M %p')
                 )
                 deleted_count -= 1  # Adjust count since we restored one
                 
@@ -513,7 +518,9 @@ def clear_admin_actions(request, order_id=None):
                     order_id=order.order_id,
                     status='Placed Order',
                     location=order.receiver_address,
-                    progress="Shipment has been placed (system restored)"
+                    progress="Shipment has been placed (system restored)",
+                    custom_date=datetime.datetime.now().strftime('%a, %d %b, %Y'),
+                    custom_time=datetime.datetime.now().strftime('%I:%M %p')
                 )
                 deleted_count -= 1  # Adjust count for each recreated initial update
             

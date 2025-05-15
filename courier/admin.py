@@ -80,7 +80,7 @@ class ShippingAdmin(admin.ModelAdmin):
         }
 
 class OrderUpdateAdmin(admin.ModelAdmin):
-    list_display = ('update_id', 'shipment_id_display', 'status', 'progress', 'time', 'location')
+    list_display = ('update_id', 'shipment_id_display', 'status', 'progress', 'custom_date', 'custom_time', 'location')
     list_filter = ('status', 'time')
     search_fields = ('order_id', 'progress', 'location')
     readonly_fields = ('update_id',)
@@ -90,6 +90,9 @@ class OrderUpdateAdmin(admin.ModelAdmin):
         }),
         ('Progress Information', {
             'fields': ('progress', 'location')
+        }),
+        ('Date and Time', {
+            'fields': ('custom_date', 'custom_time')
         }),
     )
     

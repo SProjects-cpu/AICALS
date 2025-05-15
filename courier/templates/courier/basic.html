@@ -310,13 +310,7 @@
             <li><a href="{% url 'home' %}" class="nav-link {% if request.path == '/' %}active{% endif %} font-medium transition-all duration-300">Home</a></li>
             <li><a href="{% url 'home' %}#services-section" class="nav-link font-medium transition-all duration-300">Services</a></li>
             <li><a href="{% url 'home' %}#about-section" class="nav-link font-medium transition-all duration-300">About Us</a></li>
-            <li><a {% if user.is_authenticated %} href="/contact/" {% else %} href="/login/" {% endif %} class="nav-link {% if request.path == '/contact/' %}active{% endif %} font-medium transition-all duration-300">Contact</a></li>
-            {% if user.is_authenticated %}
-              <li><a href="/logout" class="nav-link font-medium transition-all duration-300">Logout</a></li>
-            {% else %}
-              <li><a href="/login" class="nav-link {% if request.path == '/login/' %}active{% endif %} font-medium transition-all duration-300">Sign In</a></li>
-              <li class="mt-5 mb-3"><a href="/signup" class="secondary-btn hover:bg-green-600 transition-all duration-300 block text-center px-4 py-3 mx-auto {% if request.path == '/signup/' %}pulse{% endif %}" style="max-width: 90%;">Sign Up</a></li>
-            {% endif %}
+            <li><a href="/contact/" class="nav-link {% if request.path == '/contact/' %}active{% endif %} font-medium transition-all duration-300">Contact</a></li>
           </ul>
         </div>
       </div>
@@ -328,7 +322,7 @@
             <div class="col-12">
               <a href="mailto:airinternationalcouriers@gmail.com" class=""><span class="mr-2 fas fa-envelope"></span> <span class="d-none d-md-inline-block">airinternationalcouriers@gmail.com</span></a>
               <span class="mx-md-2 d-inline-block"></span>
-              <a href="tel:+919328391613" class=""><span class="mr-2 fas fa-phone"></span> <span class="d-none d-md-inline-block">+91 93283 91613</span></a>
+              <a href="tel:+919328391613" class=""><span class="mr-2 fas fa-phone"></span> +91 93283 91613</a>
 
             </div>
 
@@ -363,13 +357,7 @@
                     <li><a href="{% url 'home' %}" class="nav-link {% if request.path == '/' %}active{% endif %} font-medium transition-all duration-300">Home</a></li>
                     <li><a href="{% url 'home' %}#services-section" class="nav-link font-medium transition-all duration-300">Services</a></li>
                     <li><a href="{% url 'home' %}#about-section" class="nav-link font-medium transition-all duration-300">About Us</a></li>
-                    <li><a {% if user.is_authenticated %} href="/contact/" {% else %} href="/login/" {% endif %} class="nav-link {% if request.path == '/contact/' %}active{% endif %} font-medium transition-all duration-300">Contact</a></li>
-                    {% if user.is_authenticated %}
-                      <li><a href="/logout" class="nav-link font-medium transition-all duration-300">Logout</a></li>
-                    {% else %}
-                      <li><a href="/login" class="nav-link {% if request.path == '/login/' %}active{% endif %} font-medium transition-all duration-300">Sign In</a></li>
-                      <li class="ml-3"><a href="/signup" class="secondary-btn hover:bg-green-600 transition-all duration-300 px-4 py-2 {% if request.path == '/signup/' %}pulse{% endif %}">Sign Up</a></li>
-                    {% endif %}
+                    <li><a href="/contact/" class="nav-link {% if request.path == '/contact/' %}active{% endif %} font-medium transition-all duration-300">Contact</a></li>
                   </ul>
                 </div>
               </nav>
@@ -428,13 +416,7 @@
                             <div class="flex-shrink-0 bg-orange-500 p-2 rounded-full mr-3 mt-1">
                                 <i class="fas fa-phone-alt text-white text-sm"></i>
                             </div>
-                            <span>+91 85112 45404 (Dashrath Jadav - Owner)</span>
-                        </li>
-                        <li class="flex items-start">
-                            <div class="flex-shrink-0 bg-orange-500 p-2 rounded-full mr-3 mt-1">
-                                <i class="fas fa-phone-alt text-white text-sm"></i>
-                            </div>
-                            <span>+91 6353253396 (Sanjay Khuman - Distributor)</span>
+                            <span>Inquiry No: +91 93283 91613</span>
                         </li>
                         <li class="flex items-start">
                             <div class="flex-shrink-0 bg-orange-500 p-2 rounded-full mr-3 mt-1">
@@ -466,96 +448,6 @@
             </div>
         </div>
     </footer>
-
-    	<!-- signin Model -->
-	<!-- Modal1 -->
-	<div class="modal fade" id="myModal1" tabindex="-1" role="dialog">
-		<div class="modal-dialog">
-			<!-- Modal content-->
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-				</div>
-				<div class="modal-body modal-body-sub_agile">
-					<div class="main-mailposi">
-						<span class="fa fa-envelope-o" aria-hidden="true"></span>
-					</div>
-					<div class="modal_body_left modal_body_left1">
-						<h3 class="agileinfo_sign">Sign In </h3>
-						<p>
-							Sign In now, Let's start your Courier Service. Don't have an account?
-							<a href="#" data-toggle="modal" data-target="#myModal2">
-								Sign Up Now</a>
-						</p>
-						<form action="{% url 'home' %}" method="post">
-                             {% csrf_token %}
-							<div class="styled-input agile-styled-input-top">
-								<input type="text" placeholder="User Name" name="userame" id="userame" required="">
-							</div>
-							<div class="styled-input">
-								<input type="password" placeholder="Password" name="password" id="password" required="">
-							</div>
-							<input type="submit" value="Sign In">
-						</form>
-						<div class="clearfix"></div>
-					</div>
-					<div class="clearfix"></div>
-				</div>
-			</div>
-			<!-- //Modal content-->
-		</div>
-	</div>
-	<!-- //Modal1 -->
-	<!-- //signin Model -->
-	<!-- signup Model -->
-	<!-- Modal2 -->
-	<div class="modal fade" id="myModal2" tabindex="-1" role="dialog">
-		<div class="modal-dialog">
-			<!-- Modal content-->
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-				</div>
-				<div class="modal-body modal-body-sub_agile">
-					<div class="main-mailposi">
-						<span class="fa fa-envelope-o" aria-hidden="true"></span>
-					</div>
-					<div class="modal_body_left modal_body_left1">
-						<h3 class="agileinfo_sign">Sign Up</h3>
-
-						<form action="#" method="post">
-							<div class="styled-input agile-styled-input-top">
-								<input type="text" placeholder="Name" name="Name" required="">
-							</div>
-							<div class="styled-input">
-								<input type="email" placeholder="E-mail" name="Email" required="">
-							</div>
-							<div class="styled-input">
-								<input type="text" placeholder="Mobile" name="Mobile" required="">
-							</div>
-							<div class="styled-input">
-								<input type="text" placeholder="Address" name="Address" required="">
-							</div>
-							<div class="styled-input">
-								<input type="password" placeholder="Password" name="password" id="password1" required="">
-							</div>
-							<div class="styled-input">
-								<input type="password" placeholder="Confirm Password" name="Confirm Password" id="password2" required="">
-							</div>
-							<input type="submit" value="Sign Up">
-						</form>
-						<p>
-							<a href="#">By clicking register, I agree to your terms</a>
-						</p>
-					</div>
-				</div>
-			</div>
-			<!-- //Modal content-->
-		</div>
-	</div>
-	<!-- //Modal2 -->
-	<!-- //signup Model -->
-
 
     </div>
 
